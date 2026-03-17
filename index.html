@@ -167,11 +167,11 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
 .dd-ic{font-size:15px;width:18px;text-align:center;}
 .dd-sep{height:1px;background:var(--border);margin:4px 0;}
 
-.topbar-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.topbar-right{display:flex;align-items:center;gap:10px;margin-left:auto;position:relative;}
 .topbar-user{display:flex;align-items:center;gap:8px;cursor:pointer;padding:4px 8px;border-radius:9px;transition:background .15s;}
 .topbar-user:hover{background:var(--blue-l);}
 .t-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#60a5fa);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;}
-.t-name{font-size:13px;font-weight:600;color:var(--navy);}
+.t-name{font-size:13px;font-weight:600;color:var(--navy);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* Dashboard content */
 .dash-body{flex:1;padding:32px 28px;max-width:1100px;width:100%;margin:0 auto;}
@@ -275,7 +275,7 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
           <div class="iw"><input class="fi" type="password" id="lPw" placeholder="비밀번호" style="padding-right:56px" autocomplete="current-password">
           <button class="eye" onclick="togglePw('lPw',this)">표시</button></div>
         </div>
-        <button class="btn btn-primary" id="loginBtn" onclick="doLogin()"><span id="lBtnTxt">로그인</span></button>
+        <button class="btn btn-primary" id="loginBtn" onclick="doLogin()"><span id="lBtnTxt">계정 확인</span></button>
         <div class="divider"><span>또는 빠른 인증</span></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
           <button class="btn btn-navy" id="bioBtn" onclick="doBioLogin()">🔐 생체인식 · 패스키</button>
@@ -377,7 +377,7 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
         <div class="t-name" id="tName">-</div>
         <span style="font-size:10px;color:var(--muted);margin-left:2px;">▾</span>
       </div>
-      <div class="dropdown" id="ddUser" style="right:0;left:auto;min-width:160px;">
+      <div class="dropdown" id="ddUser" style="right:0;left:auto;min-width:160px;top:calc(100% + 8px);">
         <button class="dd-item" onclick="doLogout();closeDD()"><span class="dd-ic">🚪</span>로그아웃</button>
       </div>
     </div>
@@ -814,11 +814,11 @@ async function doBioLogin(){
 function doLogin(){
   var email=$('lEmail').value.trim(),pw=$('lPw').value;
   if(!email){shakeEl('lEmail');return;}if(!pw){shakeEl('lPw');return;}
-  setBtn('loginBtn','lBtnTxt',true,'로그인 중...');hideAlert('loginAlert');
+  setBtn('loginBtn','lBtnTxt',true,'확인 중...');hideAlert('loginAlert');
   fetch(C.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':C.key,'Authorization':'Bearer '+C.key},body:JSON.stringify({email:email,password:pw})})
   .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
   .then(function(r){
-    setBtn('loginBtn','lBtnTxt',false,'로그인');
+    setBtn('loginBtn','lBtnTxt',false,'계정 확인');
     if(r.ok&&r.d.access_token){
       saveSess(r.d);
       if(hasPin(email))updatePinSess(email);
@@ -828,7 +828,7 @@ function doLogin(){
       showAlert('loginAlert','error',r.d.error_description||r.d.msg||'이메일 또는 비밀번호가 올바르지 않습니다.');
       shakeEl('lPw');$('lPw').value='';
     }
-  }).catch(function(){setBtn('loginBtn','lBtnTxt',false,'로그인');showAlert('loginAlert','error','네트워크 오류');});
+  }).catch(function(){setBtn('loginBtn','lBtnTxt',false,'계정 확인');showAlert('loginAlert','error','네트워크 오류');});
 }
 
 // ═══════ 회원가입 ═══════
