@@ -777,18 +777,19 @@ function toast(type,msg){
 // ═══════════════════════════════════
 var SECS = ['home','notice','linked','apikeys','security','account'];
 function goSec(name){
+  if(!SECS||!SECS.forEach) return;
   SECS.forEach(function(s){
-    var el=G('sec-'+s); if(!el)return;
-    el.classList.toggle('show',s===name);
-    el.classList.toggle('hidden',s!==name);
-    var nb=G('nav-'+s); if(nb) nb.classList.toggle('active',s===name);
+    var el=G("sec-"+s); if(!el) return;
+    el.classList.toggle("show",s===name);
+    el.classList.toggle("hidden",s!==name);
+    var nb=G("nav-"+s); if(nb) nb.classList.toggle("active",s===name);
   });
-  closeUserDD();
-  if(name==='notice') loadNotices();
-  if(name==='apikeys') loadApiKeys();
-  if(name==='security') renderSecSec();
-  if(name==='linked') renderLinked();
-  if(name==='account') renderAccount();
+  var udd=G("userDD"); if(udd) udd.classList.remove("show");
+  if(name==="notice") loadNotices();
+  if(name==="apikeys") loadApiKeys();
+  if(name==="security") renderSecSec();
+  if(name==="linked") renderLinked();
+  if(name==="account") renderAccount();
 }
 
 // ═══════════════════════════════════
