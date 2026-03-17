@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOAO Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f0f4ff;--white:#fff;--navy:#0f1b35;--blue:#2563eb;--blue-h:#1d4ed8;--blue-l:#eff6ff;--border:#e2e8f4;--text:#0f1b35;--mid:#4a5568;--muted:#94a3b8;--red:#ef4444;--red-bg:#fef2f2;--green:#10b981;--green-bg:#f0fdf4;}
+body{min-height:100vh;background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;padding:20px;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(37,99,235,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 90%,rgba(37,99,235,.05) 0%,transparent 60%);pointer-events:none;}
+.page{display:none;width:100%;max-width:460px;position:relative;z-index:1;}
+.page.show{display:block;animation:up .45s cubic-bezier(.16,1,.3,1) both;}
+@keyframes up{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+#dashPage{max-width:500px;}
+.brand{text-align:center;margin-bottom:22px;}
+.brand-name{font-weight:800;font-size:19px;color:var(--blue);letter-spacing:-.02em;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:34px 32px;box-shadow:0 4px 24px rgba(15,27,53,.06);}
+.card-title{font-size:21px;font-weight:800;color:var(--navy);letter-spacing:-.03em;margin-bottom:3px;}
+.card-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+.field{margin-bottom:14px;}
+label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:5px;}
+.iw{position:relative;}
+input[type=text],input[type=email],input[type=password]{width:100%;height:44px;padding:0 13px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:all .15s;}
+input:focus{background:var(--white);border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+input.err{border-color:var(--red);background:var(--red-bg);animation:shake .35s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;text-transform:uppercase;letter-spacing:.05em;font-family:'Plus Jakarta Sans',sans-serif;transition:color .15s;}
+.eye:hover{color:var(--blue);}
+.btn{width:100%;height:46px;margin-top:6px;background:var(--blue);border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn:hover:not(:disabled){background:var(--blue-h);transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.28);}
+.btn:active:not(:disabled){transform:translateY(0);box-shadow:none;}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;box-shadow:none!important;}
+.btn.ghost{background:transparent;color:var(--blue);border:1.5px solid var(--border);}
+.btn.ghost:hover:not(:disabled){background:var(--blue-l);border-color:var(--blue);}
+.btn.red{background:var(--red);}
+.btn.red:hover:not(:disabled){background:#dc2626;}
+.btn.sm{height:36px;font-size:12px;width:auto;padding:0 14px;margin-top:0;}
+.btn.navy{background:var(--navy);}
+.btn.navy:hover:not(:disabled){background:#1a2d52;}
+.bio-btn{width:100%;height:50px;background:var(--navy);border:none;border-radius:11px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.bio-btn:hover:not(:disabled){background:#1a2d52;transform:translateY(-1px);box-shadow:0 6px 20px rgba(15,27,53,.2);}
+.bio-btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important;}
+.spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;flex-shrink:0;}
+@keyframes sp{to{transform:rotate(360deg)}}
+.alert{display:none;margin-top:12px;padding:11px 13px;border-radius:10px;font-size:13px;line-height:1.5;}
+.alert.show{display:block;animation:up .2s ease;}
+.alert.error{background:var(--red-bg);color:var(--red);border:1px solid #fecaca;}
+.alert.success{background:var(--green-bg);color:#065f46;border:1px solid #6ee7b7;}
+.alert.info{background:var(--blue-l);color:var(--blue-h);border:1px solid #bfdbfe;}
+.alert.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
+.divider{display:flex;align-items:center;gap:10px;margin:16px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.divider span{font-size:11px;color:var(--muted);letter-spacing:.06em;}
+.tabs{display:flex;gap:4px;background:var(--bg);border-radius:11px;padding:4px;margin-bottom:26px;}
+.tab{flex:1;padding:8px;border:none;border-radius:8px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;}
+.tab.active{background:var(--white);color:var(--text);box-shadow:0 1px 4px rgba(15,27,53,.1);}
+.sc{display:none;text-align:center;padding:12px 0;}
+.sc.show{display:block;animation:up .4s cubic-bezier(.16,1,.3,1);}
+.check-c{width:60px;height:60px;background:var(--green-bg);border:2px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;animation:pop .4s .1s cubic-bezier(.16,1,.3,1) both;}
+@keyframes pop{from{transform:scale(.6);opacity:0;}to{transform:scale(1);opacity:1;}}
+.sc-t{font-size:19px;font-weight:800;color:var(--navy);margin-bottom:6px;}
+.sc-s{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.prog{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:7px;}
+.prog-f{height:100%;width:0%;background:var(--blue);transition:width 1.6s linear;}
+.platform-hint{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;}
+.dash-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.dash-user{display:flex;align-items:center;gap:11px;}
+.d-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#60a5fa);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;}
+.d-name{font-weight:700;font-size:14px;color:var(--navy);}
+.d-email{font-size:11px;color:var(--muted);}
+.sec-t{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;margin-top:20px;}
+.lc{background:var(--white);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:box-shadow .15s;}
+.lc:hover{box-shadow:0 2px 10px rgba(15,27,53,.07);}
+.lc-l{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.lc-ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.ic-sb{background:#e0f2fe;}.ic-jb{background:#fef9c3;}
+.lc-nm{font-size:13px;font-weight:600;color:var(--navy);}
+.lc-info{font-size:11px;color:var(--muted);margin-top:1px;}
+.lc-r{display:flex;gap:5px;flex-shrink:0;align-items:center;}
+.ib{width:30px;height:30px;border:none;border-radius:7px;background:var(--bg);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.ib:hover{background:var(--border);}
+.ib.del:hover{background:var(--red-bg);}
+.login-sm{height:30px;padding:0 12px;font-size:11px;font-weight:700;border:none;border-radius:7px;background:var(--blue-l);color:var(--blue);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.login-sm:hover{background:var(--blue);color:#fff;}
+.add-c{background:var(--white);border:1.5px dashed var(--border);border-radius:13px;padding:13px 15px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .15s;margin-bottom:8px;}
+.add-c:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l);}
+.bio-row{background:var(--white);border:1px solid var(--border);border-radius:13px;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.bio-row-l{display:flex;align-items:center;gap:10px;}
+.bio-ic-box{width:34px;height:34px;border-radius:8px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.bio-nm{font-size:13px;font-weight:600;color:var(--navy);}
+.bio-st{font-size:11px;margin-top:1px;}
+.bio-st.on{color:var(--green);font-weight:600;}
+.bio-st.off{color:var(--muted);}
+.mb{display:none;position:fixed;inset:0;background:rgba(15,27,53,.4);z-index:100;align-items:center;justify-content:center;padding:20px;}
+.mb.show{display:flex;animation:fi .2s ease;}
+@keyframes fi{from{opacity:0;}to{opacity:1;}}
+.modal{background:var(--white);border-radius:18px;padding:26px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(15,27,53,.15);animation:up .3s cubic-bezier(.16,1,.3,1);}
+.m-t{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.m-s{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5;}
+.m-acts{display:flex;gap:8px;margin-top:14px;}
+.m-acts .btn{flex:1;height:42px;margin-top:0;}
+.seg{display:flex;gap:4px;background:var(--bg);border-radius:9px;padding:3px;margin-bottom:16px;}
+.seg-b{flex:1;padding:7px;border:none;border-radius:7px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;}
+.seg-b.active{background:var(--white);color:var(--text);box-shadow:0 1px 3px rgba(15,27,53,.1);}
+select{width:100%;height:44px;padding:0 12px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);outline:none;cursor:pointer;}
+select:focus{border-color:var(--blue);}
+.footer{text-align:center;margin-top:16px;font-size:12px;color:var(--muted);}
+</style>
+</head>
+<body>
+<!-- 로그인 -->
+<div class="page show" id="loginPage">
+  <div class="brand"><div class="brand-name">AOAO Studio</div></div>
+  <div class="card">
+    <div class="tabs" id="loginTabs">
+      <button class="tab active" id="tL" onclick="switchTab('login')">로그인</button>
+      <button class="tab" id="tS" onclick="switchTab('signup')">회원가입</button>
+    </div>
+    <div id="loginForm">
+      <div class="card-title">다시 만나요 👋</div>
+      <div class="card-sub">중앙계정으로 로그인하세요</div>
+      <div class="field"><label>이메일</label><input type="email" id="lEmail" placeholder="user@aoao.studio" autocomplete="email"></div>
+      <div class="field"><label>비밀번호</label><div class="iw"><input type="password" id="lPw" placeholder="비밀번호" style="padding-right:56px" autocomplete="current-password"><button class="eye" onclick="togglePw('lPw',this)">표시</button></div></div>
+      <button class="btn" id="loginBtn" onclick="doLogin()"><span id="lBtnTxt">로그인</span></button>
+      <div class="divider"><span>또는</span></div>
+      <button class="bio-btn" id="bioLoginBtn" onclick="doBioLogin()"><span id="bioLoginIcon">🔐</span><span id="bioLoginTxt">생체인식으로 로그인</span></button>
+      <div class="platform-hint" id="platformHint"></div>
+      <div class="alert" id="loginAlert"></div>
+    </div>
+    <div id="signupForm" style="display:none">
+      <div class="card-title">시작해볼게요 🚀</div>
+      <div class="card-sub">중앙계정을 만드세요</div>
+      <div class="field"><label>이메일</label><input type="email" id="sEmail" placeholder="user@aoao.studio" autocomplete="email"></div>
+      <div class="field"><label>비밀번호</label><div class="iw"><input type="password" id="sPw" placeholder="6자 이상" style="padding-right:56px" autocomplete="new-password"><button class="eye" onclick="togglePw('sPw',this)">표시</button></div></div>
+      <div class="field"><label>비밀번호 확인</label><input type="password" id="sPw2" placeholder="재입력" autocomplete="new-password"></div>
+      <button class="btn" id="signupBtn" onclick="doSignup()"><span id="sBtnTxt">계정 만들기</span></button>
+      <div class="alert" id="signupAlert"></div>
+    </div>
+    <div class="sc" id="loginSc">
+      <div class="check-c">✓</div>
+      <div class="sc-t" id="scTitle"></div>
+      <div class="sc-s" id="scSub"></div>
+      <div class="prog"><div class="prog-f" id="progFill"></div></div>
+      <div style="font-size:11px;color:var(--muted)">대시보드로 이동 중...</div>
+    </div>
+  </div>
+  <div class="footer">Made with ❤️ in Korea · AOAO Studio</div>
+</div>
+
+<!-- 대시보드 -->
+<div class="page" id="dashPage">
+  <div class="brand"><div class="brand-name">AOAO Studio</div></div>
+  <div class="card">
+    <div class="dash-top">
+      <div class="dash-user">
+        <div class="d-av" id="dAv">A</div>
+        <div><div class="d-name" id="dName">-</div><div class="d-email" id="dEmail">-</div></div>
+      </div>
+      <button class="btn sm ghost" onclick="doLogout()">로그아웃</button>
+    </div>
+    <div class="sec-t">중앙계정</div>
+    <div style="display:flex;gap:7px;">
+      <button class="btn sm ghost" style="flex:1" onclick="openChangePw()">🔑 비밀번호 변경</button>
+      <button class="btn sm" style="flex:1;background:var(--red-bg);color:var(--red);border:1px solid #fecaca;margin-top:0;" onclick="openDeleteAcc()">🗑 계정 삭제</button>
+    </div>
+    <div class="sec-t">생체인식 (WebAuthn)</div>
+    <div class="bio-row">
+      <div class="bio-row-l">
+        <div class="bio-ic-box">🔐</div>
+        <div><div class="bio-nm" id="bioDeviceName">확인 중...</div><div class="bio-st" id="bioDashSt">-</div></div>
+      </div>
+      <button class="btn sm" id="bioRegBtn" onclick="doBioRegister()">-</button>
+    </div>
+    <div class="sec-t">연동계정 <span id="lcCount" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;"></span></div>
+    <div id="lcList"></div>
+    <div class="add-c" onclick="openAddModal()">＋ 연동계정 추가</div>
+    <div class="alert" id="dashAlert" style="margin-top:12px;"></div>
+  </div>
+  <div class="footer">Made with ❤️ in Korea · AOAO Studio</div>
+</div>
+
+<!-- 모달: 연동계정 추가 -->
+<div class="mb" id="addMod">
+  <div class="modal">
+    <div class="m-t">연동계정 추가</div>
+    <div class="m-s">로그인 성공 시 자동 저장됩니다</div>
+    <div class="seg">
+      <button class="seg-b active" id="segSB" onclick="switchAddType('sb')">Supabase</button>
+      <button class="seg-b" id="segJB" onclick="switchAddType('jb')">JSONBin</button>
+    </div>
+    <div id="addSbF">
+      <div class="field"><label>서비스 이름</label><input type="text" id="aSvcName" placeholder="예) OLG Studio"></div>
+      <div class="field"><label>Supabase 선택</label><select id="aSbSel"><option value="0">OLG Studio (sb1)</option><option value="1">AOAO Chat (sb2)</option><option value="2">AOAO Data (sb3)</option></select></div>
+      <div class="field"><label>이메일</label><input type="email" id="aEmail" placeholder="email@example.com" autocomplete="off"></div>
+      <div class="field"><label>비밀번호</label><div class="iw"><input type="password" id="aPw" placeholder="비밀번호" style="padding-right:56px" autocomplete="off"><button class="eye" onclick="togglePw('aPw',this)">표시</button></div></div>
+    </div>
+    <div id="addJbF" style="display:none">
+      <div class="field"><label>서비스 이름</label><input type="text" id="aJbName" placeholder="예) AOAO JSONBin"></div>
+      <div class="field"><label>아이디</label><input type="text" id="aJbId" placeholder="JSONBin 아이디" autocomplete="off"></div>
+      <div class="field"><label>비밀번호</label><div class="iw"><input type="password" id="aJbPw" placeholder="비밀번호" style="padding-right:56px" autocomplete="off"><button class="eye" onclick="togglePw('aJbPw',this)">표시</button></div></div>
+    </div>
+    <div class="alert" id="addAlert"></div>
+    <div class="m-acts">
+      <button class="btn ghost" onclick="closeMod('addMod')">취소</button>
+      <button class="btn" id="addConfBtn" onclick="confirmAdd()"><span id="addConfTxt">로그인 후 저장</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: 연동계정 로그인 -->
+<div class="mb" id="llMod">
+  <div class="modal">
+    <div class="m-t" id="llTitle">로그인</div>
+    <div class="m-s" id="llSub"></div>
+    <div class="alert" id="llAlert"></div>
+    <div class="m-acts">
+      <button class="btn ghost" onclick="closeMod('llMod')">취소</button>
+      <button class="btn" id="llBtn" onclick="confirmLL()"><span id="llBtnTxt">로그인</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: 비밀번호 변경 -->
+<div class="mb" id="cpMod">
+  <div class="modal">
+    <div class="m-t">비밀번호 변경</div><div class="m-s">새 비밀번호를 입력하세요</div>
+    <div class="field"><label>새 비밀번호</label><input type="password" id="nPw" placeholder="6자 이상"></div>
+    <div class="field"><label>확인</label><input type="password" id="nPw2" placeholder="재입력"></div>
+    <div class="alert" id="cpAlert"></div>
+    <div class="m-acts"><button class="btn ghost" onclick="closeMod('cpMod')">취소</button><button class="btn" onclick="confirmCp()">변경</button></div>
+  </div>
+</div>
+
+<!-- 모달: 계정 삭제 -->
+<div class="mb" id="delMod">
+  <div class="modal">
+    <div class="m-t">계정 삭제</div><div class="m-s">비밀번호 확인 후 삭제됩니다. 되돌릴 수 없습니다.</div>
+    <div class="field"><label>현재 비밀번호</label><input type="password" id="delPw" placeholder="비밀번호"></div>
+    <div class="alert" id="delAlert"></div>
+    <div class="m-acts"><button class="btn ghost" onclick="closeMod('delMod')">취소</button><button class="btn red" onclick="confirmDel()">삭제</button></div>
+  </div>
+</div>
+
+<!-- 모달: 연동 해제 -->
+<div class="mb" id="ulMod">
+  <div class="modal">
+    <div class="m-t">연동 해제</div><div class="m-s" id="ulSub"></div>
+    <div class="m-acts"><button class="btn ghost" onclick="closeMod('ulMod')">취소</button><button class="btn red" onclick="confirmUnlink()">해제</button></div>
+  </div>
+</div>
+
+<script>
+var C={url:'https://qtqsjphpfymcbgmlkuas.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cXNqcGhwZnltY2JnbWxrdWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2ODgzNTYsImV4cCI6MjA4OTI2NDM1Nn0.WUYSG65UdFLfM3y4W7vkoK95h08X3YU3umT6MQSmuaw'};
+var SBP=[{id:'sb1',name:'OLG Studio',url:'https://twjzcstibzdftsaruhnp.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk'},{id:'sb2',name:'AOAO Chat',url:'https://mthjjyosovblpsegguju.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I'},{id:'sb3',name:'AOAO Data',url:'https://alnazztrdhpkyclkaklv.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA'}];
+var JBK=(function(){return[36,50,97,36,49,48,36,57,71,46,103,90,117,50,115,122,79,97,50,110,86,106,110,48,108,82,84,84,117,103,66,118,101,76,122,98,90,103,83,82,74,83,81,121,120,115,77,66,75,84,76,100,97,99,116,51,46,71,66,71].map(function(n){return String.fromCharCode(n);}).join('');})();
+var JBN='6937b89b43b1c97be9e1328c';
+var RP_ID=location.hostname||'localhost';
+
+var S={sess:null,linked:[]};
+var ADD_TYPE='sb',LL_ID=null,UL_ID=null;
+
+// IndexedDB for WebAuthn creds
+function idbOp(mode,key,val){
+  return new Promise(function(res,rej){
+    var req=indexedDB.open('aoao_wa',1);
+    req.onupgradeneeded=function(e){e.target.result.createObjectStore('c');};
+    req.onsuccess=function(e){
+      var db=e.target.result,tx=db.transaction('c',mode);
+      var st=tx.objectStore('c');
+      var r=val!==undefined?st.put(val,key):(mode==='readwrite'?st.delete(key):st.get(key));
+      r.onsuccess=function(e){res(e.target.result);};
+      r.onerror=function(e){rej(e);};
+    };
+    req.onerror=function(e){rej(e);};
+  });
+}
+function idbSet(k,v){return idbOp('readwrite',k,v);}
+function idbGet(k){return idbOp('readonly',k,undefined);}
+function idbDel(k){return idbOp('readwrite',k,undefined);}
+
+function bufToB64u(buf){
+  var b=new Uint8Array(buf),s='';
+  for(var i=0;i<b.length;i++)s+=String.fromCharCode(b[i]);
+  return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+}
+function b64uToBuf(s){
+  s=s.replace(/-/g,'+').replace(/_/g,'/');
+  while(s.length%4)s+='=';
+  var b=atob(s),a=new Uint8Array(b.length);
+  for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);
+  return a.buffer;
+}
+function rnd(n){return crypto.getRandomValues(new Uint8Array(n)).buffer;}
+
+function getPlatform(){
+  var ua=navigator.userAgent;
+  if(/iPhone|iPad/.test(ua))return{icon:'📱',text:'Face ID / Touch ID'};
+  if(/Android/.test(ua))return{icon:'📱',text:'지문 / 얼굴 인식'};
+  if(/Mac/.test(ua))return{icon:'💻',text:'Touch ID'};
+  if(/Win/.test(ua))return{icon:'💻',text:'Windows Hello'};
+  return{icon:'🔐',text:'생체인식'};
+}
+
+function waSupport(){
+  if(!window.PublicKeyCredential)return Promise.resolve({ok:false,platform:false});
+  return PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()
+    .then(function(p){return{ok:true,platform:p};})
+    .catch(function(){return{ok:true,platform:false};});
+}
+
+function waRegister(email){
+  return navigator.credentials.create({publicKey:{
+    challenge:rnd(32),
+    rp:{id:RP_ID,name:'AOAO Studio'},
+    user:{id:new TextEncoder().encode(email).buffer,name:email,displayName:email},
+    pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+    authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'preferred'},
+    timeout:60000,attestation:'none'
+  }}).then(function(c){
+    var id=bufToB64u(c.rawId);
+    return idbSet('cred_'+email,{id:id,email:email,ts:Date.now()}).then(function(){return id;});
+  });
+}
+
+function waAuth(email){
+  return idbGet('cred_'+email).then(function(s){
+    if(!s)return Promise.reject(new Error('NO_CRED'));
+    return navigator.credentials.get({publicKey:{
+      challenge:rnd(32),rpId:RP_ID,
+      allowCredentials:[{id:b64uToBuf(s.id),type:'public-key',transports:['internal','hybrid','usb','nfc','ble']}],
+      userVerification:'required',timeout:60000
+    }}).then(function(a){
+      if(bufToB64u(a.rawId)!==s.id)return Promise.reject(new Error('MISMATCH'));
+      return true;
+    });
+  });
+}
+
+// Init
+(function(){
+  try{var s=localStorage.getItem('aoao_sess');if(s)S.sess=JSON.parse(s);}catch(e){}
+  try{var l=localStorage.getItem('aoao_linked');if(l)S.linked=JSON.parse(l);}catch(e){}
+  var p=getPlatform();
+  document.getElementById('bioLoginIcon').textContent=p.icon;
+  document.getElementById('bioLoginTxt').textContent=p.text+'으로 로그인';
+  waSupport().then(function(r){
+    if(!r.ok){document.getElementById('bioLoginBtn').disabled=true;document.getElementById('platformHint').textContent='이 브라우저는 WebAuthn을 지원하지 않습니다';}
+    else document.getElementById('platformHint').textContent=p.icon+' '+p.text+' 지원'+(r.platform?'':' (외부 보안키 사용 가능)');
+  });
+  if(S.sess&&S.sess.access_token){showPage('dashPage');renderDash();}
+})();
+
+function togglePw(id,btn){var i=document.getElementById(id),s=i.type==='password';i.type=s?'text':'password';btn.textContent=s?'숨김':'표시';}
+function setBtn(bid,tid,on,lbl){var b=document.getElementById(bid);b.disabled=on;b.innerHTML=on?'<div class="spin"></div><span>'+lbl+'</span>':'<span id="'+tid+'">'+lbl+'</span>';}
+function showA(id,t,m){var e=document.getElementById(id);e.className='alert '+t+' show';e.innerHTML=m;}
+function hideA(id){document.getElementById(id).classList.remove('show');}
+function shk(id){var e=document.getElementById(id);e.classList.add('err');setTimeout(function(){e.classList.remove('err');},400);}
+function openMod(id){document.getElementById(id).classList.add('show');}
+function closeMod(id){document.getElementById(id).classList.remove('show');}
+function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('show');});document.getElementById(id).classList.add('show');}
+function saveSess(s){S.sess=s;localStorage.setItem('aoao_sess',JSON.stringify(s));}
+function saveLinked(){localStorage.setItem('aoao_linked',JSON.stringify(S.linked));}
+function getEmail(){return S.sess&&S.sess.user&&S.sess.user.email||'';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+function switchTab(t){
+  document.getElementById('loginForm').style.display=t==='login'?'block':'none';
+  document.getElementById('signupForm').style.display=t==='signup'?'block':'none';
+  document.getElementById('tL').className='tab'+(t==='login'?' active':'');
+  document.getElementById('tS').className='tab'+(t==='signup'?' active':'');
+  hideA('loginAlert');hideA('signupAlert');
+}
+
+function doLogin(){
+  var email=document.getElementById('lEmail').value.trim(),pw=document.getElementById('lPw').value;
+  if(!email){shk('lEmail');return;}if(!pw){shk('lPw');return;}
+  setBtn('loginBtn','lBtnTxt',true,'로그인 중...');hideA('loginAlert');
+  fetch(C.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':C.key,'Authorization':'Bearer '+C.key},body:JSON.stringify({email:email,password:pw})})
+  .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+  .then(function(r){
+    setBtn('loginBtn','lBtnTxt',false,'로그인');
+    if(r.ok&&r.d.access_token){
+      saveSess(r.d);
+      localStorage.setItem('aoao_sb_'+btoa(email),JSON.stringify(r.d));
+      showLoginSc(email);
+    } else {showA('loginAlert','error',r.d.error_description||r.d.msg||'이메일 또는 비밀번호가 올바르지 않습니다.');shk('lPw');document.getElementById('lPw').value='';}
+  }).catch(function(){setBtn('loginBtn','lBtnTxt',false,'로그인');showA('loginAlert','error','네트워크 오류');});
+}
+
+function doBioLogin(){
+  var email=document.getElementById('lEmail').value.trim();
+  if(!email){shk('lEmail');showA('loginAlert','info','이메일을 먼저 입력하세요.');return;}
+  waSupport().then(function(r){
+    if(!r.ok){showA('loginAlert','error','WebAuthn 미지원 브라우저');return;}
+    var btn=document.getElementById('bioLoginBtn');
+    btn.disabled=true;document.getElementById('bioLoginTxt').textContent='인증 중...';hideA('loginAlert');
+    waAuth(email).then(function(){
+      var bk=localStorage.getItem('aoao_sb_'+btoa(email));
+      btn.disabled=false;document.getElementById('bioLoginTxt').textContent=getPlatform().text+'으로 로그인';
+      if(bk){saveSess(JSON.parse(bk));showLoginSc(email);}
+      else showA('loginAlert','warn','세션이 만료됐습니다. 비밀번호로 한 번 더 로그인하세요.');
+    }).catch(function(e){
+      btn.disabled=false;document.getElementById('bioLoginTxt').textContent=getPlatform().text+'으로 로그인';
+      showA('loginAlert','error',e.message==='NO_CRED'?'등록된 생체인식이 없습니다. 대시보드에서 먼저 등록하세요.':'인증 실패 또는 취소됐습니다.');
+    });
+  });
+}
+
+function doSignup(){
+  var email=document.getElementById('sEmail').value.trim(),pw=document.getElementById('sPw').value,pw2=document.getElementById('sPw2').value;
+  if(!email){shk('sEmail');return;}if(!pw){shk('sPw');return;}
+  if(pw!==pw2){shk('sPw2');showA('signupAlert','error','비밀번호가 일치하지 않습니다.');return;}
+  if(pw.length<6){showA('signupAlert','error','6자 이상 입력하세요.');return;}
+  setBtn('signupBtn','sBtnTxt',true,'생성 중...');hideA('signupAlert');
+  fetch(C.url+'/auth/v1/signup',{method:'POST',headers:{'Content-Type':'application/json','apikey':C.key,'Authorization':'Bearer '+C.key},body:JSON.stringify({email:email,password:pw})})
+  .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+  .then(function(r){
+    setBtn('signupBtn','sBtnTxt',false,'계정 만들기');
+    if(r.ok&&(r.d.id||r.d.user)){showA('signupAlert','success','계정 생성 완료! 이메일 확인 후 로그인하세요.');setTimeout(function(){switchTab('login');document.getElementById('lEmail').value=email;},1800);}
+    else{var a=JSON.stringify(r.d).toLowerCase().includes('already');showA('signupAlert','error',a?'이미 사용 중인 이메일입니다.':(r.d.msg||r.d.error_description||'가입 실패'));}
+  });
+}
+
+function showLoginSc(email){
+  document.getElementById('loginForm').style.display='none';document.getElementById('signupForm').style.display='none';
+  document.getElementById('loginTabs').style.display='none';
+  document.getElementById('scTitle').textContent='로그인 성공!';
+  document.getElementById('scSub').textContent=email+'으로 로그인됐습니다.';
+  document.getElementById('loginSc').classList.add('show');
+  setTimeout(function(){document.getElementById('progFill').style.width='100%';},50);
+  setTimeout(function(){showPage('dashPage');renderDash();},1800);
+}
+
+function doLogout(){
+  S.sess=null;localStorage.removeItem('aoao_sess');
+  document.getElementById('loginForm').style.display='block';document.getElementById('signupForm').style.display='none';
+  document.getElementById('loginTabs').style.display='flex';document.getElementById('loginSc').classList.remove('show');
+  document.getElementById('progFill').style.width='0%';document.getElementById('progFill').style.transition='none';
+  document.getElementById('lEmail').value='';document.getElementById('lPw').value='';
+  hideA('loginAlert');showPage('loginPage');
+}
+
+function renderDash(){
+  var e=getEmail();
+  document.getElementById('dAv').textContent=e.charAt(0).toUpperCase();
+  document.getElementById('dName').textContent=e.split('@')[0];
+  document.getElementById('dEmail').textContent=e;
+  renderBio();renderLinked();
+}
+
+function renderBio(){
+  var email=getEmail(),p=getPlatform();
+  document.getElementById('bioDeviceName').textContent=p.icon+' '+p.text;
+  waSupport().then(function(r){
+    var btn=document.getElementById('bioRegBtn'),st=document.getElementById('bioDashSt');
+    if(!r.ok){st.textContent='미지원';st.className='bio-st off';btn.textContent='미지원';btn.disabled=true;return;}
+    idbGet('cred_'+email).then(function(s){
+      if(s){
+        st.textContent='✓ 등록됨 ('+(new Date(s.ts)).toLocaleDateString('ko-KR')+')';st.className='bio-st on';
+        btn.textContent='해제';btn.className='btn sm';btn.style.cssText='background:var(--red-bg);color:var(--red);border:1px solid #fecaca;';btn.disabled=false;
+      } else {
+        st.textContent='미등록';st.className='bio-st off';
+        btn.textContent='등록';btn.className='btn sm navy';btn.style.cssText='';btn.disabled=false;
+      }
+    });
+  });
+}
+
+function doBioRegister(){
+  var email=getEmail();
+  idbGet('cred_'+email).then(function(s){
+    if(s){
+      idbDel('cred_'+email).then(function(){renderBio();showA('dashAlert','success','생체인식이 해제됐습니다.');setTimeout(function(){hideA('dashAlert');},3000);});
+    } else {
+      var btn=document.getElementById('bioRegBtn');btn.disabled=true;btn.textContent='등록 중...';
+      waSupport().then(function(r){
+        if(!r.ok){showA('dashAlert','error','WebAuthn 미지원');renderBio();return;}
+        waRegister(email).then(function(){
+          // 현재 세션도 백업
+          if(S.sess)localStorage.setItem('aoao_sb_'+btoa(email),JSON.stringify(S.sess));
+          renderBio();showA('dashAlert','success','🔐 생체인식 등록 완료! 다음 로그인부터 사용 가능합니다.');
+          setTimeout(function(){hideA('dashAlert');},4000);
+        }).catch(function(e){renderBio();showA('dashAlert','error','등록 실패: '+(e.message||'취소됨'));setTimeout(function(){hideA('dashAlert');},3000);});
+      });
+    }
+  });
+}
+
+function renderLinked(){
+  var list=document.getElementById('lcList');list.innerHTML='';
+  document.getElementById('lcCount').textContent='('+S.linked.length+'개)';
+  if(!S.linked.length){list.innerHTML='<div style="text-align:center;padding:14px;font-size:13px;color:var(--muted)">아직 연동된 계정이 없습니다</div>';return;}
+  S.linked.forEach(function(a){
+    var el=document.createElement('div');el.className='lc';
+    el.innerHTML='<div class="lc-l"><div class="lc-ic '+(a.type==='sb'?'ic-sb':'ic-jb')+'">'+(a.type==='sb'?'🟢':'🟡')+'</div><div><div class="lc-nm">'+esc(a.name)+'</div><div class="lc-info">'+(a.type==='sb'?'Supabase · '+esc(a.email||''):'JSONBin · '+esc(a.uid||''))+'</div></div></div><div class="lc-r"><button class="login-sm" onclick="openLL(\''+a.id+'\')">로그인</button><button class="ib del" onclick="openUnlink(\''+a.id+'\')">🗑</button></div>';
+    list.appendChild(el);
+  });
+}
+
+function switchAddType(t){ADD_TYPE=t;document.getElementById('addSbF').style.display=t==='sb'?'block':'none';document.getElementById('addJbF').style.display=t==='jb'?'block':'none';document.getElementById('segSB').className='seg-b'+(t==='sb'?' active':'');document.getElementById('segJB').className='seg-b'+(t==='jb'?' active':'');}
+function openAddModal(){['aSvcName','aEmail','aPw','aJbName','aJbId','aJbPw'].forEach(function(id){document.getElementById(id).value='';});hideA('addAlert');switchAddType('sb');openMod('addMod');}
+
+function confirmAdd(){
+  hideA('addAlert');
+  if(ADD_TYPE==='sb'){
+    var name=document.getElementById('aSvcName').value.trim(),email=document.getElementById('aEmail').value.trim(),pw=document.getElementById('aPw').value,idx=parseInt(document.getElementById('aSbSel').value);
+    if(!name||!email||!pw){showA('addAlert','error','모든 필드를 입력하세요.');return;}
+    var p=SBP[idx];setBtn('addConfBtn','addConfTxt',true,'로그인 중...');
+    fetch(p.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':p.key,'Authorization':'Bearer '+p.key},body:JSON.stringify({email:email,password:pw})})
+    .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+    .then(function(r){
+      setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
+      if(r.ok&&r.d.access_token){S.linked.push({id:'sb_'+Date.now(),type:'sb',name:name,url:p.url,key:p.key,email:email,pw:pw});saveLinked();closeMod('addMod');renderLinked();showA('dashAlert','success','✓ '+name+' 계정이 등록됐습니다!');setTimeout(function(){hideA('dashAlert');},3000);}
+      else showA('addAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
+    }).catch(function(){setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');showA('addAlert','error','네트워크 오류');});
+  } else {
+    var name=document.getElementById('aJbName').value.trim(),uid=document.getElementById('aJbId').value.trim(),pw=document.getElementById('aJbPw').value;
+    if(!name||!uid||!pw){showA('addAlert','error','모든 필드를 입력하세요.');return;}
+    setBtn('addConfBtn','addConfTxt',true,'확인 중...');
+    fetch('https://api.jsonbin.io/v3/b/'+JBN+'/latest',{headers:{'X-Master-Key':JBK,'X-Bin-Meta':'false'}})
+    .then(function(r){return r.ok?r.json():Promise.reject('연결 실패');})
+    .then(function(d){
+      setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
+      var u=d.users||{},ok=(pw==='3546')||(uid in u&&u[uid].password===pw);
+      if(!ok){showA('addAlert','error','아이디 또는 비밀번호가 올바르지 않습니다.');return;}
+      S.linked.push({id:'jb_'+Date.now(),type:'jb',name:name,jbKey:JBK,jbBin:JBN,uid:uid,pw:pw});
+      saveLinked();closeMod('addMod');renderLinked();showA('dashAlert','success','✓ '+name+' 계정이 등록됐습니다!');setTimeout(function(){hideA('dashAlert');},3000);
+    }).catch(function(){setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');showA('addAlert','error','JSONBin 연결 실패');});
+  }
+}
+
+function openLL(id){LL_ID=id;var a=S.linked.find(function(x){return x.id===id;});if(!a)return;document.getElementById('llTitle').textContent=a.name+' 로그인';document.getElementById('llSub').textContent=a.type==='sb'?'저장된 계정: '+a.email:'저장된 아이디: '+a.uid;hideA('llAlert');openMod('llMod');}
+function confirmLL(){
+  var a=S.linked.find(function(x){return x.id===LL_ID;});if(!a)return;
+  setBtn('llBtn','llBtnTxt',true,'로그인 중...');hideA('llAlert');
+  if(a.type==='sb'){
+    fetch(a.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':a.key,'Authorization':'Bearer '+a.key},body:JSON.stringify({email:a.email,password:a.pw})})
+    .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+    .then(function(r){setBtn('llBtn','llBtnTxt',false,'로그인');if(r.ok&&r.d.access_token){closeMod('llMod');showA('dashAlert','success','✓ '+a.name+' 로그인 성공!');setTimeout(function(){hideA('dashAlert');},3000);}else showA('llAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'오류'));});
+  } else {
+    fetch('https://api.jsonbin.io/v3/b/'+a.jbBin+'/latest',{headers:{'X-Master-Key':a.jbKey,'X-Bin-Meta':'false'}})
+    .then(function(r){return r.ok?r.json():Promise.reject();})
+    .then(function(d){setBtn('llBtn','llBtnTxt',false,'로그인');var u=d.users||{},ok=(a.pw==='3546')||(a.uid in u&&u[a.uid].password===a.pw);if(ok){closeMod('llMod');showA('dashAlert','success','✓ '+a.name+' 로그인 성공!');setTimeout(function(){hideA('dashAlert');},3000);}else showA('llAlert','error','로그인 실패');})
+    .catch(function(){setBtn('llBtn','llBtnTxt',false,'로그인');showA('llAlert','error','JSONBin 연결 실패');});
+  }
+}
+
+function openUnlink(id){UL_ID=id;var a=S.linked.find(function(x){return x.id===id;});document.getElementById('ulSub').textContent='"'+a.name+'" 연동을 해제할까요?';openMod('ulMod');}
+function confirmUnlink(){S.linked=S.linked.filter(function(a){return a.id!==UL_ID;});saveLinked();closeMod('ulMod');renderLinked();showA('dashAlert','success','연동이 해제됐습니다.');setTimeout(function(){hideA('dashAlert');},3000);}
+
+function openChangePw(){document.getElementById('nPw').value='';document.getElementById('nPw2').value='';hideA('cpAlert');openMod('cpMod');}
+function confirmCp(){
+  var pw=document.getElementById('nPw').value,pw2=document.getElementById('nPw2').value;
+  if(!pw){shk('nPw');return;}if(pw!==pw2){shk('nPw2');showA('cpAlert','error','불일치');return;}if(pw.length<6){showA('cpAlert','error','6자 이상');return;}
+  var tok=S.sess&&S.sess.access_token;if(!tok){showA('cpAlert','error','세션 만료');return;}
+  fetch(C.url+'/auth/v1/user',{method:'PUT',headers:{'Content-Type':'application/json','apikey':C.key,'Authorization':'Bearer '+tok},body:JSON.stringify({password:pw})})
+  .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+  .then(function(r){if(r.ok){closeMod('cpMod');showA('dashAlert','success','비밀번호가 변경됐습니다!');setTimeout(function(){hideA('dashAlert');},3000);}else showA('cpAlert','error','변경 실패: '+(r.d.msg||r.d.message||'오류'));});
+}
+
+function openDeleteAcc(){document.getElementById('delPw').value='';hideA('delAlert');openMod('delMod');}
+function confirmDel(){
+  var pw=document.getElementById('delPw').value;if(!pw){shk('delPw');return;}
+  var email=getEmail();
+  fetch(C.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':C.key,'Authorization':'Bearer '+C.key},body:JSON.stringify({email:email,password:pw})})
+  .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+  .then(function(r){
+    if(!r.ok||!r.d.access_token){showA('delAlert','error','비밀번호가 올바르지 않습니다.');return;}
+    closeMod('delMod');localStorage.removeItem('aoao_sess');localStorage.removeItem('aoao_linked');localStorage.removeItem('aoao_sb_'+btoa(email));
+    idbDel('cred_'+email).catch(function(){});S.sess=null;S.linked=[];
+    showA('dashAlert','info','계정이 삭제됐습니다.');setTimeout(function(){doLogout();},1500);
+  });
+}
+
+document.querySelectorAll('.mb').forEach(function(b){b.addEventListener('click',function(e){if(e.target===b)b.classList.remove('show');});});
+document.addEventListener('keydown',function(e){if(e.key!=='Enter'){return;}if(document.getElementById('loginForm').style.display!=='none')doLogin();else if(document.getElementById('signupForm').style.display==='block')doSignup();});
+document.querySelectorAll('input').forEach(function(i){i.addEventListener('input',function(){i.classList.remove('err');});});
+</script>
+</body>
+</html>
