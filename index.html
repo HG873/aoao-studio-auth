@@ -973,10 +973,18 @@ function showLoginSc(email){
 
 function doLogout(){
   ST.sess=null; localStorage.removeItem('aoao_sess');
-  ['loginForm','signupForm'].forEach(function(id){G(id).classList.remove('hidden');});
-  G('pinLoginForm').classList.add('hidden'); G('loginSc').classList.remove('show');
+  // 로그인 폼 완전 리셋
+  G('loginForm').classList.remove('hidden');
+  G('signupForm').classList.add('hidden');
+  G('pinLoginForm').classList.add('hidden');
+  G('loginSc').classList.remove('show');
+  // 탭 리셋
+  G('tL').classList.add('active'); G('tS').classList.remove('active');
   G('loginPage').querySelector('.ltabs').style.display='';
-  G('lEmail').value=''; G('lPw').value=''; hideAlert('loginAlert');
+  // 입력값 초기화
+  G('lEmail').value=''; G('lPw').value='';
+  G('sPw').value=''; G('sPw2').value=''; G('sEmail').value='';
+  hideAlert('loginAlert'); hideAlert('signupAlert');
   showPage('loginPage');
 }
 
@@ -1046,85 +1054,96 @@ function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
 // ═══════════════════════════════════
 // API 키 (서버 /api/v1/keys 연동)
 // ═══════════════════════════════════
+function jbLoadRaw(){
+  return fetch('https://api.jsonbin.io/v3/b/'+JB.bin+'/latest',{
+    headers:{'X-Master-Key':JB.key,'X-Bin-Meta':'false'}
+  }).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
+}
+function jbSaveRaw(data){
+  return fetch('https://api.jsonbin.io/v3/b/'+JB.bin,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json','X-Master-Key':JB.key},
+    body:JSON.stringify(data)
+  }).then(function(r){return r.ok;}).catch(function(){return false;});
+}
+function genApiKey(){
+  var chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var rand='';for(var i=0;i<32;i++)rand+=chars[Math.floor(Math.random()*chars.length)];
+  return 'aoao-'+rand;
+}
 function loadApiKeys(){
-  var list=G('apiKeyList');
-  if(!list) return;
-  var token=getToken();
-  if(!token){ list.innerHTML='<div class="empty"><div class="empty-ic">🔒</div>로그인이 필요합니다.</div>'; return; }
+  var list=G('apiKeyList'); if(!list) return;
   list.innerHTML='<div class="loading"><div class="spin-b"></div>불러오는 중...</div>';
-
-  fetch(AOAO_SERVER+'/api/v1/keys',{
-    headers:{'Authorization':'Bearer '+token,'apikey':CENTRAL.key}
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    var keys=data.keys||[];
-    G('st-apikeys').textContent=keys.length;
-    if(!keys.length){ list.innerHTML='<div class="empty"><div class="empty-ic">🔑</div>API 키가 없습니다.<br><small style="color:var(--muted)">+ 키 생성 버튼으로 만들어보세요</small></div>'; return; }
-    list.innerHTML=keys.map(function(k){
-      var created=k.created_at?new Date(k.created_at).toLocaleDateString('ko-KR'):'';
-      return '<div class="row">'+
+  var email=getEmail();
+  jbLoadRaw().then(function(data){
+    if(!data){ list.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>JSONBin 연결 실패</div>'; return; }
+    var apiKeys=data.api_keys||{};
+    var myKeys=Object.keys(apiKeys).filter(function(k){return apiKeys[k].user_id===email;});
+    var st=G('st-apikeys'); if(st) st.textContent=myKeys.length;
+    if(!myKeys.length){
+      list.innerHTML='<div class="empty"><div class="empty-ic">🔑</div>API 키가 없습니다.<br><small style="color:var(--muted)">+ 키 생성 버튼으로 만들어보세요</small></div>';
+      return;
+    }
+    var rows = myKeys.map(function(k){
+      var info=apiKeys[k];
+      var created=info.created_at?new Date(info.created_at).toLocaleDateString('ko-KR'):'';
+      var masked=k.substring(0,10)+'••••'+k.substring(k.length-4);
+      var el=document.createElement('div');
+      el.className='row';
+      el.innerHTML=
         '<div class="row-l"><div class="row-ic ic-yellow">🔑</div>'+
-        '<div><div class="row-name">'+escHtml(k.name||'API Key')+'</div>'+
-        '<div class="row-sub">'+escHtml(k.api_key||k.full_key||'')+'</div></div></div>'+
+        '<div><div class="row-name">'+escHtml(info.name||'API Key')+'</div>'+
+        '<div class="row-sub">'+escHtml(masked)+' · '+created+' · 사용 '+(info.usage_count||0)+'회</div></div></div>'+
         '<div class="row-r">'+
-          '<button class="btn btn-light xs" onclick="copyText(\''+escHtml(k.full_key||k.api_key||'')+'\')">복사</button>'+
-          '<button class="btn btn-red xs" onclick="deleteApiKey(\''+escHtml(k.full_key||k.api_key||'')+'\')">삭제</button>'+
-        '</div></div>';
-    }).join('');
-  })
-  .catch(function(){
-    list.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>API 키를 불러올 수 없습니다.<br><small style="color:var(--muted)">서버 연결 실패</small></div>';
+          '<button class="btn btn-light xs" data-key="'+escHtml(k)+'" data-action="copy">복사</button>'+
+          '<button class="btn btn-red xs" data-key="'+escHtml(k)+'" data-action="del">삭제</button>'+
+        '</div>';
+      el.querySelectorAll('button[data-action]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var key=btn.getAttribute('data-key');
+          if(btn.getAttribute('data-action')==='copy') copyText(key);
+          else deleteApiKey(key);
+        });
+      });
+      return el;
+    });
+    list.innerHTML='';
+    rows.forEach(function(el){ list.appendChild(el); });
   });
 }
-
 function createApiKey(){ G('keyName').value=''; hideAlert('createKeyAlert'); openMod('createKeyMod'); }
 function confirmCreateKey(){
   var name=G('keyName').value.trim()||'My Key';
-  var token=getToken(); if(!token){showAlert('createKeyAlert','error','로그인이 필요합니다.');return;}
+  var email=getEmail(); if(!email){showAlert('createKeyAlert','error','로그인이 필요합니다.');return;}
   setBtn('createKeyConfBtn','createKeyConfTxt',true,'생성 중...');
-  fetch(AOAO_SERVER+'/api/v1/keys',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-    body:JSON.stringify({name:name})
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');
-    if(data.api_key){
-      NEW_API_KEY=data.api_key;
-      closeMod('createKeyMod');
-      G('newKeyVal').textContent=data.api_key;
-      hideAlert('newKeyAlert');
-      openMod('newKeyMod');
-    } else {
-      showAlert('createKeyAlert','error',data.error&&data.error.message?data.error.message:'키 생성 실패');
-    }
-  })
-  .catch(function(){setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');showAlert('createKeyAlert','error','서버 연결 실패');});
+  jbLoadRaw().then(function(data){
+    if(!data){setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');showAlert('createKeyAlert','error','JSONBin 연결 실패');return;}
+    if(!data.api_keys) data.api_keys={};
+    var newKey=genApiKey();
+    data.api_keys[newKey]={name:name,user_id:email,created_at:new Date().toISOString(),usage_count:0,active:true};
+    return jbSaveRaw(data).then(function(ok){
+      setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');
+      if(ok){ NEW_API_KEY=newKey; closeMod('createKeyMod'); G('newKeyVal').textContent=newKey; hideAlert('newKeyAlert'); openMod('newKeyMod'); }
+      else showAlert('createKeyAlert','error','저장 실패');
+    });
+  }).catch(function(){setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');showAlert('createKeyAlert','error','오류');});
 }
-
 function copyNewKey(){ copyText(NEW_API_KEY); showAlert('newKeyAlert','success','복사됐습니다!'); }
-
 function deleteApiKey(key){
   if(!confirm('이 API 키를 삭제할까요?')) return;
-  var token=getToken();
-  fetch(AOAO_SERVER+'/api/v1/keys/'+encodeURIComponent(key),{
-    method:'DELETE',
-    headers:{'Authorization':'Bearer '+token}
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    if(data.success){ toast('success','API 키가 삭제됐습니다.'); loadApiKeys(); }
-    else toast('error','삭제 실패');
-  })
-  .catch(function(){toast('error','서버 연결 실패');});
+  jbLoadRaw().then(function(data){
+    if(!data){toast('error','JSONBin 연결 실패');return;}
+    if(data.api_keys&&data.api_keys[key]) delete data.api_keys[key];
+    return jbSaveRaw(data).then(function(ok){
+      if(ok){toast('success','API 키 삭제됨');loadApiKeys();}else toast('error','삭제 실패');
+    });
+  });
 }
-
 function copyCode(){
-  var text='fetch(\'https://aoao-studio-code.onrender.com/api/v1/completions\', {\n  method: \'POST\',\n  headers: {\n    \'Content-Type\': \'application/json\',\n    \'Authorization\': \'Bearer YOUR_API_KEY\'\n  },\n  body: JSON.stringify({\n    model: \'olg-3.1\',\n    messages: [{ role: \'user\', content: \'안녕!\' }]\n  })\n})';
+  var text="fetch('https://aoao-studio-code.onrender.com/api/v1/completions', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n    model: 'olg-3.1',\n    messages: [{ role: 'user', content: '안녕!' }]\n  })\n})";
   copyText(text);
 }
+
 
 // ═══════════════════════════════════
 // 보안 섹션
