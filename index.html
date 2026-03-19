@@ -157,7 +157,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-botto
 .tab-nav{display:flex;gap:2px;flex:1;}
 .tnb{display:flex;align-items:center;gap:5px;height:34px;padding:0 12px;border:none;border-radius:8px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .tnb:hover,.tnb.active{background:var(--bl);color:var(--blue);}
-.tnb .nic{font-size:14px;}
+.tnb .nic{font-size:14px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;line-height:1;}
 
 /* user area with custom dropdown */
 .tb-right{display:flex;align-items:center;gap:8px;margin-left:auto;position:relative;}
@@ -357,7 +357,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-botto
       <button class="tnb" onclick="goSec('notice')" id="nav-notice"><span class="nic">📢</span> 공지</button>
       <button class="tnb" onclick="goSec('linked')" id="nav-linked"><span class="nic">🔗</span> 연동계정</button>
       <button class="tnb" onclick="goSec('apikeys')" id="nav-apikeys"><span class="nic">🔑</span> API 키</button>
-      <button class="tnb" onclick="goSec('security')" id="nav-security"><span class="nic">🛡</span> 보안</button>
+      <button class="tnb" onclick="goSec('security')" id="nav-security"><span class="nic">🔒</span> 보안</button>
       <button class="tnb" onclick="goSec('account')" id="nav-account"><span class="nic">👤</span> 계정</button>
     </nav>
     <div class="tb-right">
@@ -779,12 +779,12 @@ var SECS=['home','notice','linked','apikeys','security','account','serverfix'];
 // ════════════════════════════════════
 // 초기화
 // ════════════════════════════════════
-(function(){
+document.addEventListener('DOMContentLoaded',function(){
   try{var s=localStorage.getItem('aoao_sess');if(s)ST.sess=JSON.parse(s);}catch(e){}
   try{var l=localStorage.getItem('aoao_linked');if(l)ST.linked=JSON.parse(l);}catch(e){}
   if(!window.PublicKeyCredential){var b=G('bioBtn');if(b){b.disabled=true;b.textContent='🚫 미지원';}}
   if(ST.sess&&ST.sess.access_token){showPage('dashPage');renderDash();}
-})();
+});
 
 // ════════════════════════════════════
 // 유틸
@@ -876,6 +876,10 @@ function switchTab(t){
 // PIN
 // ════════════════════════════════════
 async function hashPin(pin,email){var data=new TextEncoder().encode(pin+':'+email+':aoao2024');var h=await crypto.subtle.digest('SHA-256',data);return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
+function pinKey(email){
+  try{return 'aoao_pin_'+btoa(unescape(encodeURIComponent(email)));}
+  catch(e){return 'aoao_pin_'+Array.from(new TextEncoder().encode(email)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
+}
 async function savePin(pin,email){
   var hash=await hashPin(pin,email);
   var sessData=ST.sess?JSON.stringify(ST.sess):null;
