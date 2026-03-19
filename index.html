@@ -1162,9 +1162,11 @@ function renderSecSec(){
 // ════════════════════════════════════
 function switchAddType(t){
   ADD_TYPE=t;
+  var _f={'ao':'addAoF','sb':'addSbF','jb':'addJbF'};
+  var _s={'ao':'segAO', 'sb':'segSB', 'jb':'segJB'};
   ['ao','sb','jb'].forEach(function(x){
-    G('add'+x.charAt(0).toUpperCase()+x.slice(1)+'F').classList.toggle('hidden',x!==t);
-    G('seg'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('active',x===t);
+    var f=G(_f[x]); if(f) f.classList.toggle('hidden',x!==t);
+    var s=G(_s[x]); if(s) s.classList.toggle('active',x===t);
   });
 }
 function openAddModal(){
