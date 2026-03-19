@@ -890,6 +890,11 @@ function hasPin(e){return!!localStorage.getItem(pinKey(e));}
 function getPinSess(e){var r=localStorage.getItem(pinKey(e));if(!r)return null;try{var o=JSON.parse(r);return o.sess?JSON.parse(o.sess):null;}catch(ex){return null;}}
 function updatePinSess(e){var r=localStorage.getItem(pinKey(e));if(!r||!ST.sess)return;try{var o=JSON.parse(r);o.sess=JSON.stringify(ST.sess);localStorage.setItem(pinKey(e),JSON.stringify(o));}catch(ex){}}
 function deletePin(){var e=getEmail();localStorage.removeItem(pinKey(e));renderSecSec();toast('success','PIN이 해제됐습니다.');}
+async function verifyPin(pin,email){
+  var r=localStorage.getItem(pinKey(email));
+  if(!r) return false;
+  try{ return JSON.parse(r).hash===(await hashPin(pin,email)); }catch(e){ return false; }
+}
 
 function pfx(m){return m==='login'?'l':'s';}
 function updDots(m){var p=pfx(m),b=PIN_BUF[m];for(var i=0;i<4;i++){var d=G(p+'d'+i);if(d)d.className='pin-dot'+(i<b.length?' filled':'');}}
@@ -1166,11 +1171,14 @@ function renderSecSec(){
 // ════════════════════════════════════
 function switchAddType(t){
   ADD_TYPE=t;
-  var map={ao:['addAoF','segAO'],sb:['addSbF','segSB'],jb:['addJbF','segJB']};
-  Object.keys(map).forEach(function(x){
-    var f=G(map[x][0]); if(f) f.classList.toggle('hidden',x!==t);
-    var s=G(map[x][1]); if(s) s.classList.toggle('active',x===t);
-  });
+  var fAo=G('addAoF'),fSb=G('addSbF'),fJb=G('addJbF');
+  var sAo=G('segAO'), sSb=G('segSB'), sJb=G('segJB');
+  if(fAo) fAo.classList.toggle('hidden', t!=='ao');
+  if(fSb) fSb.classList.toggle('hidden', t!=='sb');
+  if(fJb) fJb.classList.toggle('hidden', t!=='jb');
+  if(sAo) sAo.classList.toggle('active', t==='ao');
+  if(sSb) sSb.classList.toggle('active', t==='sb');
+  if(sJb) sJb.classList.toggle('active', t==='jb');
 }
 function openAddModal(){
   ['aSvcName','aSvcUrl','aEmail','aPw','aJbName','aJbUrl','aJbId','aJbPw','aAoId','aAoPw'].forEach(function(id){var el=G(id);if(el)el.value='';});
@@ -1279,38 +1287,42 @@ function confirmLinkedLogin(){
   var acc=ST.linked.find(function(a){return a.id===LL_ID;});if(!acc)return;
   setBtn('llBtn','llBtnTxt',true,'로그인 중...');hideAlert('llAlert');
   if(acc.type==='ao'){
-    // 해당 사이트 Supabase에 직접 로그인 → localStorage에 토큰 심고 이동
     var site=AO_SITES.find(function(s){return s.id===acc.siteId;});
     if(!site){showAlert('llAlert','error','사이트 정보 없음');setBtn('llBtn','llBtnTxt',false,'로그인');return;}
+
     if(site.type==='modelhub'){
-      // Model Hub: /api/login {id, password} → localStorage에 userId, isAdmin 저장
+      // ── Model Hub: /api/login {id, pw} → userId/isAdmin localStorage 심기 ──
       fetch(site.url+'/api/login',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
+        credentials:'include',
         body:JSON.stringify({id:acc.email,password:acc.pw})
       })
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
       .then(function(r){
         setBtn('llBtn','llBtnTxt',false,'로그인');
         if(r.ok&&r.d.success&&r.d.user){
-          localStorage.setItem('userId', r.d.user.id);
-          localStorage.setItem('isAdmin', r.d.user.role==='dev'?'true':'false');
+          localStorage.setItem('userId', r.d.user.id||r.d.user.userId||acc.email);
+          localStorage.setItem('isAdmin', (r.d.user.role==='dev'||r.d.user.isAdmin)?'true':'false');
           localStorage.setItem('isPro', r.d.user.isPro?'true':'false');
           closeMod('llMod');
-          toast('success','Model Hub 자동 로그인 완료 ✓');
+          toast('success','Model Hub 로그인 완료 ✓');
           setTimeout(function(){window.open(site.url,'_blank');},700);
         } else {
-          showAlert('llAlert','error','로그인 실패: '+(r.d.error||'아이디/비밀번호 확인'));
+          showAlert('llAlert','error','실패: '+(r.d.error||r.d.message||'아이디/비밀번호 확인'));
         }
       })
       .catch(function(){
-        // CORS 차단 → 그냥 이동
+        // CORS 차단 → 그냥 이동 (Flask 세션쿠키는 서버에서 처리)
         setBtn('llBtn','llBtnTxt',false,'로그인');
         closeMod('llMod');
-        toast('info','Model Hub 이동 중... (사이트에서 직접 로그인하세요)');
+        toast('info','Model Hub → 이동 중 (사이트에서 로그인하세요)');
         setTimeout(function(){window.open(site.url,'_blank');},500);
       });
-    } else {
+
+    } else if(site.type==='supabase_nosession'){
+      // ── Game Studio: persistSession:false → URL 해시로 토큰 전달 ──
+      // sb.auth.setSession({access_token, refresh_token}) 으로 수동 주입 가능
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{
         method:'POST',
         headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},
@@ -1320,15 +1332,41 @@ function confirmLinkedLogin(){
       .then(function(r){
         setBtn('llBtn','llBtnTxt',false,'로그인');
         if(r.ok&&r.d.access_token){
-          if(site.lsToken&&site.lsUser){
-            localStorage.setItem(site.lsToken, r.d.access_token);
-            localStorage.setItem(site.lsUser, JSON.stringify(r.d.user));
-            closeMod('llMod');
-            toast('success',acc.name+' 자동 로그인 완료 ✓ 이동 중...');
-          } else {
-            closeMod('llMod');
-            toast('info',acc.name+' 인증됨 → 이동 (세션 유지 안 됨)');
-          }
+          closeMod('llMod');
+          // URL 해시로 access_token + refresh_token 전달
+          // Game 사이트 checkAuth()가 sb.auth.getSession()을 쓰므로
+          // sb.auth.setSession()으로 수동 주입하는 URL 파라미터 방식 사용
+          var token = encodeURIComponent(r.d.access_token);
+          var refresh = encodeURIComponent(r.d.refresh_token||'');
+          var dest = site.url+'#access_token='+token+'&refresh_token='+refresh+'&type=recovery';
+          toast('success','Game Studio 로그인 ✓ 이동 중...');
+          setTimeout(function(){window.open(dest,'_blank');},700);
+        } else {
+          showAlert('llAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
+        }
+      })
+      .catch(function(e){
+        setBtn('llBtn','llBtnTxt',false,'로그인');
+        showAlert('llAlert','error','오류: '+e.message);
+      });
+
+    } else {
+      // ── Zeta/Typo: Supabase localStorage 방식 ──
+      // Zeta: z-token, z-user / Typo: sb_token, sb_user
+      fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},
+        body:JSON.stringify({email:acc.email,password:acc.pw})
+      })
+      .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+      .then(function(r){
+        setBtn('llBtn','llBtnTxt',false,'로그인');
+        if(r.ok&&r.d.access_token){
+          // 해당 사이트가 읽는 키에 직접 저장
+          localStorage.setItem(site.lsToken, r.d.access_token);
+          localStorage.setItem(site.lsUser, JSON.stringify(r.d.user));
+          closeMod('llMod');
+          toast('success',acc.name+' 자동 로그인 완료 ✓ 이동 중...');
           setTimeout(function(){window.open(site.url,'_blank');},700);
         } else {
           showAlert('llAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
