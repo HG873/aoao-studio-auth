@@ -1039,8 +1039,8 @@ function renderDash(){
 }
 function renderStats(){
   var email=getEmail();
-  G('st-linked').textContent=ST.linked.length;
-  G('st-sec').textContent=(hasPin(email)?'PIN':'')+((getPKsByEmail(email).length>0)?' 🔐':'');
+  var _sl=G('st-linked');if(_sl)_sl.textContent=ST.linked.length;
+  var _ss=G('st-sec');if(_ss)_ss.textContent=(hasPin(email)?'PIN':'')+((getPKsByEmail(email).length>0)?' 🔐':'');
   if(!G('st-sec').textContent.trim())G('st-sec').textContent='미설정';
 }
 
@@ -1054,7 +1054,7 @@ function loadNotices(){
   fetch(AOAO_SERVER+'/api/notices')
   .then(function(r){return r.json();})
   .then(function(notices){
-    G('st-notice').textContent=notices.length;
+    var _sn=G('st-notice');if(_sn)_sn.textContent=notices.length;
     var typeMap={info:'info',success:'success',warn:'warn',warning:'warn'};
     var html=function(arr,limit){
       if(!arr||!arr.length)return '<div class="empty"><div class="empty-ic">📭</div>공지가 없습니다.</div>';
@@ -1166,9 +1166,10 @@ function renderSecSec(){
 // ════════════════════════════════════
 function switchAddType(t){
   ADD_TYPE=t;
-  ['ao','sb','jb'].forEach(function(x){
-    G('add'+x.charAt(0).toUpperCase()+x.slice(1)+'F').classList.toggle('hidden',x!==t);
-    G('seg'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('active',x===t);
+  var map={ao:['addAoF','segAO'],sb:['addSbF','segSB'],jb:['addJbF','segJB']};
+  Object.keys(map).forEach(function(x){
+    var f=G(map[x][0]); if(f) f.classList.toggle('hidden',x!==t);
+    var s=G(map[x][1]); if(s) s.classList.toggle('active',x===t);
   });
 }
 function openAddModal(){
