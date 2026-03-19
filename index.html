@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AOAO Studio</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='18' fill='white'%3EA%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -157,7 +156,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-botto
 .tab-nav{display:flex;gap:2px;flex:1;}
 .tnb{display:flex;align-items:center;gap:5px;height:34px;padding:0 12px;border:none;border-radius:8px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .tnb:hover,.tnb.active{background:var(--bl);color:var(--blue);}
-.tnb .nic{font-size:14px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;line-height:1;}
+.tnb .nic{font-size:14px;}
 
 /* user area with custom dropdown */
 .tb-right{display:flex;align-items:center;gap:8px;margin-left:auto;position:relative;}
@@ -357,7 +356,7 @@ label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-botto
       <button class="tnb" onclick="goSec('notice')" id="nav-notice"><span class="nic">📢</span> 공지</button>
       <button class="tnb" onclick="goSec('linked')" id="nav-linked"><span class="nic">🔗</span> 연동계정</button>
       <button class="tnb" onclick="goSec('apikeys')" id="nav-apikeys"><span class="nic">🔑</span> API 키</button>
-      <button class="tnb" onclick="goSec('security')" id="nav-security"><span class="nic">🔒</span> 보안</button>
+      <button class="tnb" onclick="goSec('security')" id="nav-security"><span class="nic">🛡</span> 보안</button>
       <button class="tnb" onclick="goSec('account')" id="nav-account"><span class="nic">👤</span> 계정</button>
     </nav>
     <div class="tb-right">
@@ -736,48 +735,41 @@ var SB_LIST=[
 ];
 var AO_SITES=[
   {
-    id:'zeta',name:'AI Girlfriend',icon:'💕',url:'https://aoao-studio-zeta.onrender.com',
+    id:'zeta',name:'AI Girlfriend',icon:'💕',
+    url:'https://aoao-studio-zeta.onrender.com',
+    authUrl:'https://aoao-studio-zeta.onrender.com/auth.html',
     type:'supabase',
     sbUrl:'https://twjzcstibzdftsaruhnp.supabase.co',
     sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk',
     lsToken:'z-token',lsUser:'z-user'
   },
   {
-    id:'typo',name:'Type Studio',icon:'✍️',url:'https://aoao-studio-typo.onrender.com',
+    id:'typo',name:'Type Studio',icon:'✍️',
+    url:'https://aoao-studio-typo.onrender.com',
+    authUrl:'https://aoao-studio-typo.onrender.com/auth.html',
     type:'supabase',
     sbUrl:'https://mthjjyosovblpsegguju.supabase.co',
     sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I',
     lsToken:'sb_token',lsUser:'sb_user'
   },
   {
-    id:'game',name:'Game Studio',icon:'🎮',url:'https://aoao-gmae-studio.onrender.com',
+    id:'game',name:'Game Studio',icon:'🎮',
+    url:'https://aoao-gmae-studio.onrender.com',
+    authUrl:'https://aoao-gmae-studio.onrender.com/auth.html',
     type:'supabase_nosession',
     sbUrl:'https://alnazztrdhpkyclkaklv.supabase.co',
     sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA',
     lsToken:null,lsUser:null
   },
   {
-    id:'modelhub',name:'Model Hub',icon:'🗄️',url:'https://aoao-studio-data.onrender.com',
-    type:'modelhub',
-    // /api/login {id, password} → userId, isAdmin, isPro를 localStorage에 저장
-    lsUserId:'userId',lsAdmin:'isAdmin',lsAdminPw:'3546'
+    id:'modelhub',name:'Model Hub',icon:'🗄️',
+    url:'https://aoao-studio-data.onrender.com',
+    authUrl:'https://aoao-studio-data.onrender.com/auth.html',
+    type:'modelhub'
   }
 ];
 var JB={key:(function(){return[36,50,97,36,49,48,36,57,71,46,103,90,117,50,115,122,79,97,50,110,86,106,110,48,108,82,84,84,117,103,66,118,101,76,122,98,90,103,83,82,74,83,81,121,120,115,77,66,75,84,76,100,97,99,116,51,46,71,66,71].map(function(n){return String.fromCharCode(n);}).join('');}()),bin:'6937b89b43b1c97be9e1328c'};
 var AOAO_SERVER='https://aoao-studio-code.onrender.com';
-
-// auth.html 경로: login.html과 같은 위치에 있다고 가정
-// 예) https://aoao-studio.onrender.com/auth.html
-function getAuthUrl(params){
-  // 현재 페이지 기준으로 auth.html 경로 계산
-  var base=location.href.substring(0,location.href.lastIndexOf('/')+1).replace(/\/$/,'');
-  // file:// 환경이면 경고
-  if(location.protocol==='file:') base='';
-  var url=base+'/auth.html?';
-  var parts=[];
-  Object.keys(params).forEach(function(k){ if(params[k]!=null) parts.push(encodeURIComponent(k)+'='+encodeURIComponent(params[k])); });
-  return url+parts.join('&');
-}
 
 // ════════════════════════════════════
 // 상태
@@ -792,12 +784,12 @@ var SECS=['home','notice','linked','apikeys','security','account','serverfix'];
 // ════════════════════════════════════
 // 초기화
 // ════════════════════════════════════
-document.addEventListener('DOMContentLoaded',function(){
+(function(){
   try{var s=localStorage.getItem('aoao_sess');if(s)ST.sess=JSON.parse(s);}catch(e){}
   try{var l=localStorage.getItem('aoao_linked');if(l)ST.linked=JSON.parse(l);}catch(e){}
   if(!window.PublicKeyCredential){var b=G('bioBtn');if(b){b.disabled=true;b.textContent='🚫 미지원';}}
   if(ST.sess&&ST.sess.access_token){showPage('dashPage');renderDash();}
-});
+})();
 
 // ════════════════════════════════════
 // 유틸
@@ -889,25 +881,12 @@ function switchTab(t){
 // PIN
 // ════════════════════════════════════
 async function hashPin(pin,email){var data=new TextEncoder().encode(pin+':'+email+':aoao2024');var h=await crypto.subtle.digest('SHA-256',data);return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
-function pinKey(email){
-  try{return 'aoao_pin_'+btoa(unescape(encodeURIComponent(email)));}
-  catch(e){return 'aoao_pin_'+Array.from(new TextEncoder().encode(email)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
-}
-async function savePin(pin,email){
-  var hash=await hashPin(pin,email);
-  var sessData=ST.sess?JSON.stringify(ST.sess):null;
-  var obj={hash:hash,sess:sessData,at:new Date().toISOString()};
-  try{ localStorage.setItem(pinKey(email),JSON.stringify(obj)); }catch(e){ console.warn('PIN 저장 실패:',e); }
-}
-function hasPin(e){return!!localStorage.getItem(pinKey(e));}
-function getPinSess(e){var r=localStorage.getItem(pinKey(e));if(!r)return null;try{var o=JSON.parse(r);return o.sess?JSON.parse(o.sess):null;}catch(ex){return null;}}
-function updatePinSess(e){var r=localStorage.getItem(pinKey(e));if(!r||!ST.sess)return;try{var o=JSON.parse(r);o.sess=JSON.stringify(ST.sess);localStorage.setItem(pinKey(e),JSON.stringify(o));}catch(ex){}}
-function deletePin(){var e=getEmail();localStorage.removeItem(pinKey(e));renderSecSec();toast('success','PIN이 해제됐습니다.');}
-async function verifyPin(pin,email){
-  var r=localStorage.getItem(pinKey(email));
-  if(!r) return false;
-  try{ return JSON.parse(r).hash===(await hashPin(pin,email)); }catch(e){ return false; }
-}
+async function savePin(pin,email){var hash=await hashPin(pin,email);localStorage.setItem('aoao_pin_'+btoa(email),JSON.stringify({hash:hash,sess:ST.sess?JSON.stringify(ST.sess):null,at:new Date().toISOString()}));}
+async function verifyPin(pin,email){var r=localStorage.getItem('aoao_pin_'+btoa(email));if(!r)return false;return JSON.parse(r).hash===(await hashPin(pin,email));}
+function hasPin(e){return!!localStorage.getItem('aoao_pin_'+btoa(e));}
+function getPinSess(e){var r=localStorage.getItem('aoao_pin_'+btoa(e));if(!r)return null;var o=JSON.parse(r);return o.sess?JSON.parse(o.sess):null;}
+function updatePinSess(e){var r=localStorage.getItem('aoao_pin_'+btoa(e));if(!r||!ST.sess)return;var o=JSON.parse(r);o.sess=JSON.stringify(ST.sess);localStorage.setItem('aoao_pin_'+btoa(e),JSON.stringify(o));}
+function deletePin(){var e=getEmail();localStorage.removeItem('aoao_pin_'+btoa(e));renderSecSec();toast('success','PIN이 해제됐습니다.');}
 
 function pfx(m){return m==='login'?'l':'s';}
 function updDots(m){var p=pfx(m),b=PIN_BUF[m];for(var i=0;i<4;i++){var d=G(p+'d'+i);if(d)d.className='pin-dot'+(i<b.length?' filled':'');}}
@@ -949,14 +928,13 @@ function savePKs(a){localStorage.setItem('aoao_passkeys',JSON.stringify(a));}
 function getPKsByEmail(e){return getPKs().filter(function(p){return p.email===e;});}
 function devName(){var ua=navigator.userAgent;if(/iPhone/.test(ua))return'iPhone';if(/iPad/.test(ua))return'iPad';if(/Mac/.test(ua))return'Mac';if(/Windows/.test(ua))return'Windows';if(/Android/.test(ua))return'Android';return'기기';}
 async function doRegisterPasskey(){
-  if(!window.PublicKeyCredential){showAlert('bioAlert','error','WebAuthn 미지원 브라우저');return;}
-  if(!window.crypto||!window.crypto.subtle){showAlert('bioAlert','error','보안 컨텍스트 필요 — HTTPS 또는 localhost에서만 동작합니다');return;}
-  if(location.protocol!=='https:'&&location.hostname!=='localhost'){showAlert('bioAlert','error','패스키는 HTTPS 서버에서만 등록 가능합니다 (file:// 불가)');return;}
+  if(!window.PublicKeyCredential){showAlert('bioAlert','error','WebAuthn 미지원');return;}
+  if(location.protocol!=='https:'&&location.hostname!=='localhost'){showAlert('bioAlert','error','HTTPS 환경에서만 패스키 등록 가능합니다.');return;}
   var email=getEmail(),btn=G('bioAddBtn');btn.disabled=true;btn.textContent='등록 중...';hideAlert('bioAlert');
   try{
     var cred=await navigator.credentials.create({publicKey:{
       challenge:crypto.getRandomValues(new Uint8Array(32)),
-      rp:{name:'AOAO Studio',id:location.hostname||'localhost'},
+      rp:{name:'AOAO Studio',id:location.hostname},
       user:{id:new TextEncoder().encode(email),name:email,displayName:email},
       pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
       authenticatorSelection:{userVerification:'preferred',residentKey:'preferred'},
@@ -964,7 +942,7 @@ async function doRegisterPasskey(){
     }});
     var pk={id:'pk_'+Date.now(),credId:buf2b64(cred.rawId),email:email,name:devName()+' '+new Date().toLocaleDateString('ko-KR'),at:new Date().toISOString()};
     var all=getPKs();all.push(pk);savePKs(all);
-    if(ST.sess)try{localStorage.setItem('aoao_sess_bio_'+btoa(unescape(encodeURIComponent(email))),JSON.stringify(ST.sess));}catch(e){}
+    if(ST.sess)localStorage.setItem('aoao_sess_bio_'+btoa(email),JSON.stringify(ST.sess));
     btn.disabled=false;btn.textContent='+ 추가';renderSecSec();showAlert('bioAlert','success','패스키 등록됨! 🎉');
   }catch(e){btn.disabled=false;btn.textContent='+ 추가';showAlert('bioAlert','error',e.name==='NotAllowedError'?'등록 취소':e.name==='InvalidStateError'?'이미 등록됨':(e.message||'등록 실패'));}
 }
@@ -978,8 +956,8 @@ async function doBioLogin(){
   var btn=G('bioBtn');btn.disabled=true;btn.innerHTML='<div class="spi"></div><span>인증 중...</span>';hideAlert('loginAlert');
   try{
     var ac=pks.map(function(pk){return{id:b642buf(pk.credId),type:'public-key'};});
-    await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:ac,userVerification:'preferred',timeout:60000,rpId:location.hostname||'localhost'}});
-    var se=null;try{se=localStorage.getItem('aoao_sess_bio_'+btoa(unescape(encodeURIComponent(pks[0].email))));}catch(e){}
+    await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:ac,userVerification:'preferred',timeout:60000,rpId:location.hostname}});
+    var se=localStorage.getItem('aoao_sess_bio_'+btoa(pks[0].email));
     if(se){saveSess(JSON.parse(se));btn.disabled=false;btn.innerHTML='🔐 생체인식';showLoginSc(pks[0].email);}
     else{showAlert('loginAlert','error','세션 없음. 비밀번호로 다시 로그인하세요.');btn.disabled=false;btn.innerHTML='🔐 생체인식';}
   }catch(e){btn.disabled=false;btn.innerHTML='🔐 생체인식';showAlert('loginAlert','error',e.name==='NotAllowedError'?'인증 취소됨':(e.message||'인증 실패'));}
@@ -999,7 +977,7 @@ function doLogin(){
     if(r.ok&&r.d.access_token){
       saveSess(r.d);
       if(hasPin(email))updatePinSess(email);
-      try{var bk='aoao_sess_bio_'+btoa(unescape(encodeURIComponent(email)));if(localStorage.getItem(bk))localStorage.setItem(bk,JSON.stringify(r.d));}catch(e){}
+      var bk='aoao_sess_bio_'+btoa(email);if(localStorage.getItem(bk))localStorage.setItem(bk,JSON.stringify(r.d));
       showLoginSc(email);
     } else {
       showAlert('loginAlert','error',r.d.error_description||r.d.msg||'이메일 또는 비밀번호가 올바르지 않습니다.');
@@ -1045,10 +1023,8 @@ function doLogout(){
 function renderDash(){
   // file:// 프로토콜 경고
   if(location.protocol==='file:'){
-    setTimeout(function(){
-      toast('error','⚠️ 로컬 파일 실행 중 — 자동 로그인·공지·API키가 동작하지 않습니다');
-      setTimeout(function(){toast('info','💡 서버에 올리거나 python -m http.server 8080 으로 실행하세요');},2500);
-    },500);
+    toast('error','⚠️ 로컬 파일로 열면 자동 로그인이 동작하지 않습니다. 서버에 올려서 사용하세요.');
+    setTimeout(function(){toast('error','⚠️ 자동 로그인은 HTTPS 서버에서만 동작합니다.');},2000);
   }
   var email=getEmail(),name=email.split('@')[0];
   G('tbAv').textContent=email.charAt(0).toUpperCase();G('tbNm').textContent=name;
@@ -1059,8 +1035,8 @@ function renderDash(){
 }
 function renderStats(){
   var email=getEmail();
-  var _sl=G('st-linked');if(_sl)_sl.textContent=ST.linked.length;
-  var _ss=G('st-sec');if(_ss)_ss.textContent=(hasPin(email)?'PIN':'')+((getPKsByEmail(email).length>0)?' 🔐':'');
+  G('st-linked').textContent=ST.linked.length;
+  G('st-sec').textContent=(hasPin(email)?'PIN':'')+((getPKsByEmail(email).length>0)?' 🔐':'');
   if(!G('st-sec').textContent.trim())G('st-sec').textContent='미설정';
 }
 
@@ -1071,34 +1047,26 @@ function loadNotices(){
   var hl=G('homeNoticeList'),fl=G('noticeList');
   var loading='<div class="loading"><div class="spi-b"></div>불러오는 중...</div>';
   if(hl)hl.innerHTML=loading;if(fl)fl.innerHTML=loading;
-  if(location.protocol==='file:'){
-    var warn='<div class="empty"><div class="empty-ic">⚠️</div>서버에 올린 후 공지를 불러올 수 있습니다.<br><small style="color:var(--muted)">file://에서는 CORS 차단으로 외부 API 접근 불가</small></div>';
-    if(hl)hl.innerHTML=warn;if(fl)fl.innerHTML=warn;return;
-  }
-  fetch(AOAO_SERVER+'/api/notices',{cache:'no-store'})
-  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-  .then(function(raw){
-    // 서버가 배열 혹은 {notices:[...]} 형태 모두 대응
-    var notices=Array.isArray(raw)?raw:(raw.notices||raw.data||[]);
-    var _sn=G('st-notice');if(_sn)_sn.textContent=notices.length;
-    var typeMap={info:'info',success:'success',warn:'warn',warning:'warn',update:'success',notice:'info'};
-    var mkHtml=function(arr,limit){
+  fetch(AOAO_SERVER+'/api/notices')
+  .then(function(r){return r.json();})
+  .then(function(notices){
+    G('st-notice').textContent=notices.length;
+    var typeMap={info:'info',success:'success',warn:'warn',warning:'warn'};
+    var html=function(arr,limit){
       if(!arr||!arr.length)return '<div class="empty"><div class="empty-ic">📭</div>공지가 없습니다.</div>';
       return arr.slice(0,limit).map(function(n){
         var dot=typeMap[n.type]||'info';
-        var rawDate=n.createdAt||n.created_at||n.date||'';
-        var date=rawDate?new Date(rawDate).toLocaleDateString('ko-KR'):'';
+        var date=n.createdAt?new Date(n.createdAt).toLocaleDateString('ko-KR'):'';
         var pin=n.pinned?'<span class="tag" style="background:var(--ybg);color:var(--yellow);border:1px solid #fcd34d;margin-left:5px;font-size:10px;">📌</span>':'';
-        return '<div class="notice-c"><div class="nc-top"><div class="nc-dot '+dot+'"></div><div class="nc-title">'+escH(n.title||'(제목 없음)')+pin+'</div><div class="nc-date">'+date+'</div></div><div class="nc-body">'+escH(n.content||n.body||'')+'</div></div>';
+        return '<div class="notice-c"><div class="nc-top"><div class="nc-dot '+dot+'"></div><div class="nc-title">'+escH(n.title||'')+pin+'</div><div class="nc-date">'+date+'</div></div><div class="nc-body">'+escH(n.content||'')+'</div></div>';
       }).join('');
     };
-    if(hl)hl.innerHTML=mkHtml(notices,3);
-    if(fl)fl.innerHTML=mkHtml(notices,999);
+    if(hl)hl.innerHTML=html(notices,3);
+    if(fl)fl.innerHTML=html(notices,999);
   })
-  .catch(function(e){
-    var err='<div class="empty"><div class="empty-ic">⚠️</div>공지 로드 실패: '+e.message+'</div>';
-    if(hl)hl.innerHTML=err;if(fl)fl.innerHTML=err;
-    var _sn=G('st-notice');if(_sn)_sn.textContent='?';
+  .catch(function(){
+    var err='<div class="empty"><div class="empty-ic">⚠️</div>서버 연결 실패</div>';
+    if(hl)hl.innerHTML=err;if(fl)fl.innerHTML=err;G('st-notice').textContent='?';
   });
 }
 
@@ -1194,14 +1162,10 @@ function renderSecSec(){
 // ════════════════════════════════════
 function switchAddType(t){
   ADD_TYPE=t;
-  var fAo=G('addAoF'),fSb=G('addSbF'),fJb=G('addJbF');
-  var sAo=G('segAO'), sSb=G('segSB'), sJb=G('segJB');
-  if(fAo) fAo.classList.toggle('hidden', t!=='ao');
-  if(fSb) fSb.classList.toggle('hidden', t!=='sb');
-  if(fJb) fJb.classList.toggle('hidden', t!=='jb');
-  if(sAo) sAo.classList.toggle('active', t==='ao');
-  if(sSb) sSb.classList.toggle('active', t==='sb');
-  if(sJb) sJb.classList.toggle('active', t==='jb');
+  ['ao','sb','jb'].forEach(function(x){
+    G('add'+x.charAt(0).toUpperCase()+x.slice(1)+'F').classList.toggle('hidden',x!==t);
+    G('seg'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('active',x===t);
+  });
 }
 function openAddModal(){
   ['aSvcName','aSvcUrl','aEmail','aPw','aJbName','aJbUrl','aJbId','aJbPw','aAoId','aAoPw'].forEach(function(id){var el=G(id);if(el)el.value='';});
@@ -1301,16 +1265,10 @@ function renderLinked(){
 }
 
 function openLinkedLogin(id){
-  LL_ID=id;
-  var acc=ST.linked.find(function(a){return a.id===id;});
-  if(!acc) return;
-  var site=acc.type==='ao'?AO_SITES.find(function(s){return s.id===acc.siteId;}):null;
-  var methodMap={supabase:'localStorage 토큰 자동 주입',supabase_nosession:'URL 토큰 전달',modelhub:'서버 직접 로그인'};
-  var method=site?(' · '+( methodMap[site.type]||'')):'';
+  LL_ID=id;var acc=ST.linked.find(function(a){return a.id===id;});if(!acc)return;
   G('llTitle').textContent=acc.name+' 로그인';
-  G('llSub').textContent=(acc.email||acc.uid||'저장된 계정')+method;
-  hideAlert('llAlert');
-  openMod('llMod');
+  G('llSub').textContent=acc.type==='ao'?'저장된 계정: '+(acc.email||acc.uid):acc.type==='sb'?'저장된 계정: '+acc.email:'저장된 아이디: '+acc.uid;
+  hideAlert('llAlert');openMod('llMod');
 }
 function confirmLinkedLogin(){
   var acc=ST.linked.find(function(a){return a.id===LL_ID;});if(!acc)return;
@@ -1320,70 +1278,35 @@ function confirmLinkedLogin(){
     if(!site){showAlert('llAlert','error','사이트 정보 없음');setBtn('llBtn','llBtnTxt',false,'로그인');return;}
 
     if(site.type==='modelhub'){
-      // ── Model Hub: /api/login {id, pw} → userId/isAdmin localStorage 심기 ──
+      // Model Hub: /api/login → auth.html?type=modelhub&uid=...
       fetch(site.url+'/api/login',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        credentials:'include',
+        method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',
         body:JSON.stringify({id:acc.email,password:acc.pw})
       })
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
       .then(function(r){
         setBtn('llBtn','llBtnTxt',false,'로그인');
         if(r.ok&&r.d.success&&r.d.user){
-          var mhUserId=r.d.user.id||r.d.user.userId||acc.email;
-          var mhAdmin=(r.d.user.role==='dev'||r.d.user.isAdmin)?'true':'false';
-          var mhPro=r.d.user.isPro?'true':'false';
+          var uid=r.d.user.id||r.d.user.userId||acc.email;
+          var adm=(r.d.user.role==='dev'||r.d.user.isAdmin)?'true':'false';
+          var pro=r.d.user.isPro?'true':'false';
           closeMod('llMod');
           toast('success','Model Hub 로그인 완료 ✓');
-          var authUrl=getAuthUrl({site:'modelhub',userId:mhUserId,isAdmin:mhAdmin,isPro:mhPro});
-          setTimeout(function(){window.open(authUrl,'_blank');},700);
+          var dest=site.authUrl+'?type=modelhub&uid='+encodeURIComponent(uid)+'&adm='+adm+'&pro='+pro+'&redirect='+encodeURIComponent('/');
+          setTimeout(function(){window.open(dest,'_blank');},600);
         } else {
           showAlert('llAlert','error','실패: '+(r.d.error||r.d.message||'아이디/비밀번호 확인'));
         }
       })
       .catch(function(){
-        // CORS 차단 → 그냥 이동 (Flask 세션쿠키는 서버에서 처리)
         setBtn('llBtn','llBtnTxt',false,'로그인');
         closeMod('llMod');
-        toast('info','Model Hub → 이동 중 (사이트에서 로그인하세요)');
+        toast('info','CORS 차단 → Model Hub로 이동합니다');
         setTimeout(function(){window.open(site.url,'_blank');},500);
       });
 
-    } else if(site.type==='supabase_nosession'){
-      // ── Game Studio: persistSession:false → URL 해시로 토큰 전달 ──
-      // sb.auth.setSession({access_token, refresh_token}) 으로 수동 주입 가능
-      fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},
-        body:JSON.stringify({email:acc.email,password:acc.pw})
-      })
-      .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
-      .then(function(r){
-        setBtn('llBtn','llBtnTxt',false,'로그인');
-        if(r.ok&&r.d.access_token){
-          closeMod('llMod');
-          // URL 해시로 access_token + refresh_token 전달
-          // Game 사이트 checkAuth()가 sb.auth.getSession()을 쓰므로
-          // sb.auth.setSession()으로 수동 주입하는 URL 파라미터 방식 사용
-          toast('success','Game Studio 로그인 ✓ 이동 중...');
-          var authUrl=getAuthUrl({
-            site:'game',
-            token:r.d.access_token,
-            refresh:r.d.refresh_token||''
-          });
-          setTimeout(function(){window.open(authUrl,'_blank');},700);
-        } else {
-          showAlert('llAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
-        }
-      })
-      .catch(function(e){
-        setBtn('llBtn','llBtnTxt',false,'로그인');
-        showAlert('llAlert','error','오류: '+e.message);
-      });
-
     } else {
-      // ── Zeta/Typo: Supabase 로그인 → auth.html로 토큰 전달 ──
+      // Zeta / Typo / Game: Supabase 로그인 → auth.html 경유
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{
         method:'POST',
         headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},
@@ -1394,15 +1317,15 @@ function confirmLinkedLogin(){
         setBtn('llBtn','llBtnTxt',false,'로그인');
         if(r.ok&&r.d.access_token){
           closeMod('llMod');
-          toast('success',acc.name+' 로그인 성공 ✓ auth 페이지로 이동...');
-          // auth.html에서 localStorage 심고 사이트로 이동
-          var authUrl=getAuthUrl({
-            site:site.id,
-            token:r.d.access_token,
-            user:JSON.stringify(r.d.user),
-            refresh:r.d.refresh_token||''
-          });
-          setTimeout(function(){window.open(authUrl,'_blank');},700);
+          toast('success',acc.name+' 로그인 ✓ 이동 중...');
+          // auth.html이 localStorage에 토큰 심고 / 로 이동
+          var dest=site.authUrl
+            +'?type='+site.id
+            +'&token='+encodeURIComponent(r.d.access_token)
+            +'&refresh='+encodeURIComponent(r.d.refresh_token||'')
+            +'&user='+encodeURIComponent(JSON.stringify(r.d.user||{}))
+            +'&redirect='+encodeURIComponent('/');
+          setTimeout(function(){window.open(dest,'_blank');},600);
         } else {
           showAlert('llAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
         }
