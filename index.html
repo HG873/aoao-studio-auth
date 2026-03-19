@@ -9,228 +9,230 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --bg:#f0f4ff;--white:#fff;--navy:#0f1b35;--navy2:#1a2d52;
-  --blue:#2563eb;--blue-h:#1d4ed8;--blue-l:#eff6ff;--blue-ll:#dbeafe;
+  --blue:#2563eb;--bh:#1d4ed8;--bl:#eff6ff;--bll:#dbeafe;
   --border:#e2e8f4;--border2:#c7d4ef;
   --text:#0f1b35;--mid:#4a5568;--muted:#94a3b8;
-  --red:#ef4444;--red-bg:#fef2f2;--red-b:#fecaca;
-  --green:#10b981;--green-bg:#f0fdf4;--green-b:#6ee7b7;
-  --yellow:#f59e0b;--yellow-bg:#fffbeb;
-  --shadow:0 2px 12px rgba(15,27,53,.07);
-  --shadow-lg:0 8px 32px rgba(15,27,53,.12);
+  --red:#ef4444;--rbg:#fef2f2;--rb:#fecaca;
+  --green:#10b981;--gbg:#f0fdf4;--gb:#6ee7b7;
+  --yellow:#f59e0b;--ybg:#fffbeb;
+  --sh:0 2px 12px rgba(15,27,53,.07);
+  --shl:0 8px 32px rgba(15,27,53,.12);
 }
 *{scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
 *::-webkit-scrollbar{width:4px;}*::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-
 body{min-height:100vh;background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 15% 10%,rgba(37,99,235,.05) 0%,transparent 55%);pointer-events:none;}
-
 .hidden{display:none!important;}
-@keyframes up{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-@keyframes pop{from{transform:scale(.88);opacity:0;}to{transform:scale(1);opacity:1;}}
+@keyframes up{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fi{from{opacity:0;}to{opacity:1;}}
+@keyframes pop{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
 @keyframes spin{to{transform:rotate(360deg);}}
-@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 
-/* ══════ PAGE SHELL ══════ */
+/* ── PAGE ── */
 .page{display:none;min-height:100vh;}
-.page.show{display:flex;animation:fadeIn .3s ease;}
+.page.show{display:flex;animation:fi .25s ease;}
 
-/* ══════ LOGIN ══════ */
+/* ── LOGIN ── */
 #loginPage{align-items:center;justify-content:center;padding:24px;}
-.login-wrap{width:100%;max-width:420px;}
-.lbrand{text-align:center;margin-bottom:26px;font-size:20px;font-weight:800;color:var(--blue);animation:up .4s ease both;}
-.lcard{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:32px;box-shadow:var(--shadow-lg);animation:up .4s .08s ease both;}
-
-.ltabs{display:flex;gap:4px;background:var(--bg);border-radius:11px;padding:4px;margin-bottom:26px;}
-.ltab{flex:1;padding:8px;border:none;border-radius:8px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;}
+.lbox{width:100%;max-width:420px;}
+.lbrand{text-align:center;margin-bottom:24px;font-size:19px;font-weight:800;color:var(--blue);animation:up .4s ease both;}
+.lcard{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:32px;box-shadow:var(--shl);animation:up .4s .07s ease both;}
+.ltabs{display:flex;gap:4px;background:var(--bg);border-radius:11px;padding:4px;margin-bottom:24px;}
+.ltab{flex:1;padding:8px;border:none;border-radius:8px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .18s;}
 .ltab.active{background:var(--white);color:var(--text);box-shadow:0 1px 4px rgba(15,27,53,.1);}
+.lt{font-size:19px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+.ls{font-size:13px;color:var(--muted);margin-bottom:20px;}
 
-.l-title{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:3px;}
-.l-sub{font-size:13px;color:var(--muted);margin-bottom:22px;}
-
-.field{margin-bottom:13px;}
-label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:5px;}
+/* ── FORM ── */
+.field{margin-bottom:12px;}
+label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:4px;}
 .iw{position:relative;}
-.fi{width:100%;height:44px;padding:0 13px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:all .15s;}
+.fi{width:100%;height:44px;padding:0 12px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:all .15s;}
 .fi:focus{background:var(--white);border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
 .fi::placeholder{color:var(--muted);}
-.fi.err{border-color:var(--red);background:var(--red-bg);animation:shake .3s ease;}
-select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;}
-.eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;text-transform:uppercase;letter-spacing:.05em;font-family:'Plus Jakarta Sans',sans-serif;transition:color .15s;}
+.fi.err{border-color:var(--red);background:var(--rbg);animation:shake .3s ease;}
+.eye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;text-transform:uppercase;letter-spacing:.05em;font-family:'Plus Jakarta Sans',sans-serif;transition:color .15s;}
 .eye:hover{color:var(--blue);}
 
-/* buttons */
+/* ── CUSTOM SELECT ── */
+.csel-wrap{position:relative;}
+.csel-trigger{
+  width:100%;height:44px;padding:0 36px 0 12px;
+  background:var(--bg);border:1.5px solid var(--border);border-radius:10px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);
+  cursor:pointer;display:flex;align-items:center;gap:8px;
+  transition:all .15s;user-select:none;
+}
+.csel-trigger:hover,.csel-trigger.open{background:var(--white);border-color:var(--blue);}
+.csel-trigger .csel-ic{font-size:16px;flex-shrink:0;}
+.csel-trigger .csel-txt{flex:1;text-align:left;}
+.csel-trigger .csel-arr{position:absolute;right:12px;font-size:10px;color:var(--muted);transition:transform .18s;}
+.csel-trigger.open .csel-arr{transform:rotate(180deg);}
+.csel-dropdown{
+  display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:5px;box-shadow:var(--shl);z-index:200;
+  animation:up .15s ease both;
+}
+.csel-dropdown.show{display:block;}
+.csel-option{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 11px;border-radius:8px;
+  font-size:13px;font-weight:500;color:var(--text);
+  cursor:pointer;transition:background .12s;
+}
+.csel-option:hover{background:var(--bg);}
+.csel-option.selected{background:var(--bl);color:var(--blue);}
+.csel-option .opt-ic{font-size:15px;flex-shrink:0;}
+.csel-option .opt-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+
+/* ── BUTTONS ── */
 .btn{width:100%;height:44px;margin-top:6px;border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px;}
 .btn:hover:not(:disabled){transform:translateY(-1px);}
 .btn:active:not(:disabled){transform:translateY(0);}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;}
-.btn-blue{background:var(--blue);color:#fff;}
-.btn-blue:hover:not(:disabled){background:var(--blue-h);box-shadow:0 6px 18px rgba(37,99,235,.25);}
-.btn-navy{background:var(--navy);color:#fff;}
-.btn-navy:hover:not(:disabled){background:var(--navy2);}
-.btn-light{background:var(--bg);color:var(--mid);border:1px solid var(--border);}
-.btn-light:hover:not(:disabled){border-color:var(--blue);color:var(--blue);background:var(--blue-l);}
-.btn-ghost{background:transparent;color:var(--blue);border:1.5px solid var(--blue);}
-.btn-ghost:hover:not(:disabled){background:var(--blue-l);}
-.btn-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-b);}
-.btn-red:hover:not(:disabled){background:rgba(239,68,68,.12);}
-.btn.sm{height:32px;font-size:12px;width:auto;padding:0 13px;margin-top:0;border-radius:8px;}
-.btn.xs{height:28px;font-size:11px;width:auto;padding:0 10px;margin-top:0;border-radius:7px;}
+.b-blue{background:var(--blue);color:#fff;}
+.b-blue:hover:not(:disabled){background:var(--bh);box-shadow:0 6px 18px rgba(37,99,235,.25);}
+.b-navy{background:var(--navy);color:#fff;}
+.b-navy:hover:not(:disabled){background:var(--navy2);}
+.b-light{background:var(--bg);color:var(--mid);border:1px solid var(--border);}
+.b-light:hover:not(:disabled){border-color:var(--blue);color:var(--blue);background:var(--bl);}
+.b-ghost{background:transparent;color:var(--blue);border:1.5px solid var(--blue);}
+.b-ghost:hover:not(:disabled){background:var(--bl);}
+.b-red{background:var(--rbg);color:var(--red);border:1px solid var(--rb);}
+.b-red:hover:not(:disabled){background:rgba(239,68,68,.12);}
+.btn.sm{height:32px;font-size:12px;width:auto;padding:0 12px;margin-top:0;border-radius:8px;}
+.btn.xs{height:27px;font-size:11px;width:auto;padding:0 9px;margin-top:0;border-radius:7px;font-weight:600;}
+.spi{width:14px;height:14px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;}
+.spi-b{width:13px;height:13px;border:2px solid rgba(37,99,235,.2);border-top-color:var(--blue);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;}
 
-.spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;}
-.spin-b{width:14px;height:14px;border:2px solid rgba(37,99,235,.2);border-top-color:var(--blue);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;}
+.div{display:flex;align-items:center;gap:10px;margin:14px 0;}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--border);}
+.div span{font-size:11px;color:var(--muted);}
 
-.divider{display:flex;align-items:center;gap:10px;margin:15px 0;}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
-.divider span{font-size:11px;color:var(--muted);}
+.alert{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.5;}
+.alert.show{display:block;animation:up .18s ease;}
+.alert.error{background:var(--rbg);color:var(--red);border:1px solid var(--rb);}
+.alert.success{background:var(--gbg);color:#065f46;border:1px solid var(--gb);}
+.alert.info{background:var(--bl);color:var(--blue);border:1px solid #bfdbfe;}
+.alert.warn{background:var(--ybg);color:#92400e;border:1px solid #fcd34d;}
 
-.alert{display:none;margin-top:11px;padding:10px 13px;border-radius:10px;font-size:13px;line-height:1.5;}
-.alert.show{display:block;animation:up .2s ease;}
-.alert.error{background:var(--red-bg);color:var(--red);border:1px solid var(--red-b);}
-.alert.success{background:var(--green-bg);color:#065f46;border:1px solid var(--green-b);}
-.alert.info{background:var(--blue-l);color:var(--blue);border:1px solid #bfdbfe;}
-.alert.warn{background:var(--yellow-bg);color:#92400e;border:1px solid #fcd34d;}
-
-/* success */
 .sc{display:none;text-align:center;padding:8px 0;}
 .sc.show{display:block;animation:up .4s cubic-bezier(.16,1,.3,1);}
-.sc-ring{width:58px;height:58px;margin:0 auto 14px;border-radius:50%;background:var(--green-bg);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:24px;animation:pop .4s .1s cubic-bezier(.16,1,.3,1) both;}
-.sc-t{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:5px;}
-.sc-s{font-size:13px;color:var(--muted);margin-bottom:18px;}
-.prog{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:6px;}
+.sc-ring{width:56px;height:56px;margin:0 auto 14px;border-radius:50%;background:var(--gbg);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:22px;animation:pop .4s .1s cubic-bezier(.16,1,.3,1) both;}
+.sc-t{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.sc-s{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.prog{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:5px;}
 .prog-f{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),#60a5fa);}
 
 /* PIN */
 .pin-wrap{text-align:center;}
-.pin-t{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:3px;}
-.pin-s{font-size:13px;color:var(--muted);margin-bottom:10px;}
-.pin-badge{display:inline-block;padding:3px 11px;border-radius:20px;background:var(--blue-l);border:1px solid #bfdbfe;color:var(--blue);font-size:12px;font-weight:600;margin-bottom:15px;}
-.pin-dots{display:flex;gap:11px;justify-content:center;margin-bottom:18px;}
+.pin-t{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+.pin-s{font-size:13px;color:var(--muted);margin-bottom:9px;}
+.pin-badge{display:inline-block;padding:3px 11px;border-radius:20px;background:var(--bl);border:1px solid #bfdbfe;color:var(--blue);font-size:12px;font-weight:600;margin-bottom:14px;}
+.pin-dots{display:flex;gap:10px;justify-content:center;margin-bottom:17px;}
 .pin-dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--border2);transition:all .15s;}
 .pin-dot.filled{background:var(--blue);border-color:var(--blue);}
 .pin-dot.ok{background:var(--green);border-color:var(--green);}
 .pin-dot.error{background:var(--red);border-color:var(--red);}
-.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:210px;margin:0 auto;}
-.pin-key{height:54px;border:1.5px solid var(--border);border-radius:11px;background:var(--white);font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .12s;}
-.pin-key:hover{border-color:var(--blue);background:var(--blue-l);color:var(--blue);}
-.pin-key:active{transform:scale(.93);}
-.pin-key.k-del{font-size:15px;color:var(--muted);}
-.pin-key.k-empty{visibility:hidden;}
-.pin-back{margin-top:13px;font-size:12px;color:var(--muted);cursor:pointer;}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-width:210px;margin:0 auto;}
+.pk{height:52px;border:1.5px solid var(--border);border-radius:11px;background:var(--white);font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .12s;}
+.pk:hover{border-color:var(--blue);background:var(--bl);color:var(--blue);}
+.pk:active{transform:scale(.93);}
+.pk.k-del{font-size:14px;color:var(--muted);}
+.pk.k-empty{visibility:hidden;}
+.pin-back{margin-top:12px;font-size:12px;color:var(--muted);cursor:pointer;}
 .pin-back:hover{color:var(--blue);}
 
-/* ══════ DASHBOARD ══════ */
+/* ── DASHBOARD ── */
 #dashPage{flex-direction:column;background:var(--bg);}
 
 /* topbar */
-.topbar{
-  position:sticky;top:0;z-index:50;
-  background:rgba(255,255,255,.93);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  height:54px;display:flex;align-items:center;
-  padding:0 24px;gap:0;
-}
-.tb-logo{font-size:15px;font-weight:800;color:var(--blue);flex-shrink:0;margin-right:20px;}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;padding:0 20px;gap:0;}
+.tb-logo{font-size:15px;font-weight:800;color:var(--blue);flex-shrink:0;margin-right:16px;}
 
-/* tab nav */
+/* custom tab nav */
 .tab-nav{display:flex;gap:2px;flex:1;}
-.tab-nav-btn{
-  display:flex;align-items:center;gap:6px;
-  height:36px;padding:0 13px;border:none;border-radius:8px;
-  background:transparent;font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:13px;font-weight:600;color:var(--muted);
-  cursor:pointer;transition:all .15s;white-space:nowrap;
-}
-.tab-nav-btn:hover{background:var(--blue-l);color:var(--blue);}
-.tab-nav-btn.active{background:var(--blue-l);color:var(--blue);}
-.tab-nav-btn .nic{font-size:14px;}
+.tnb{display:flex;align-items:center;gap:5px;height:34px;padding:0 12px;border:none;border-radius:8px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tnb:hover,.tnb.active{background:var(--bl);color:var(--blue);}
+.tnb .nic{font-size:14px;}
 
-/* user area */
-.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto;position:relative;}
-.tb-user{display:flex;align-items:center;gap:7px;cursor:pointer;padding:5px 9px;border-radius:9px;transition:background .15s;border:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;}
-.tb-user:hover{background:var(--blue-l);}
-.tb-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#60a5fa);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
-.tb-name{font-size:13px;font-weight:600;color:var(--navy);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.tb-arr{font-size:9px;color:var(--muted);}
+/* user area with custom dropdown */
+.tb-right{display:flex;align-items:center;gap:8px;margin-left:auto;position:relative;}
+.tb-user-btn{display:flex;align-items:center;gap:7px;height:34px;padding:0 10px;border:none;border-radius:9px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:background .15s;}
+.tb-user-btn:hover{background:var(--bl);}
+.tb-av{width:27px;height:27px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#60a5fa);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
+.tb-nm{font-size:13px;font-weight:600;color:var(--navy);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tb-arr{font-size:9px;color:var(--muted);transition:transform .18s;}
+.tb-user-btn.open .tb-arr{transform:rotate(180deg);}
 
-.user-dd{
-  display:none;position:absolute;top:calc(100% + 6px);right:0;
-  background:var(--white);border:1px solid var(--border);
-  border-radius:13px;padding:6px;min-width:160px;
-  box-shadow:var(--shadow-lg);z-index:200;
-  animation:up .15s ease both;
-}
+/* user dropdown */
+.user-dd{display:none;position:absolute;top:calc(100% + 6px);right:0;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:5px;min-width:180px;box-shadow:var(--shl);z-index:200;animation:up .15s ease both;}
 .user-dd.show{display:block;}
-.udd-header{padding:10px 12px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;}
-.udd-email{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.udd-header{padding:9px 11px 7px;border-bottom:1px solid var(--border);margin-bottom:4px;}
 .udd-name{font-size:13px;font-weight:700;color:var(--navy);}
-.udd-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:background .12s;border:none;background:none;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;}
+.udd-email{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.udd-item{display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:background .12s;border:none;background:none;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;}
 .udd-item:hover{background:var(--bg);}
-.udd-item.red:hover{background:var(--red-bg);color:var(--red);}
-.udd-sep{height:1px;background:var(--border);margin:4px 0;}
+.udd-item.red:hover{background:var(--rbg);color:var(--red);}
+.udd-sep{height:1px;background:var(--border);margin:3px 0;}
 
 /* dash body */
-.dash-body{flex:1;padding:28px 24px;max-width:960px;width:100%;margin:0 auto;}
-
-/* section */
+.dash-body{flex:1;padding:26px 22px;max-width:940px;width:100%;margin:0 auto;}
 .dash-sec{display:none;}
-.dash-sec.show{display:block;animation:up .25s ease;}
-
-.sec-head{margin-bottom:22px;}
-.sec-head h1{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.dash-sec.show{display:block;animation:up .22s ease;}
+.sec-head{margin-bottom:20px;}
+.sec-head h1{font-size:21px;font-weight:800;color:var(--navy);margin-bottom:2px;}
 .sec-head p{font-size:13px;color:var(--muted);}
 
-/* stat cards */
-.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:22px;}
-.stat-c{background:var(--white);border:1px solid var(--border);border-radius:13px;padding:16px;box-shadow:var(--shadow);}
-.s-ic{font-size:18px;margin-bottom:8px;}
-.s-val{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+/* stat row */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:11px;margin-bottom:20px;}
+.stat-c{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:15px;box-shadow:var(--sh);}
+.s-ic{font-size:18px;margin-bottom:7px;}
+.s-val{font-size:19px;font-weight:800;color:var(--navy);margin-bottom:1px;}
 .s-lbl{font-size:11px;color:var(--muted);}
 
 /* card */
-.card{background:var(--white);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;}
-.card-h{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--border);}
-.card-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--navy);}
-.card-body{padding:16px 18px;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:13px;box-shadow:var(--sh);margin-bottom:15px;overflow:hidden;}
+.card-h{display:flex;align-items:center;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--border);}
+.card-title{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:var(--navy);}
+.card-body{padding:15px 17px;}
 
-/* row */
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;transition:border-color .15s;}
+/* row item */
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;transition:border-color .15s;}
 .row:last-child{margin-bottom:0;}
 .row:hover{border-color:var(--border2);}
-.row-l{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.row-l{display:flex;align-items:center;gap:9px;flex:1;min-width:0;}
 .row-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
-.ic-blue{background:var(--blue-l);border:1px solid #bfdbfe;}
-.ic-green{background:var(--green-bg);border:1px solid var(--green-b);}
-.ic-yellow{background:var(--yellow-bg);border:1px solid #fcd34d;}
-.ic-gray{background:var(--bg);border:1px solid var(--border2);}
+.ic-blue{background:var(--bl);border:1px solid #bfdbfe;}
+.ic-green{background:var(--gbg);border:1px solid var(--gb);}
+.ic-yellow{background:var(--ybg);border:1px solid #fcd34d;}
 .ic-sb{background:#e0f2fe;border:1px solid #bae6fd;}
 .ic-jb{background:#fef9c3;border:1px solid #fde68a;}
-.ic-red{background:var(--red-bg);border:1px solid var(--red-b);}
+.ic-ao{background:var(--bl);border:1px solid #bfdbfe;}
 .row-name{font-size:13px;font-weight:600;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.row-sub{font-size:11px;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'JetBrains Mono',monospace;}
+.row-sub{font-size:11px;color:var(--muted);margin-top:1px;font-family:'JetBrains Mono',monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .row-r{display:flex;gap:5px;flex-shrink:0;align-items:center;}
-
-.add-row{display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;border:1.5px dashed var(--border2);border-radius:10px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;margin-top:4px;}
-.add-row:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l);}
+.add-row{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border:1.5px dashed var(--border2);border-radius:10px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;margin-top:4px;}
+.add-row:hover{border-color:var(--blue);color:var(--blue);background:var(--bl);}
 
 /* tag */
-.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;}
-.tag.green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-b);}
-.tag.blue{background:var(--blue-l);color:var(--blue);border:1px solid #bfdbfe;}
+.tag{display:inline-flex;align-items:center;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;}
+.tag.green{background:var(--gbg);color:var(--green);border:1px solid var(--gb);}
+.tag.blue{background:var(--bl);color:var(--blue);border:1px solid #bfdbfe;}
 .tag.gray{background:var(--bg);color:var(--muted);border:1px solid var(--border);}
-.tag.red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-b);}
-.tag.yellow{background:var(--yellow-bg);color:var(--yellow);border:1px solid #fcd34d;}
+.tag.red{background:var(--rbg);color:var(--red);border:1px solid var(--rb);}
 
-/* code block */
-.code-block{background:var(--navy);color:#e2e8f0;border-radius:10px;padding:12px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;position:relative;overflow-x:auto;margin-top:8px;}
-.copy-btn{position:absolute;top:8px;right:8px;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#e2e8f0;font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:background .15s;}
+/* code */
+.code-block{background:var(--navy);color:#e2e8f0;border-radius:10px;padding:12px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;position:relative;overflow-x:auto;margin-top:8px;}
+.copy-btn{position:absolute;top:8px;right:8px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#e2e8f0;font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:background .15s;}
 .copy-btn:hover{background:rgba(255,255,255,.2);}
 
-/* notice card */
-.notice-card{padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;}
-.notice-card:last-child{margin-bottom:0;}
-.nc-top{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
-.nc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+/* notice */
+.notice-c{padding:13px 15px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;}
+.nc-top{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.nc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 .nc-dot.info{background:var(--blue);}
 .nc-dot.success{background:var(--green);}
 .nc-dot.warn{background:var(--yellow);}
@@ -238,54 +240,50 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
 .nc-date{font-size:11px;color:var(--muted);}
 .nc-body{font-size:12px;color:var(--mid);line-height:1.6;}
 
-/* account profile */
-.acc-card{display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;}
-.acc-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#60a5fa);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;color:#fff;flex-shrink:0;}
+/* acc */
+.acc-card{display:flex;align-items:center;gap:13px;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:11px;margin-bottom:14px;}
+.acc-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#60a5fa);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;}
 
-/* empty state */
-.empty{text-align:center;padding:32px 20px;color:var(--muted);font-size:13px;}
-.empty-ic{font-size:32px;margin-bottom:10px;}
-
-/* loading spinner center */
-.loading{display:flex;align-items:center;justify-content:center;padding:32px;gap:10px;font-size:13px;color:var(--muted);}
+/* empty */
+.empty{text-align:center;padding:28px 20px;color:var(--muted);font-size:13px;}
+.empty-ic{font-size:28px;margin-bottom:8px;}
+.loading{display:flex;align-items:center;justify-content:center;padding:28px;gap:9px;font-size:13px;color:var(--muted);}
 
 /* modal */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(15,27,53,.35);backdrop-filter:blur(6px);z-index:300;align-items:center;justify-content:center;padding:20px;}
-.modal-bg.show{display:flex;animation:fadeIn .2s ease;}
-.modal{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:26px;width:100%;max-width:370px;box-shadow:var(--shadow-lg);animation:pop .25s cubic-bezier(.16,1,.3,1);}
-.modal h3{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:4px;}
-.modal p{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
-.modal-acts{display:flex;gap:8px;margin-top:14px;}
+.modal-bg.show{display:flex;animation:fi .18s ease;}
+.modal{background:var(--white);border:1px solid var(--border);border-radius:17px;padding:24px;width:100%;max-width:380px;box-shadow:var(--shl);animation:pop .22s cubic-bezier(.16,1,.3,1);max-height:90vh;overflow-y:auto;}
+.modal h3{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.modal p{font-size:13px;color:var(--muted);margin-bottom:15px;line-height:1.5;}
+.modal-acts{display:flex;gap:7px;margin-top:13px;}
 .modal-acts .btn{flex:1;height:40px;margin-top:0;}
 
-.seg{display:flex;gap:3px;background:var(--bg);border-radius:9px;padding:3px;margin-bottom:14px;}
-.seg-b{flex:1;padding:6px;border:none;border-radius:7px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;}
+/* custom seg */
+.seg{display:flex;gap:3px;background:var(--bg);border-radius:9px;padding:3px;margin-bottom:13px;}
+.seg-b{flex:1;padding:6px;border:none;border-radius:7px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .18s;}
 .seg-b.active{background:var(--white);color:var(--text);box-shadow:0 1px 3px rgba(15,27,53,.1);}
 
 /* toast */
-.toast-wrap{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:7px;pointer-events:none;}
-.toast{padding:11px 15px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);animation:up .25s ease;pointer-events:auto;max-width:280px;}
-.toast.success{background:var(--green-bg);color:#065f46;border:1px solid var(--green-b);}
-.toast.error{background:var(--red-bg);color:var(--red);border:1px solid var(--red-b);}
-.toast.info{background:var(--blue-l);color:var(--blue);border:1px solid #bfdbfe;}
+.toast-wrap{position:fixed;bottom:18px;right:18px;z-index:999;display:flex;flex-direction:column;gap:6px;pointer-events:none;}
+.toast{padding:10px 14px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:var(--shl);animation:up .22s ease;pointer-events:auto;max-width:260px;}
+.toast.success{background:var(--gbg);color:#065f46;border:1px solid var(--gb);}
+.toast.error{background:var(--rbg);color:var(--red);border:1px solid var(--rb);}
+.toast.info{background:var(--bl);color:var(--blue);border:1px solid #bfdbfe;}
 
-/* PIN in modal */
-.pin-modal-wrap{text-align:center;}
+/* server fix notice */
+.server-fix{background:var(--navy);color:#e2e8f0;border-radius:12px;padding:16px 18px;margin-bottom:16px;}
+.server-fix h4{font-size:13px;font-weight:700;color:#60a5fa;margin-bottom:8px;}
+.server-fix p{font-size:12px;line-height:1.7;color:#94a3b8;}
+.server-fix code{background:rgba(255,255,255,.1);padding:1px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#86efac;}
 
-@media(max-width:600px){
-  .topbar{padding:0 14px;}
-  .dash-body{padding:18px 14px;}
-  .tab-nav-btn span.nic{display:none;}
-  .tab-nav-btn{padding:0 10px;font-size:12px;}
-  .stat-row{grid-template-columns:1fr 1fr;}
-}
+@media(max-width:580px){.topbar{padding:0 12px;}.tab-nav .tnb span.nic+*{display:none;}.tnb{padding:0 9px;}.dash-body{padding:16px 12px;}}
 </style>
 </head>
 <body>
 
-<!-- ════════════ LOGIN PAGE ════════════ -->
+<!-- ═══════ LOGIN ═══════ -->
 <div class="page show" id="loginPage" style="align-items:center;justify-content:center;min-height:100vh;padding:24px;">
-  <div class="login-wrap">
+  <div class="lbox">
     <div class="lbrand">AOAO Studio</div>
     <div class="lcard">
       <div class="ltabs">
@@ -293,62 +291,55 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
         <button class="ltab" id="tS" onclick="switchTab('signup')">회원가입</button>
       </div>
 
-      <!-- 로그인 -->
       <div id="loginForm">
-        <div class="l-title">다시 만나요 👋</div>
-        <div class="l-sub">중앙계정으로 로그인하세요</div>
+        <div class="lt">다시 만나요 👋</div>
+        <div class="ls">중앙계정으로 로그인하세요</div>
         <div class="field"><label>이메일</label><input class="fi" type="email" id="lEmail" placeholder="user@aoao.studio" autocomplete="email"></div>
         <div class="field"><label>비밀번호</label>
-          <div class="iw"><input class="fi" type="password" id="lPw" placeholder="비밀번호" style="padding-right:54px" autocomplete="current-password">
+          <div class="iw"><input class="fi" type="password" id="lPw" placeholder="비밀번호" style="padding-right:52px" autocomplete="current-password">
           <button class="eye" onclick="togglePw('lPw',this)">표시</button></div>
         </div>
-        <button class="btn btn-blue" id="loginBtn" onclick="doLogin()"><span id="lBtnTxt">계정 확인</span></button>
-        <div class="divider"><span>또는 빠른 인증</span></div>
+        <button class="btn b-blue" id="loginBtn" onclick="doLogin()"><span id="lBtnTxt">계정 확인</span></button>
+        <div class="div"><span>또는 빠른 인증</span></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <button class="btn btn-navy" id="bioBtn" onclick="doBioLogin()">🔐 생체인식</button>
-          <button class="btn btn-light" onclick="goPinLogin()">🔢 PIN</button>
+          <button class="btn b-navy" id="bioBtn" onclick="doBioLogin()">🔐 생체인식</button>
+          <button class="btn b-light" onclick="goPinLogin()">🔢 PIN</button>
         </div>
-        <div style="text-align:center;margin-top:7px;font-size:11px;color:var(--muted);">Windows Hello · Touch ID · Face ID (HTTPS 필요)</div>
+        <div style="text-align:center;margin-top:6px;font-size:11px;color:var(--muted);">Windows Hello · Touch ID · Face ID (HTTPS 필요)</div>
         <div class="alert" id="loginAlert"></div>
       </div>
 
-      <!-- PIN 로그인 -->
       <div id="pinLoginForm" class="hidden">
         <div class="pin-wrap">
-          <div class="pin-t">PIN 입력</div>
-          <div class="pin-s">4자리 PIN을 입력하세요</div>
+          <div class="pin-t">PIN 입력</div><div class="pin-s">4자리 PIN을 입력하세요</div>
           <div class="pin-badge" id="pinLoginEmail"></div>
           <div class="pin-dots"><div class="pin-dot" id="ld0"></div><div class="pin-dot" id="ld1"></div><div class="pin-dot" id="ld2"></div><div class="pin-dot" id="ld3"></div></div>
           <div class="pin-grid">
-            <button class="pin-key" onclick="pp('login','1')">1</button><button class="pin-key" onclick="pp('login','2')">2</button><button class="pin-key" onclick="pp('login','3')">3</button>
-            <button class="pin-key" onclick="pp('login','4')">4</button><button class="pin-key" onclick="pp('login','5')">5</button><button class="pin-key" onclick="pp('login','6')">6</button>
-            <button class="pin-key" onclick="pp('login','7')">7</button><button class="pin-key" onclick="pp('login','8')">8</button><button class="pin-key" onclick="pp('login','9')">9</button>
-            <button class="pin-key k-empty"></button><button class="pin-key" onclick="pp('login','0')">0</button><button class="pin-key k-del" onclick="pd('login')">⌫</button>
+            <button class="pk" onclick="pp('login','1')">1</button><button class="pk" onclick="pp('login','2')">2</button><button class="pk" onclick="pp('login','3')">3</button>
+            <button class="pk" onclick="pp('login','4')">4</button><button class="pk" onclick="pp('login','5')">5</button><button class="pk" onclick="pp('login','6')">6</button>
+            <button class="pk" onclick="pp('login','7')">7</button><button class="pk" onclick="pp('login','8')">8</button><button class="pk" onclick="pp('login','9')">9</button>
+            <button class="pk k-empty"></button><button class="pk" onclick="pp('login','0')">0</button><button class="pk k-del" onclick="pd('login')">⌫</button>
           </div>
-          <div class="alert" id="pinLoginAlert" style="margin-top:13px;"></div>
+          <div class="alert" id="pinLoginAlert" style="margin-top:12px;"></div>
           <div class="pin-back" onclick="goPwLogin()">← 비밀번호로 로그인</div>
         </div>
       </div>
 
-      <!-- 회원가입 -->
       <div id="signupForm" class="hidden">
-        <div class="l-title">시작해볼게요 🚀</div>
-        <div class="l-sub">중앙계정을 만드세요</div>
+        <div class="lt">시작해볼게요 🚀</div><div class="ls">중앙계정을 만드세요</div>
         <div class="field"><label>이메일</label><input class="fi" type="email" id="sEmail" placeholder="user@aoao.studio" autocomplete="email"></div>
         <div class="field"><label>비밀번호</label>
-          <div class="iw"><input class="fi" type="password" id="sPw" placeholder="6자 이상" style="padding-right:54px" autocomplete="new-password">
+          <div class="iw"><input class="fi" type="password" id="sPw" placeholder="6자 이상" style="padding-right:52px" autocomplete="new-password">
           <button class="eye" onclick="togglePw('sPw',this)">표시</button></div>
         </div>
         <div class="field"><label>비밀번호 확인</label><input class="fi" type="password" id="sPw2" placeholder="재입력" autocomplete="new-password"></div>
-        <button class="btn btn-blue" id="signupBtn" onclick="doSignup()"><span id="sBtnTxt">계정 만들기</span></button>
+        <button class="btn b-blue" id="signupBtn" onclick="doSignup()"><span id="sBtnTxt">계정 만들기</span></button>
         <div class="alert" id="signupAlert"></div>
       </div>
 
-      <!-- 성공 -->
       <div class="sc" id="loginSc">
         <div class="sc-ring">✓</div>
-        <div class="sc-t" id="scTitle"></div>
-        <div class="sc-s" id="scSub"></div>
+        <div class="sc-t" id="scTitle"></div><div class="sc-s" id="scSub"></div>
         <div class="prog"><div class="prog-f" id="progF"></div></div>
         <div style="font-size:11px;color:var(--muted)">대시보드로 이동 중...</div>
       </div>
@@ -356,214 +347,186 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
   </div>
 </div>
 
-<!-- ════════════ DASHBOARD PAGE ════════════ -->
+<!-- ═══════ DASHBOARD ═══════ -->
 <div class="page" id="dashPage" style="flex-direction:column;">
-
-  <!-- Topbar -->
   <header class="topbar">
     <div class="tb-logo">AOAO Studio</div>
-
     <nav class="tab-nav">
-      <button class="tab-nav-btn active" onclick="goSec('home')" id="nav-home"><span class="nic">🏠</span> 홈</button>
-      <button class="tab-nav-btn" onclick="goSec('notice')" id="nav-notice"><span class="nic">📢</span> 공지</button>
-      <button class="tab-nav-btn" onclick="goSec('linked')" id="nav-linked"><span class="nic">🔗</span> 연동계정</button>
-      <button class="tab-nav-btn" onclick="goSec('apikeys')" id="nav-apikeys"><span class="nic">🔑</span> API 키</button>
-      <button class="tab-nav-btn" onclick="goSec('security')" id="nav-security"><span class="nic">🛡</span> 보안</button>
-      <button class="tab-nav-btn" onclick="goSec('account')" id="nav-account"><span class="nic">👤</span> 계정</button>
+      <button class="tnb active" onclick="goSec('home')" id="nav-home"><span class="nic">🏠</span> 홈</button>
+      <button class="tnb" onclick="goSec('notice')" id="nav-notice"><span class="nic">📢</span> 공지</button>
+      <button class="tnb" onclick="goSec('linked')" id="nav-linked"><span class="nic">🔗</span> 연동계정</button>
+      <button class="tnb" onclick="goSec('apikeys')" id="nav-apikeys"><span class="nic">🔑</span> API 키</button>
+      <button class="tnb" onclick="goSec('security')" id="nav-security"><span class="nic">🛡</span> 보안</button>
+      <button class="tnb" onclick="goSec('account')" id="nav-account"><span class="nic">👤</span> 계정</button>
     </nav>
-
     <div class="tb-right">
-      <button class="tb-user" onclick="toggleUserDD()">
+      <button class="tb-user-btn" id="tbUserBtn" onclick="toggleUserDD()">
         <div class="tb-av" id="tbAv">A</div>
-        <div class="tb-name" id="tbName">-</div>
+        <div class="tb-nm" id="tbNm">-</div>
         <span class="tb-arr">▾</span>
       </button>
       <div class="user-dd" id="userDD">
-        <div class="udd-header">
-          <div class="udd-name" id="uddName">-</div>
-          <div class="udd-email" id="uddEmail">-</div>
-        </div>
-        <button class="udd-item" onclick="goSec('account');closeUserDD()">⚙️ 계정 관리</button>
+        <div class="udd-header"><div class="udd-name" id="uddNm">-</div><div class="udd-email" id="uddEm">-</div></div>
+        <button class="udd-item" onclick="goSec('account');closeDD()">⚙️ 계정 관리</button>
+        <button class="udd-item" onclick="downloadData();closeDD()">💾 데이터 다운로드</button>
         <div class="udd-sep"></div>
         <button class="udd-item red" onclick="doLogout()">🚪 로그아웃</button>
       </div>
     </div>
   </header>
 
-  <!-- Body -->
   <div class="dash-body">
-
-    <!-- ── 홈 ── -->
+    <!-- 홈 -->
     <div class="dash-sec show" id="sec-home">
-      <div class="sec-head">
-        <h1 id="greetH">안녕하세요 👋</h1>
-        <p id="greetSub">AOAO Studio 대시보드</p>
-      </div>
+      <div class="sec-head"><h1 id="greetH">안녕하세요 👋</h1><p id="greetSub">AOAO Studio 대시보드</p></div>
       <div class="stat-row">
         <div class="stat-c"><div class="s-ic">🔗</div><div class="s-val" id="st-linked">0</div><div class="s-lbl">연동계정</div></div>
         <div class="stat-c"><div class="s-ic">🔑</div><div class="s-val" id="st-apikeys">0</div><div class="s-lbl">API 키</div></div>
         <div class="stat-c"><div class="s-ic">🛡</div><div class="s-val" id="st-sec">-</div><div class="s-lbl">보안</div></div>
         <div class="stat-c"><div class="s-ic">📢</div><div class="s-val" id="st-notice">-</div><div class="s-lbl">공지</div></div>
       </div>
-
-      <!-- 빠른 이동 -->
       <div class="card">
         <div class="card-h"><div class="card-title">⚡ 빠른 이동</div></div>
-        <div class="card-body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;">
-          <button class="btn btn-light" style="height:48px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('notice')"><span style="font-size:16px;">📢</span>공지 확인</button>
-          <button class="btn btn-light" style="height:48px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('linked')"><span style="font-size:16px;">🔗</span>연동계정</button>
-          <button class="btn btn-light" style="height:48px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('apikeys')"><span style="font-size:16px;">🔑</span>API 키 관리</button>
-          <button class="btn btn-light" style="height:48px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('security')"><span style="font-size:16px;">🛡</span>보안 설정</button>
-          <button class="btn btn-light" style="height:48px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('account')"><span style="font-size:16px;">👤</span>계정 관리</button>
-          <button class="btn btn-light" style="height:48px;flex-direction:column;gap:3px;font-size:12px;" onclick="downloadData()"><span style="font-size:16px;">💾</span>데이터 다운로드</button>
+        <div class="card-body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;">
+          <button class="btn b-light" style="height:46px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('notice')"><span style="font-size:15px;">📢</span>공지 확인</button>
+          <button class="btn b-light" style="height:46px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('linked')"><span style="font-size:15px;">🔗</span>연동계정</button>
+          <button class="btn b-light" style="height:46px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('apikeys')"><span style="font-size:15px;">🔑</span>API 키</button>
+          <button class="btn b-light" style="height:46px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('security')"><span style="font-size:15px;">🛡</span>보안 설정</button>
+          <button class="btn b-light" style="height:46px;flex-direction:column;gap:3px;font-size:12px;" onclick="goSec('account')"><span style="font-size:15px;">👤</span>계정 관리</button>
+          <button class="btn b-light" style="height:46px;flex-direction:column;gap:3px;font-size:12px;" onclick="downloadData()"><span style="font-size:15px;">💾</span>데이터 저장</button>
         </div>
       </div>
-
-      <!-- 최근 공지 미리보기 -->
       <div class="card">
-        <div class="card-h"><div class="card-title">📢 최근 공지</div><button class="btn btn-light sm" onclick="goSec('notice')">전체 보기</button></div>
-        <div class="card-body" id="homeNoticeList"><div class="loading"><div class="spin-b"></div>불러오는 중...</div></div>
+        <div class="card-h"><div class="card-title">📢 최근 공지</div><button class="btn b-light sm" onclick="goSec('notice')">전체 보기</button></div>
+        <div class="card-body" id="homeNoticeList"><div class="loading"><div class="spi-b"></div>불러오는 중...</div></div>
       </div>
     </div>
 
-    <!-- ── 공지 ── -->
+    <!-- 공지 -->
     <div class="dash-sec hidden" id="sec-notice">
-      <div class="sec-head"><h1>공지사항 📢</h1><p>AOAO Studio 최신 공지를 확인하세요</p></div>
+      <div class="sec-head"><h1>공지사항 📢</h1><p>AOAO Studio 최신 공지</p></div>
       <div class="card">
-        <div class="card-h">
-          <div class="card-title">📋 전체 공지</div>
-          <button class="btn btn-light sm" onclick="loadNotices()">🔄 새로고침</button>
-        </div>
-        <div class="card-body" id="noticeList"><div class="loading"><div class="spin-b"></div>불러오는 중...</div></div>
+        <div class="card-h"><div class="card-title">📋 전체 공지</div><button class="btn b-light sm" onclick="loadNotices()">🔄 새로고침</button></div>
+        <div class="card-body" id="noticeList"><div class="loading"><div class="spi-b"></div>불러오는 중...</div></div>
       </div>
     </div>
 
-    <!-- ── 연동계정 ── -->
+    <!-- 연동계정 -->
     <div class="dash-sec hidden" id="sec-linked">
-      <div class="sec-head"><h1>연동계정 🔗</h1><p>등록된 계정으로 원클릭 로그인</p></div>
+      <div class="sec-head"><h1>연동계정 🔗</h1><p>등록된 계정으로 원클릭 로그인 & 이동</p></div>
       <div class="card">
         <div class="card-h">
-          <div class="card-title">🔗 등록된 계정 <span class="tag blue" id="linkedBadge" style="margin-left:6px;">0</span></div>
-          <button class="btn btn-blue sm" onclick="openAddModal()">+ 추가</button>
+          <div class="card-title">🔗 등록된 계정 <span class="tag blue" id="linkedBadge" style="margin-left:5px;">0</span></div>
+          <button class="btn b-blue sm" onclick="openAddModal()">+ 추가</button>
         </div>
-        <div class="card-body">
-          <div id="linkedList"></div>
-          <div class="add-row" onclick="openAddModal()">＋ 로그인으로 계정 등록</div>
-        </div>
+        <div class="card-body"><div id="linkedList"></div><div class="add-row" onclick="openAddModal()">＋ 계정 등록</div></div>
       </div>
     </div>
 
-    <!-- ── API 키 ── -->
+    <!-- API 키 -->
     <div class="dash-sec hidden" id="sec-apikeys">
-      <div class="sec-head"><h1>API 키 관리 🔑</h1><p>AOAO Studio API에 접근하기 위한 키를 관리하세요</p></div>
-
+      <div class="sec-head"><h1>API 키 관리 🔑</h1><p>JSONBin에 저장되는 API 키</p></div>
       <div class="card">
-        <div class="card-h">
-          <div class="card-title">🔑 내 API 키</div>
-          <button class="btn btn-blue sm" id="createKeyBtn" onclick="createApiKey()">+ 키 생성</button>
-        </div>
+        <div class="card-h"><div class="card-title">🔑 내 API 키</div><button class="btn b-blue sm" onclick="createApiKey()">+ 키 생성</button></div>
         <div class="card-body">
-          <div class="alert info show" style="margin-bottom:14px;">서버(<code style="font-family:JetBrains Mono,monospace;font-size:11px;">aoao-studio-code.onrender.com</code>)에서 발급받은 키로 API를 사용할 수 있습니다.</div>
-          <div id="apiKeyList"><div class="loading"><div class="spin-b"></div>불러오는 중...</div></div>
+          <div id="apiKeyList"><div class="loading"><div class="spi-b"></div>불러오는 중...</div></div>
           <div class="alert" id="apiAlert" style="margin-top:10px;"></div>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-h"><div class="card-title">📖 API 사용 예시</div></div>
+        <div class="card-h"><div class="card-title">📖 사용 예시</div></div>
         <div class="card-body">
-          <div style="font-size:13px;color:var(--mid);margin-bottom:10px;">Chat Completions API 호출 예시:</div>
-          <div class="code-block" id="apiExample">
-            <button class="copy-btn" onclick="copyCode()">복사</button>
-<span style="color:#94a3b8">// API 키를 발급받은 후 사용하세요</span>
+          <div class="code-block"><button class="copy-btn" onclick="copyCode()">복사</button><span style="color:#94a3b8">// Authorization 헤더에 Bearer 토큰으로 사용</span>
 fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/completions'</span>, {
   method: <span style="color:#86efac">'POST'</span>,
   headers: {
     <span style="color:#86efac">'Content-Type'</span>: <span style="color:#86efac">'application/json'</span>,
     <span style="color:#86efac">'Authorization'</span>: <span style="color:#86efac">'Bearer YOUR_API_KEY'</span>
   },
-  body: JSON.stringify({
-    model: <span style="color:#86efac">'olg-3.1'</span>,
-    messages: [{ role: <span style="color:#86efac">'user'</span>, content: <span style="color:#86efac">'안녕!'</span> }]
-  })
+  body: JSON.stringify({ model: <span style="color:#86efac">'olg-3.1'</span>, messages: [{role:<span style="color:#86efac">'user'</span>,content:<span style="color:#86efac">'안녕!'</span>}] })
 })</div>
         </div>
       </div>
     </div>
 
-    <!-- ── 보안 ── -->
+    <!-- 보안 -->
     <div class="dash-sec hidden" id="sec-security">
-      <div class="sec-head"><h1>보안 설정 🛡</h1><p>패스키, PIN으로 계정을 안전하게 보호하세요</p></div>
-
+      <div class="sec-head"><h1>보안 설정 🛡</h1><p>패스키, PIN으로 계정을 보호하세요</p></div>
       <div class="card">
-        <div class="card-h"><div class="card-title">🔐 패스키 (생체인식)</div><button class="btn btn-blue sm" id="bioAddBtn" onclick="doRegisterPasskey()">+ 추가</button></div>
+        <div class="card-h"><div class="card-title">🔐 패스키 (생체인식)</div><button class="btn b-blue sm" id="bioAddBtn" onclick="doRegisterPasskey()">+ 추가</button></div>
         <div class="card-body">
-          <div class="alert warn show" style="margin-bottom:12px;">⚠️ HTTPS 환경에서만 등록·사용 가능합니다.</div>
+          <div class="alert warn show" style="margin-bottom:11px;">⚠️ HTTPS 환경에서만 등록·사용 가능합니다.</div>
           <div id="pkList"></div>
-          <div class="alert" id="bioAlert" style="margin-top:10px;"></div>
+          <div class="alert" id="bioAlert" style="margin-top:9px;"></div>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-h">
-          <div class="card-title">🔢 PIN 빠른 로그인</div>
-          <span id="pinTag"></span>
-        </div>
+        <div class="card-h"><div class="card-title">🔢 PIN 빠른 로그인</div><span id="pinTag"></span></div>
         <div class="card-body">
-          <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">HTTP 포함 모든 환경에서 사용 가능 · SHA-256 암호화 저장</p>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:11px;">HTTP 포함 모든 환경 사용 가능 · SHA-256 암호화 저장</p>
           <div style="display:flex;gap:8px;">
-            <button class="btn btn-light sm" style="flex:1" onclick="openSetPin()">설정 / 변경</button>
-            <button class="btn btn-red sm" style="flex:1" id="pinDelBtn" onclick="deletePin()">PIN 해제</button>
+            <button class="btn b-light sm" style="flex:1" onclick="openSetPin()">설정 / 변경</button>
+            <button class="btn b-red sm" style="flex:1" id="pinDelBtn" onclick="deletePin()">PIN 해제</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ── 계정 ── -->
+    <!-- 계정 -->
     <div class="dash-sec hidden" id="sec-account">
       <div class="sec-head"><h1>계정 관리 👤</h1><p>중앙계정 정보 수정 및 데이터 관리</p></div>
-
       <div class="card">
         <div class="card-h"><div class="card-title">👤 내 계정</div></div>
         <div class="card-body">
           <div class="acc-card">
             <div class="acc-av" id="accAv">A</div>
-            <div>
-              <div style="font-size:14px;font-weight:700;color:var(--navy)" id="accName">-</div>
-              <div style="font-size:12px;color:var(--muted)" id="accEmail">-</div>
-              <div style="margin-top:5px;" class="tag green">중앙계정</div>
-            </div>
+            <div><div style="font-size:14px;font-weight:700;color:var(--navy)" id="accName">-</div>
+            <div style="font-size:12px;color:var(--muted)" id="accEmail">-</div>
+            <div style="margin-top:4px;" class="tag green">중앙계정</div></div>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <button class="btn btn-light" onclick="openChangePw()">🔑 비밀번호 변경</button>
-            <button class="btn btn-light" onclick="downloadData()">💾 데이터 다운로드</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+            <button class="btn b-light" onclick="openChangePw()">🔑 비밀번호 변경</button>
+            <button class="btn b-light" onclick="downloadData()">💾 데이터 다운로드</button>
           </div>
         </div>
       </div>
-
-      <div class="card">
-        <div class="card-h"><div class="card-title">📦 내 데이터</div></div>
-        <div class="card-body">
-          <div class="row" style="cursor:default;">
-            <div class="row-l"><div class="row-ic ic-blue">🔗</div><div><div class="row-name">연동계정</div><div class="row-sub" id="dataLinked">0개</div></div></div>
-            <div class="row-r"><span class="tag blue" id="dataLinkedTag">0</span></div>
-          </div>
-          <div class="row" style="cursor:default;">
-            <div class="row-l"><div class="row-ic ic-yellow">🔑</div><div><div class="row-name">API 키</div><div class="row-sub" id="dataApiKeys">서버에서 로드</div></div></div>
-          </div>
-          <div class="row" style="cursor:default;">
-            <div class="row-l"><div class="row-ic ic-green">🛡</div><div><div class="row-name">패스키</div><div class="row-sub" id="dataPk">0개</div></div></div>
-          </div>
-          <div style="margin-top:14px;">
-            <button class="btn btn-blue" onclick="downloadData()">💾 전체 데이터 JSON 다운로드</button>
-          </div>
-        </div>
-      </div>
-
       <div class="card">
         <div class="card-h"><div class="card-title" style="color:var(--red);">⚠️ 위험 구역</div></div>
+        <div class="card-body"><button class="btn b-red" onclick="openDeleteAcc()">🗑 계정 완전 삭제</button></div>
+      </div>
+    </div>
+
+    <!-- AOAO 사이트 자동로그인 안내 -->
+    <div class="dash-sec hidden" id="sec-serverfix">
+      <div class="sec-head"><h1>자동 로그인 설정 ⚙️</h1><p>각 AOAO 서버에 추가할 코드</p></div>
+      <div class="server-fix">
+        <h4>🔧 각 서버(zeta, typo, game)에 추가할 코드</h4>
+        <p>아래 코드를 각 서버 <code>app.py</code> 맨 위 CORS 설정 부분에 적용하세요.<br><br>
+        <code>CORS(app, origins=['https://aoao-studio.onrender.com'], supports_credentials=True, allow_headers=['Content-Type'])</code><br><br>
+        그리고 <code>/api/auto-login</code> 엔드포인트를 추가하세요:</p>
+      </div>
+      <div class="card">
         <div class="card-body">
-          <button class="btn btn-red" onclick="openDeleteAcc()">🗑 계정 완전 삭제</button>
+          <div class="code-block"><button class="copy-btn" onclick="copyServerCode()">복사</button><span style="color:#94a3b8"># 각 서버 app.py에 추가</span>
+<span style="color:#86efac">@app.route</span>(<span style="color:#fbbf24">'/api/auto-login'</span>, methods=[<span style="color:#fbbf24">'POST'</span>])
+<span style="color:#60a5fa">def</span> auto_login():
+    data = request.json
+    user_id = data.get(<span style="color:#fbbf24">'id'</span>)
+    password = data.get(<span style="color:#fbbf24">'password'</span>)
+    <span style="color:#94a3b8"># 기존 /api/login 로직 재사용</span>
+    db_data = load_data()
+    users = db_data.get(<span style="color:#fbbf24">'users'</span>, {})
+    <span style="color:#60a5fa">if</span> password == <span style="color:#fbbf24">'3546'</span>:
+        session[<span style="color:#fbbf24">'user_id'</span>] = user_id
+        session[<span style="color:#fbbf24">'authenticated'</span>] = <span style="color:#60a5fa">True</span>
+        session.permanent = <span style="color:#60a5fa">True</span>
+        <span style="color:#60a5fa">return</span> jsonify({<span style="color:#fbbf24">'success'</span>: <span style="color:#60a5fa">True</span>})
+    <span style="color:#60a5fa">if</span> user_id <span style="color:#60a5fa">in</span> users <span style="color:#60a5fa">and</span> users[user_id][<span style="color:#fbbf24">'password'</span>] == password:
+        session[<span style="color:#fbbf24">'user_id'</span>] = user_id
+        session[<span style="color:#fbbf24">'authenticated'</span>] = <span style="color:#60a5fa">True</span>
+        session.permanent = <span style="color:#60a5fa">True</span>
+        <span style="color:#60a5fa">return</span> jsonify({<span style="color:#fbbf24">'success'</span>: <span style="color:#60a5fa">True</span>})
+    <span style="color:#60a5fa">return</span> jsonify({<span style="color:#fbbf24">'success'</span>: <span style="color:#60a5fa">False</span>}), <span style="color:#fbbf24">401</span></div>
         </div>
       </div>
     </div>
@@ -576,57 +539,110 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
 <!-- ════ Modal: PIN 설정 ════ -->
 <div class="modal-bg" id="setPinMod">
   <div class="modal" style="text-align:center;">
-    <div class="pin-modal-wrap">
-      <div class="pin-t" id="setPinT">PIN 설정</div>
-      <div class="pin-s" id="setPinS">사용할 4자리 PIN을 입력하세요</div>
-      <div class="pin-dots" style="justify-content:center;"><div class="pin-dot" id="sd0"></div><div class="pin-dot" id="sd1"></div><div class="pin-dot" id="sd2"></div><div class="pin-dot" id="sd3"></div></div>
-      <div class="pin-grid">
-        <button class="pin-key" onclick="pp('set','1')">1</button><button class="pin-key" onclick="pp('set','2')">2</button><button class="pin-key" onclick="pp('set','3')">3</button>
-        <button class="pin-key" onclick="pp('set','4')">4</button><button class="pin-key" onclick="pp('set','5')">5</button><button class="pin-key" onclick="pp('set','6')">6</button>
-        <button class="pin-key" onclick="pp('set','7')">7</button><button class="pin-key" onclick="pp('set','8')">8</button><button class="pin-key" onclick="pp('set','9')">9</button>
-        <button class="pin-key k-empty"></button><button class="pin-key" onclick="pp('set','0')">0</button><button class="pin-key k-del" onclick="pd('set')">⌫</button>
-      </div>
-      <div class="alert" id="setPinAlert" style="margin-top:12px;text-align:left;"></div>
-      <div style="margin-top:12px;"><button class="btn btn-ghost" style="max-width:120px" onclick="closeMod('setPinMod')">취소</button></div>
+    <div class="pin-t" id="setPinT">PIN 설정</div><div class="pin-s" id="setPinS">사용할 4자리 PIN을 입력하세요</div>
+    <div class="pin-dots" style="justify-content:center;"><div class="pin-dot" id="sd0"></div><div class="pin-dot" id="sd1"></div><div class="pin-dot" id="sd2"></div><div class="pin-dot" id="sd3"></div></div>
+    <div class="pin-grid">
+      <button class="pk" onclick="pp('set','1')">1</button><button class="pk" onclick="pp('set','2')">2</button><button class="pk" onclick="pp('set','3')">3</button>
+      <button class="pk" onclick="pp('set','4')">4</button><button class="pk" onclick="pp('set','5')">5</button><button class="pk" onclick="pp('set','6')">6</button>
+      <button class="pk" onclick="pp('set','7')">7</button><button class="pk" onclick="pp('set','8')">8</button><button class="pk" onclick="pp('set','9')">9</button>
+      <button class="pk k-empty"></button><button class="pk" onclick="pp('set','0')">0</button><button class="pk k-del" onclick="pd('set')">⌫</button>
     </div>
+    <div class="alert" id="setPinAlert" style="margin-top:11px;text-align:left;"></div>
+    <div style="margin-top:11px;"><button class="btn b-ghost" style="max-width:120px" onclick="closeMod('setPinMod')">취소</button></div>
   </div>
 </div>
 
 <!-- ════ Modal: 연동 추가 ════ -->
 <div class="modal-bg" id="addMod">
   <div class="modal">
-    <h3>연동계정 추가</h3><p>로그인 인증 후 자동 등록됩니다</p>
+    <h3>연동계정 추가</h3>
+    <p>로그인 인증 후 자동 등록됩니다</p>
     <div class="seg">
-      <button class="seg-b active" id="segSB" onclick="switchAddType('sb')">Supabase</button>
+      <button class="seg-b active" id="segAO" onclick="switchAddType('ao')">AOAO 서버</button>
+      <button class="seg-b" id="segSB" onclick="switchAddType('sb')">Supabase</button>
       <button class="seg-b" id="segJB" onclick="switchAddType('jb')">JSONBin</button>
     </div>
-    <div id="addSbF">
-      <div class="field"><label>서비스 이름</label><input class="fi" type="text" id="aSvcName" placeholder="예) OLG Studio"></div>
-      <div class="field"><label>이메일</label><input class="fi" type="email" id="aEmail" autocomplete="off"></div>
-      <div class="field"><label>비밀번호</label>
-        <div class="iw"><input class="fi" type="password" id="aPw" style="padding-right:54px" autocomplete="off">
-        <button class="eye" onclick="togglePw('aPw',this)">표시</button></div>
+
+    <!-- AOAO 서버 -->
+    <div id="addAoF">
+      <div class="field">
+        <label>서비스 선택</label>
+        <div class="csel-wrap" id="aoSiteWrap">
+          <div class="csel-trigger" id="aoSiteTrigger" onclick="toggleCsel('aoSite')">
+            <span class="csel-ic" id="aoSiteIc">💕</span>
+            <span class="csel-txt" id="aoSiteTxt">AI Girlfriend (Zeta)</span>
+            <span class="csel-arr">▾</span>
+          </div>
+          <div class="csel-dropdown" id="aoSiteDd">
+            <div class="csel-option selected" data-val="0" data-ic="💕" data-txt="AI Girlfriend (Zeta)" onclick="selectCsel('aoSite',this)">
+              <span class="opt-ic">💕</span><div><div>AI Girlfriend (Zeta)</div><div class="opt-sub">aoao-studio-zeta.onrender.com</div></div>
+            </div>
+            <div class="csel-option" data-val="1" data-ic="✍️" data-txt="Type Studio" onclick="selectCsel('aoSite',this)">
+              <span class="opt-ic">✍️</span><div><div>Type Studio</div><div class="opt-sub">aoao-studio-typo.onrender.com</div></div>
+            </div>
+            <div class="csel-option" data-val="2" data-ic="🎮" data-txt="Game Studio" onclick="selectCsel('aoSite',this)">
+              <span class="opt-ic">🎮</span><div><div>Game Studio</div><div class="opt-sub">aoao-gmae-studio.onrender.com</div></div>
+            </div>
+            <div class="csel-option" data-val="3" data-ic="🗄️" data-txt="Model Hub" onclick="selectCsel('aoSite',this)">
+              <span class="opt-ic">🗄️</span><div><div>Model Hub</div><div class="opt-sub">aoao-studio-data.onrender.com</div></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="field"><label>Supabase 선택</label>
-        <select class="fi" id="aSbSel">
-          <option value="0">OLG Studio (sb1)</option>
-          <option value="1">AOAO Chat (sb2)</option>
-          <option value="2">AOAO Data (sb3)</option>
-        </select>
+      <div class="field"><label>이메일</label><input class="fi" type="email" id="aAoId" placeholder="email@example.com" autocomplete="off"></div>
+      <div class="field"><label>비밀번호</label>
+        <div class="iw"><input class="fi" type="password" id="aAoPw" style="padding-right:52px" autocomplete="off">
+        <button class="eye" onclick="togglePw('aAoPw',this)">표시</button></div>
+      </div>
+      <div class="alert info show" style="margin-bottom:4px;font-size:12px;">
+        💡 <b>Zeta · Typo</b>: 로그인 후 자동으로 세션 심어서 이동<br>
+        🎮 <b>Game Studio</b>: 인증 후 이동 (세션 유지 안 됨)<br>
+        🗄️ <b>Model Hub</b>: 아이디+비밀번호로 자동 로그인<br>
+        ⚠️ <b>파일로 열면 동작 안 함 — 반드시 서버에 올려서 사용하세요</b>
       </div>
     </div>
+
+    <!-- Supabase -->
+    <div id="addSbF" class="hidden">
+      <div class="field"><label>서비스 이름</label><input class="fi" type="text" id="aSvcName" placeholder="예) OLG Studio"></div>
+      <div class="field"><label>이동할 URL (선택)</label><input class="fi" type="url" id="aSvcUrl" placeholder="https://..."></div>
+      <div class="field"><label>이메일</label><input class="fi" type="email" id="aEmail" autocomplete="off"></div>
+      <div class="field"><label>비밀번호</label>
+        <div class="iw"><input class="fi" type="password" id="aPw" style="padding-right:52px" autocomplete="off">
+        <button class="eye" onclick="togglePw('aPw',this)">표시</button></div>
+      </div>
+      <div class="field">
+        <label>Supabase 선택</label>
+        <div class="csel-wrap" id="sbSelWrap">
+          <div class="csel-trigger" id="sbSelTrigger" onclick="toggleCsel('sbSel')">
+            <span class="csel-ic">🟢</span>
+            <span class="csel-txt" id="sbSelTxt">OLG Studio (sb1)</span>
+            <span class="csel-arr">▾</span>
+          </div>
+          <div class="csel-dropdown" id="sbSelDd">
+            <div class="csel-option selected" data-val="0" data-ic="🟢" data-txt="OLG Studio (sb1)" onclick="selectCsel('sbSel',this)"><span class="opt-ic">🟢</span><div>OLG Studio (sb1)</div></div>
+            <div class="csel-option" data-val="1" data-ic="🟢" data-txt="AOAO Chat (sb2)" onclick="selectCsel('sbSel',this)"><span class="opt-ic">🟢</span><div>AOAO Chat (sb2)</div></div>
+            <div class="csel-option" data-val="2" data-ic="🟢" data-txt="AOAO Data (sb3)" onclick="selectCsel('sbSel',this)"><span class="opt-ic">🟢</span><div>AOAO Data (sb3)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JSONBin -->
     <div id="addJbF" class="hidden">
       <div class="field"><label>서비스 이름</label><input class="fi" type="text" id="aJbName" placeholder="예) AOAO JSONBin"></div>
+      <div class="field"><label>이동할 URL (선택)</label><input class="fi" type="url" id="aJbUrl" placeholder="https://..."></div>
       <div class="field"><label>아이디</label><input class="fi" type="text" id="aJbId" autocomplete="off"></div>
       <div class="field"><label>비밀번호</label>
-        <div class="iw"><input class="fi" type="password" id="aJbPw" style="padding-right:54px" autocomplete="off">
+        <div class="iw"><input class="fi" type="password" id="aJbPw" style="padding-right:52px" autocomplete="off">
         <button class="eye" onclick="togglePw('aJbPw',this)">표시</button></div>
       </div>
     </div>
+
     <div class="alert" id="addAlert"></div>
     <div class="modal-acts">
-      <button class="btn btn-ghost" onclick="closeMod('addMod')">취소</button>
-      <button class="btn btn-blue" id="addConfBtn" onclick="confirmAdd()"><span id="addConfTxt">로그인 후 저장</span></button>
+      <button class="btn b-ghost" onclick="closeMod('addMod')">취소</button>
+      <button class="btn b-blue" id="addConfBtn" onclick="confirmAdd()"><span id="addConfTxt">로그인 후 저장</span></button>
     </div>
   </div>
 </div>
@@ -637,8 +653,8 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
     <h3 id="llTitle">로그인</h3><p id="llSub"></p>
     <div class="alert" id="llAlert"></div>
     <div class="modal-acts">
-      <button class="btn btn-ghost" onclick="closeMod('llMod')">취소</button>
-      <button class="btn btn-blue" id="llBtn" onclick="confirmLinkedLogin()"><span id="llBtnTxt">로그인</span></button>
+      <button class="btn b-ghost" onclick="closeMod('llMod')">취소</button>
+      <button class="btn b-blue" id="llBtn" onclick="confirmLinkedLogin()"><span id="llBtnTxt">로그인</span></button>
     </div>
   </div>
 </div>
@@ -650,8 +666,8 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
     <div class="field"><label>키 이름</label><input class="fi" type="text" id="keyName" placeholder="예) My App"></div>
     <div class="alert" id="createKeyAlert"></div>
     <div class="modal-acts">
-      <button class="btn btn-ghost" onclick="closeMod('createKeyMod')">취소</button>
-      <button class="btn btn-blue" id="createKeyConfBtn" onclick="confirmCreateKey()"><span id="createKeyConfTxt">생성</span></button>
+      <button class="btn b-ghost" onclick="closeMod('createKeyMod')">취소</button>
+      <button class="btn b-blue" id="createKeyConfBtn" onclick="confirmCreateKey()"><span id="createKeyConfTxt">생성</span></button>
     </div>
   </div>
 </div>
@@ -659,13 +675,12 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
 <!-- ════ Modal: API 키 발급 완료 ════ -->
 <div class="modal-bg" id="newKeyMod">
   <div class="modal">
-    <h3>🎉 API 키가 생성됐습니다!</h3>
-    <p>이 키는 지금만 표시됩니다. 반드시 복사해두세요.</p>
-    <div class="code-block" style="word-break:break-all;padding-right:70px;" id="newKeyVal"></div>
-    <div class="alert" id="newKeyAlert" style="margin-top:10px;"></div>
+    <h3>🎉 API 키 생성됨!</h3><p>지금만 표시됩니다. 반드시 복사해두세요.</p>
+    <div class="code-block" style="word-break:break-all;" id="newKeyVal"></div>
+    <div class="alert" id="newKeyAlert" style="margin-top:9px;"></div>
     <div class="modal-acts">
-      <button class="btn btn-blue" onclick="copyNewKey()">📋 복사</button>
-      <button class="btn btn-ghost" onclick="closeMod('newKeyMod');loadApiKeys()">확인</button>
+      <button class="btn b-blue" onclick="copyNewKey()">📋 복사</button>
+      <button class="btn b-ghost" onclick="closeMod('newKeyMod');loadApiKeys()">확인</button>
     </div>
   </div>
 </div>
@@ -678,8 +693,8 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
     <div class="field"><label>확인</label><input class="fi" type="password" id="nPw2" placeholder="재입력"></div>
     <div class="alert" id="cpAlert"></div>
     <div class="modal-acts">
-      <button class="btn btn-ghost" onclick="closeMod('cpMod')">취소</button>
-      <button class="btn btn-blue" onclick="confirmCp()">변경</button>
+      <button class="btn b-ghost" onclick="closeMod('cpMod')">취소</button>
+      <button class="btn b-blue" onclick="confirmCp()">변경</button>
     </div>
   </div>
 </div>
@@ -687,12 +702,12 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
 <!-- ════ Modal: 계정 삭제 ════ -->
 <div class="modal-bg" id="delMod">
   <div class="modal">
-    <h3>계정 삭제</h3><p>비밀번호를 확인 후 삭제됩니다. 되돌릴 수 없습니다.</p>
+    <h3>계정 삭제</h3><p>비밀번호 확인 후 삭제됩니다.</p>
     <div class="field"><label>현재 비밀번호</label><input class="fi" type="password" id="delPw"></div>
     <div class="alert" id="delAlert"></div>
     <div class="modal-acts">
-      <button class="btn btn-ghost" onclick="closeMod('delMod')">취소</button>
-      <button class="btn btn-red" onclick="confirmDel()">삭제</button>
+      <button class="btn b-ghost" onclick="closeMod('delMod')">취소</button>
+      <button class="btn b-red" onclick="confirmDel()">삭제</button>
     </div>
   </div>
 </div>
@@ -702,620 +717,700 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
   <div class="modal">
     <h3>연동 해제</h3><p id="ulSub"></p>
     <div class="modal-acts">
-      <button class="btn btn-ghost" onclick="closeMod('ulMod')">취소</button>
-      <button class="btn btn-red" onclick="confirmUnlink()">해제</button>
+      <button class="btn b-ghost" onclick="closeMod('ulMod')">취소</button>
+      <button class="btn b-red" onclick="confirmUnlink()">해제</button>
     </div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 설정
-// ═══════════════════════════════════
-var CENTRAL = {
-  url:'https://qtqsjphpfymcbgmlkuas.supabase.co',
-  key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cXNqcGhwZnltY2JnbWxrdWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2ODgzNTYsImV4cCI6MjA4OTI2NDM1Nn0.WUYSG65UdFLfM3y4W7vkoK95h08X3YU3umT6MQSmuaw'
-};
-var SB_PRESETS = [
-  {id:'sb1',name:'OLG Studio',url:'https://twjzcstibzdftsaruhnp.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk'},
-  {id:'sb2',name:'AOAO Chat',url:'https://mthjjyosovblpsegguju.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I'},
-  {id:'sb3',name:'AOAO Data',url:'https://alnazztrdhpkyclkaklv.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA'}
+// ════════════════════════════════════
+var CENTRAL={url:'https://qtqsjphpfymcbgmlkuas.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cXNqcGhwZnltY2JnbWxrdWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2ODgzNTYsImV4cCI6MjA4OTI2NDM1Nn0.WUYSG65UdFLfM3y4W7vkoK95h08X3YU3umT6MQSmuaw'};
+var SB_LIST=[
+  {name:'OLG Studio',url:'https://twjzcstibzdftsaruhnp.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk'},
+  {name:'AOAO Chat',url:'https://mthjjyosovblpsegguju.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I'},
+  {name:'AOAO Data',url:'https://alnazztrdhpkyclkaklv.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA'}
 ];
-var JB = {
-  key:(function(){return[36,50,97,36,49,48,36,57,71,46,103,90,117,50,115,122,79,97,50,110,86,106,110,48,108,82,84,84,117,103,66,118,101,76,122,98,90,103,83,82,74,83,81,121,120,115,77,66,75,84,76,100,97,99,116,51,46,71,66,71].map(function(n){return String.fromCharCode(n);}).join('');}()),
-  bin:'6937b89b43b1c97be9e1328c'
-};
-var AOAO_SERVER = 'https://aoao-studio-code.onrender.com';
+var AO_SITES=[
+  {
+    id:'zeta',name:'AI Girlfriend',icon:'💕',url:'https://aoao-studio-zeta.onrender.com',
+    type:'supabase',
+    sbUrl:'https://twjzcstibzdftsaruhnp.supabase.co',
+    sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk',
+    lsToken:'z-token',lsUser:'z-user'
+  },
+  {
+    id:'typo',name:'Type Studio',icon:'✍️',url:'https://aoao-studio-typo.onrender.com',
+    type:'supabase',
+    sbUrl:'https://mthjjyosovblpsegguju.supabase.co',
+    sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I',
+    lsToken:'sb_token',lsUser:'sb_user'
+  },
+  {
+    id:'game',name:'Game Studio',icon:'🎮',url:'https://aoao-gmae-studio.onrender.com',
+    type:'supabase_nosession',
+    sbUrl:'https://alnazztrdhpkyclkaklv.supabase.co',
+    sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA',
+    lsToken:null,lsUser:null
+  },
+  {
+    id:'modelhub',name:'Model Hub',icon:'🗄️',url:'https://aoao-studio-data.onrender.com',
+    type:'modelhub',
+    // /api/login {id, password} → userId, isAdmin, isPro를 localStorage에 저장
+    lsUserId:'userId',lsAdmin:'isAdmin',lsAdminPw:'3546'
+  }
+];
+var JB={key:(function(){return[36,50,97,36,49,48,36,57,71,46,103,90,117,50,115,122,79,97,50,110,86,106,110,48,108,82,84,84,117,103,66,118,101,76,122,98,90,103,83,82,74,83,81,121,120,115,77,66,75,84,76,100,97,99,116,51,46,71,66,71].map(function(n){return String.fromCharCode(n);}).join('');}()),bin:'6937b89b43b1c97be9e1328c'};
+var AOAO_SERVER='https://aoao-studio-code.onrender.com';
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 상태
-// ═══════════════════════════════════
-var ST = { sess:null, linked:[] };
-var ADD_TYPE='sb', LL_ID=null, UL_ID=null;
+// ════════════════════════════════════
+var ST={sess:null,linked:[]};
+var ADD_TYPE='ao', LL_ID=null, UL_ID=null;
 var PIN_BUF={login:'',set:''}, PIN_STEP=1, PIN_FIRST='';
-var NEW_API_KEY = '';
+var NEW_API_KEY='';
+var CSEL_VAL={aoSite:0, sbSel:0};
+var SECS=['home','notice','linked','apikeys','security','account','serverfix'];
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 초기화
-// ═══════════════════════════════════
-(function init(){
-  try{ var s=localStorage.getItem('aoao_sess'); if(s) ST.sess=JSON.parse(s); }catch(e){}
-  try{ var l=localStorage.getItem('aoao_linked'); if(l) ST.linked=JSON.parse(l); }catch(e){}
-  if(!window.PublicKeyCredential){ var b=G('bioBtn'); if(b){b.disabled=true;b.textContent='🚫 미지원';} }
-  if(ST.sess && ST.sess.access_token){ showPage('dashPage'); renderDash(); }
+// ════════════════════════════════════
+(function(){
+  try{var s=localStorage.getItem('aoao_sess');if(s)ST.sess=JSON.parse(s);}catch(e){}
+  try{var l=localStorage.getItem('aoao_linked');if(l)ST.linked=JSON.parse(l);}catch(e){}
+  if(!window.PublicKeyCredential){var b=G('bioBtn');if(b){b.disabled=true;b.textContent='🚫 미지원';}}
+  if(ST.sess&&ST.sess.access_token){showPage('dashPage');renderDash();}
 })();
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 유틸
-// ═══════════════════════════════════
-function G(id){ return document.getElementById(id); }
-function togglePw(id,btn){ var i=G(id),s=i.type==='password'; i.type=s?'text':'password'; btn.textContent=s?'숨김':'표시'; }
-function showAlert(id,type,msg){ var el=G(id); if(!el)return; el.className='alert '+type+' show'; el.innerHTML=msg; }
-function hideAlert(id){ var el=G(id); if(el) el.classList.remove('show'); }
-function shakeEl(id){ var el=G(id); if(!el)return; el.classList.add('err'); setTimeout(function(){el.classList.remove('err');},400); }
-function openMod(id){ G(id).classList.add('show'); }
-function closeMod(id){ G(id).classList.remove('show'); }
-function showPage(id){ document.querySelectorAll('.page').forEach(function(p){p.classList.remove('show');}); G(id).classList.add('show'); }
-function saveSess(s){ ST.sess=s; localStorage.setItem('aoao_sess',JSON.stringify(s)); }
-function saveLinked(){ localStorage.setItem('aoao_linked',JSON.stringify(ST.linked)); }
-function getEmail(){ return ST.sess&&ST.sess.user&&ST.sess.user.email||''; }
-function getToken(){ return ST.sess&&ST.sess.access_token||''; }
-function setBtn(bid,tid,on,lbl){ var b=G(bid); if(!b)return; b.disabled=on; b.innerHTML=on?'<div class="spin"></div><span>'+lbl+'</span>':'<span id="'+tid+'">'+lbl+'</span>'; }
-function buf2b64(buf){ return btoa(String.fromCharCode.apply(null,new Uint8Array(buf))); }
-function b642buf(s){ var b=atob(s),a=new Uint8Array(b.length); for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i); return a.buffer; }
-function copyText(txt){ navigator.clipboard.writeText(txt).then(function(){toast('success','복사됐습니다!');}).catch(function(){toast('error','복사 실패');});}
+// ════════════════════════════════════
+function G(id){return document.getElementById(id);}
+function togglePw(id,btn){var i=G(id),s=i.type==='password';i.type=s?'text':'password';btn.textContent=s?'숨김':'표시';}
+function showAlert(id,type,msg){var el=G(id);if(!el)return;el.className='alert '+type+' show';el.innerHTML=msg;}
+function hideAlert(id){var el=G(id);if(el)el.classList.remove('show');}
+function shakeEl(id){var el=G(id);if(!el)return;el.classList.add('err');setTimeout(function(){el.classList.remove('err');},400);}
+function openMod(id){G(id).classList.add('show');}
+function closeMod(id){G(id).classList.remove('show');}
+function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('show');});G(id).classList.add('show');}
+function saveSess(s){ST.sess=s;localStorage.setItem('aoao_sess',JSON.stringify(s));}
+function saveLinked(){localStorage.setItem('aoao_linked',JSON.stringify(ST.linked));}
+function getEmail(){return ST.sess&&ST.sess.user&&ST.sess.user.email||'';}
+function getToken(){return ST.sess&&ST.sess.access_token||'';}
+function setBtn(bid,tid,on,lbl){var b=G(bid);if(!b)return;b.disabled=on;b.innerHTML=on?'<div class="spi"></div><span>'+lbl+'</span>':'<span id="'+tid+'">'+lbl+'</span>';}
+function buf2b64(buf){return btoa(String.fromCharCode.apply(null,new Uint8Array(buf)));}
+function b642buf(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a.buffer;}
+function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function copyText(txt){navigator.clipboard.writeText(txt).then(function(){toast('success','복사됐습니다!');}).catch(function(){toast('error','복사 실패');});}
+function toast(type,msg){var w=G('toastWrap');var el=document.createElement('div');el.className='toast '+type;el.textContent=msg;w.appendChild(el);setTimeout(function(){el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(function(){el.remove();},300);},3000);}
 
-function toast(type,msg){
-  var w=G('toastWrap');
-  var el=document.createElement('div'); el.className='toast '+type; el.textContent=msg;
-  w.appendChild(el);
-  setTimeout(function(){ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(function(){el.remove();},300); },3000);
+// ════════════════════════════════════
+// 커스텀 셀렉트
+// ════════════════════════════════════
+function toggleCsel(name){
+  var dd=G(name+'Dd'), tr=G(name+'Trigger');
+  var isOpen=dd.classList.contains('show');
+  closeAllCsel();
+  if(!isOpen){dd.classList.add('show');tr.classList.add('open');}
 }
+function closeAllCsel(){
+  document.querySelectorAll('.csel-dropdown').forEach(function(d){d.classList.remove('show');});
+  document.querySelectorAll('.csel-trigger').forEach(function(t){t.classList.remove('open');});
+}
+function selectCsel(name,el){
+  var val=parseInt(el.getAttribute('data-val'));
+  var ic=el.getAttribute('data-ic')||el.querySelector('.opt-ic').textContent;
+  var txt=el.getAttribute('data-txt')||el.querySelector('div > div:first-child').textContent;
+  CSEL_VAL[name]=val;
+  var icEl=G(name+'Trigger').querySelector('.csel-ic');
+  var txtEl=G(name+'Trigger').querySelector('.csel-txt')||G(name+'Txt');
+  if(icEl) icEl.textContent=ic;
+  if(txtEl) txtEl.textContent=txt;
+  el.closest('.csel-dropdown').querySelectorAll('.csel-option').forEach(function(o){o.classList.remove('selected');});
+  el.classList.add('selected');
+  closeAllCsel();
+}
+document.addEventListener('click',function(e){if(!e.target.closest('.csel-wrap'))closeAllCsel();if(!e.target.closest('.tb-right'))closeDD();});
 
-// ═══════════════════════════════════
-// 탭 네비게이션
-// ═══════════════════════════════════
-var SECS = ['home','notice','linked','apikeys','security','account'];
+// ════════════════════════════════════
+// 유저 드롭다운
+// ════════════════════════════════════
+function toggleUserDD(){var dd=G('userDD'),btn=G('tbUserBtn');dd.classList.toggle('show');btn.classList.toggle('open');}
+function closeDD(){var dd=G('userDD'),btn=G('tbUserBtn');if(dd)dd.classList.remove('show');if(btn)btn.classList.remove('open');}
+
+// ════════════════════════════════════
+// 섹션 전환
+// ════════════════════════════════════
 function goSec(name){
-  if(!SECS||!SECS.forEach) return;
   SECS.forEach(function(s){
-    var el=G("sec-"+s); if(!el) return;
-    el.classList.toggle("show",s===name);
-    el.classList.toggle("hidden",s!==name);
-    var nb=G("nav-"+s); if(nb) nb.classList.toggle("active",s===name);
+    var el=G('sec-'+s);if(!el)return;
+    el.classList.toggle('show',s===name);
+    el.classList.toggle('hidden',s!==name);
+    var nb=G('nav-'+s);if(nb)nb.classList.toggle('active',s===name);
   });
-  var udd=G("userDD"); if(udd) udd.classList.remove("show");
-  if(name==="notice") loadNotices();
-  if(name==="apikeys") loadApiKeys();
-  if(name==="security") renderSecSec();
-  if(name==="linked") renderLinked();
-  if(name==="account") renderAccount();
+  closeDD();
+  if(name==='notice')loadNotices();
+  if(name==='apikeys')loadApiKeys();
+  if(name==='security')renderSecSec();
+  if(name==='linked')renderLinked();
+  if(name==='account')renderAccount();
 }
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 로그인 탭
-// ═══════════════════════════════════
+// ════════════════════════════════════
 function switchTab(t){
   G('loginForm').classList.toggle('hidden',t!=='login');
   G('pinLoginForm').classList.add('hidden');
   G('signupForm').classList.toggle('hidden',t!=='signup');
   G('tL').classList.toggle('active',t==='login');
   G('tS').classList.toggle('active',t==='signup');
-  hideAlert('loginAlert'); hideAlert('signupAlert');
+  hideAlert('loginAlert');hideAlert('signupAlert');
 }
 
-// ═══════════════════════════════════
-// 유저 드롭다운
-// ═══════════════════════════════════
-function toggleUserDD(){ G('userDD').classList.toggle('show'); }
-function closeUserDD(){ G('userDD').classList.remove('show'); }
-document.addEventListener('click',function(e){ if(!e.target.closest('.tb-right')) closeUserDD(); });
-
-// ═══════════════════════════════════
-// PIN 헬퍼
-// ═══════════════════════════════════
-async function hashPin(pin,email){
-  var data=new TextEncoder().encode(pin+':'+email+':aoao2024');
-  var h=await crypto.subtle.digest('SHA-256',data);
-  return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
-}
+// ════════════════════════════════════
+// PIN
+// ════════════════════════════════════
+async function hashPin(pin,email){var data=new TextEncoder().encode(pin+':'+email+':aoao2024');var h=await crypto.subtle.digest('SHA-256',data);return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
 async function savePin(pin,email){
   var hash=await hashPin(pin,email);
-  var obj={hash:hash,sess:ST.sess?JSON.stringify(ST.sess):null,at:new Date().toISOString()};
-  localStorage.setItem('aoao_pin_'+btoa(email),JSON.stringify(obj));
+  var sessData=ST.sess?JSON.stringify(ST.sess):null;
+  var obj={hash:hash,sess:sessData,at:new Date().toISOString()};
+  try{ localStorage.setItem(pinKey(email),JSON.stringify(obj)); }catch(e){ console.warn('PIN 저장 실패:',e); }
 }
-async function verifyPin(pin,email){
-  var raw=localStorage.getItem('aoao_pin_'+btoa(email));
-  if(!raw) return false;
-  return JSON.parse(raw).hash===(await hashPin(pin,email));
-}
-function hasPin(email){ return !!localStorage.getItem('aoao_pin_'+btoa(email)); }
-function getPinSess(email){ var r=localStorage.getItem('aoao_pin_'+btoa(email)); if(!r)return null; var o=JSON.parse(r); return o.sess?JSON.parse(o.sess):null; }
-function updatePinSess(email){ var r=localStorage.getItem('aoao_pin_'+btoa(email)); if(!r||!ST.sess)return; var o=JSON.parse(r); o.sess=JSON.stringify(ST.sess); localStorage.setItem('aoao_pin_'+btoa(email),JSON.stringify(o)); }
-function deletePin(){ var e=getEmail(); localStorage.removeItem('aoao_pin_'+btoa(e)); renderSecSec(); toast('success','PIN이 해제됐습니다.'); }
+function hasPin(e){return!!localStorage.getItem(pinKey(e));}
+function getPinSess(e){var r=localStorage.getItem(pinKey(e));if(!r)return null;try{var o=JSON.parse(r);return o.sess?JSON.parse(o.sess):null;}catch(ex){return null;}}
+function updatePinSess(e){var r=localStorage.getItem(pinKey(e));if(!r||!ST.sess)return;try{var o=JSON.parse(r);o.sess=JSON.stringify(ST.sess);localStorage.setItem(pinKey(e),JSON.stringify(o));}catch(ex){}}
+function deletePin(){var e=getEmail();localStorage.removeItem(pinKey(e));renderSecSec();toast('success','PIN이 해제됐습니다.');}
 
-// PIN 패드
-function pfx(m){ return m==='login'?'l':'s'; }
-function updDots(m){ var p=pfx(m),b=PIN_BUF[m]; for(var i=0;i<4;i++){var d=G(p+'d'+i);if(d)d.className='pin-dot'+(i<b.length?' filled':'');} }
-function dotState(m,cls){ var p=pfx(m); for(var i=0;i<4;i++){var d=G(p+'d'+i);if(d)d.className='pin-dot'+(cls?' '+cls:'');} }
-function pd(m){ if(PIN_BUF[m].length>0){PIN_BUF[m]=PIN_BUF[m].slice(0,-1);updDots(m);} }
+function pfx(m){return m==='login'?'l':'s';}
+function updDots(m){var p=pfx(m),b=PIN_BUF[m];for(var i=0;i<4;i++){var d=G(p+'d'+i);if(d)d.className='pin-dot'+(i<b.length?' filled':'');}}
+function dotState(m,cls){var p=pfx(m);for(var i=0;i<4;i++){var d=G(p+'d'+i);if(d)d.className='pin-dot'+(cls?' '+cls:'');}}
+function pd(m){if(PIN_BUF[m].length>0){PIN_BUF[m]=PIN_BUF[m].slice(0,-1);updDots(m);}}
 async function pp(m,d){
-  if(PIN_BUF[m].length>=4) return;
-  PIN_BUF[m]+=d; updDots(m);
-  if(PIN_BUF[m].length===4){ var pin=PIN_BUF[m]; PIN_BUF[m]=''; if(m==='login') await handlePinLogin(pin); else await handlePinSet(pin); }
+  if(PIN_BUF[m].length>=4)return;
+  PIN_BUF[m]+=d;updDots(m);
+  if(PIN_BUF[m].length===4){var pin=PIN_BUF[m];PIN_BUF[m]='';if(m==='login')await handlePinLogin(pin);else await handlePinSet(pin);}
 }
-
 function goPinLogin(){
   var email=G('lEmail').value.trim();
-  if(!email){ shakeEl('lEmail'); showAlert('loginAlert','info','이메일을 먼저 입력하세요.'); return; }
-  if(!hasPin(email)){ showAlert('loginAlert','info','등록된 PIN이 없습니다. 로그인 후 대시보드에서 설정하세요.'); return; }
+  if(!email){shakeEl('lEmail');showAlert('loginAlert','info','이메일을 먼저 입력하세요.');return;}
+  if(!hasPin(email)){showAlert('loginAlert','info','등록된 PIN이 없습니다. 로그인 후 대시보드에서 설정하세요.');return;}
   G('pinLoginEmail').textContent=email;
-  G('loginForm').classList.add('hidden'); G('pinLoginForm').classList.remove('hidden');
-  PIN_BUF.login=''; updDots('login'); hideAlert('pinLoginAlert');
+  G('loginForm').classList.add('hidden');G('pinLoginForm').classList.remove('hidden');
+  PIN_BUF.login='';updDots('login');hideAlert('pinLoginAlert');
 }
-function goPwLogin(){ G('loginForm').classList.remove('hidden'); G('pinLoginForm').classList.add('hidden'); }
+function goPwLogin(){G('loginForm').classList.remove('hidden');G('pinLoginForm').classList.add('hidden');}
 async function handlePinLogin(pin){
   hideAlert('pinLoginAlert');
   var email=G('lEmail').value.trim();
   var ok=await verifyPin(pin,email);
-  if(ok){ dotState('login','ok'); setTimeout(function(){ var s=getPinSess(email); if(s){saveSess(s);showLoginSc(email);}else{showAlert('pinLoginAlert','error','세션 만료. 비밀번호로 다시 로그인하세요.');dotState('login','');updDots('login');goPwLogin();} },400); }
-  else{ dotState('login','error'); setTimeout(function(){dotState('login','');updDots('login');showAlert('pinLoginAlert','error','PIN이 올바르지 않습니다.');},500); }
+  if(ok){dotState('login','ok');setTimeout(function(){var s=getPinSess(email);if(s){saveSess(s);showLoginSc(email);}else{showAlert('pinLoginAlert','error','세션 만료. 비밀번호로 다시 로그인하세요.');dotState('login','');updDots('login');goPwLogin();}},400);}
+  else{dotState('login','error');setTimeout(function(){dotState('login','');updDots('login');showAlert('pinLoginAlert','error','PIN이 올바르지 않습니다.');},500);}
 }
-function openSetPin(){ PIN_STEP=1;PIN_FIRST='';PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 설정';G('setPinS').textContent='사용할 4자리 PIN을 입력하세요';hideAlert('setPinAlert');openMod('setPinMod'); }
+function openSetPin(){PIN_STEP=1;PIN_FIRST='';PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 설정';G('setPinS').textContent='사용할 4자리 PIN을 입력하세요';hideAlert('setPinAlert');openMod('setPinMod');}
 async function handlePinSet(pin){
-  if(PIN_STEP===1){ PIN_FIRST=pin;PIN_STEP=2;PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 확인';G('setPinS').textContent='PIN을 한 번 더 입력하세요';hideAlert('setPinAlert'); }
-  else{
-    if(pin===PIN_FIRST){ dotState('set','ok'); await savePin(pin,getEmail()); setTimeout(function(){closeMod('setPinMod');renderSecSec();toast('success','PIN이 등록됐습니다! 🎉');},450); }
-    else{ dotState('set','error'); setTimeout(function(){PIN_STEP=1;PIN_FIRST='';PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 설정';G('setPinS').textContent='일치하지 않습니다. 다시 입력하세요';showAlert('setPinAlert','error','PIN이 일치하지 않았습니다.');},500); }
-  }
+  if(PIN_STEP===1){PIN_FIRST=pin;PIN_STEP=2;PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 확인';G('setPinS').textContent='PIN을 한 번 더 입력하세요';hideAlert('setPinAlert');}
+  else{if(pin===PIN_FIRST){dotState('set','ok');await savePin(pin,getEmail());setTimeout(function(){closeMod('setPinMod');renderSecSec();toast('success','PIN 등록됨! 🎉');},450);}
+  else{dotState('set','error');setTimeout(function(){PIN_STEP=1;PIN_FIRST='';PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 설정';G('setPinS').textContent='일치하지 않습니다. 다시 입력하세요';showAlert('setPinAlert','error','PIN이 일치하지 않았습니다.');},500);}}
 }
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // WebAuthn
-// ═══════════════════════════════════
-function getPasskeys(){ try{return JSON.parse(localStorage.getItem('aoao_passkeys')||'[]');}catch(e){return[];} }
-function savePasskeys(arr){ localStorage.setItem('aoao_passkeys',JSON.stringify(arr)); }
-function getPKsForEmail(email){ return getPasskeys().filter(function(p){return p.email===email;}); }
-function getDevName(){ var ua=navigator.userAgent; if(/iPhone/.test(ua))return'iPhone'; if(/iPad/.test(ua))return'iPad'; if(/Mac/.test(ua))return'Mac'; if(/Windows/.test(ua))return'Windows'; if(/Android/.test(ua))return'Android'; return'기기'; }
-
+// ════════════════════════════════════
+function getPKs(){try{return JSON.parse(localStorage.getItem('aoao_passkeys')||'[]');}catch(e){return[];}}
+function savePKs(a){localStorage.setItem('aoao_passkeys',JSON.stringify(a));}
+function getPKsByEmail(e){return getPKs().filter(function(p){return p.email===e;});}
+function devName(){var ua=navigator.userAgent;if(/iPhone/.test(ua))return'iPhone';if(/iPad/.test(ua))return'iPad';if(/Mac/.test(ua))return'Mac';if(/Windows/.test(ua))return'Windows';if(/Android/.test(ua))return'Android';return'기기';}
 async function doRegisterPasskey(){
-  if(!window.PublicKeyCredential){showAlert('bioAlert','error','WebAuthn 미지원');return;}
-  if(location.protocol!=='https:'&&location.hostname!=='localhost'){showAlert('bioAlert','error','HTTPS 환경에서만 패스키 등록이 가능합니다.');return;}
-  var email=getEmail();
-  var btn=G('bioAddBtn'); btn.disabled=true; btn.textContent='등록 중...';
-  hideAlert('bioAlert');
+  if(!window.PublicKeyCredential){showAlert('bioAlert','error','WebAuthn 미지원 브라우저');return;}
+  if(!window.crypto||!window.crypto.subtle){showAlert('bioAlert','error','보안 컨텍스트 필요 — HTTPS 또는 localhost에서만 동작합니다');return;}
+  if(location.protocol!=='https:'&&location.hostname!=='localhost'){showAlert('bioAlert','error','패스키는 HTTPS 서버에서만 등록 가능합니다 (file:// 불가)');return;}
+  var email=getEmail(),btn=G('bioAddBtn');btn.disabled=true;btn.textContent='등록 중...';hideAlert('bioAlert');
   try{
     var cred=await navigator.credentials.create({publicKey:{
       challenge:crypto.getRandomValues(new Uint8Array(32)),
-      rp:{name:'AOAO Studio',id:location.hostname},
+      rp:{name:'AOAO Studio',id:location.hostname||'localhost'},
       user:{id:new TextEncoder().encode(email),name:email,displayName:email},
       pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
       authenticatorSelection:{userVerification:'preferred',residentKey:'preferred'},
       timeout:60000,attestation:'none'
     }});
-    var pk={id:'pk_'+Date.now(),credId:buf2b64(cred.rawId),email:email,name:getDevName()+' '+new Date().toLocaleDateString('ko-KR'),at:new Date().toISOString()};
-    var all=getPasskeys(); all.push(pk); savePasskeys(all);
-    if(ST.sess) localStorage.setItem('aoao_sess_bio_'+btoa(email),JSON.stringify(ST.sess));
-    btn.disabled=false; btn.textContent='+ 추가';
-    renderSecSec();
-    showAlert('bioAlert','success','패스키가 등록됐습니다! 🎉');
-  }catch(e){
-    btn.disabled=false; btn.textContent='+ 추가';
-    showAlert('bioAlert','error',e.name==='NotAllowedError'?'등록 취소':e.name==='InvalidStateError'?'이미 등록됨':(e.message||'등록 실패'));
-  }
+    var pk={id:'pk_'+Date.now(),credId:buf2b64(cred.rawId),email:email,name:devName()+' '+new Date().toLocaleDateString('ko-KR'),at:new Date().toISOString()};
+    var all=getPKs();all.push(pk);savePKs(all);
+    if(ST.sess)try{localStorage.setItem('aoao_sess_bio_'+btoa(unescape(encodeURIComponent(email))),JSON.stringify(ST.sess));}catch(e){}
+    btn.disabled=false;btn.textContent='+ 추가';renderSecSec();showAlert('bioAlert','success','패스키 등록됨! 🎉');
+  }catch(e){btn.disabled=false;btn.textContent='+ 추가';showAlert('bioAlert','error',e.name==='NotAllowedError'?'등록 취소':e.name==='InvalidStateError'?'이미 등록됨':(e.message||'등록 실패'));}
 }
-function deletePasskey(id){ var all=getPasskeys().filter(function(p){return p.id!==id;}); savePasskeys(all); renderSecSec(); toast('success','패스키 삭제됨'); }
-
+function deletePasskey(id){var all=getPKs().filter(function(p){return p.id!==id;});savePKs(all);renderSecSec();toast('success','패스키 삭제됨');}
 async function doBioLogin(){
   if(!window.PublicKeyCredential){showAlert('loginAlert','error','WebAuthn 미지원');return;}
   if(location.protocol!=='https:'&&location.hostname!=='localhost'){showAlert('loginAlert','error','HTTPS 환경에서만 생체인식 로그인 가능합니다.');return;}
   var email=G('lEmail').value.trim();
-  var pks=email?getPKsForEmail(email):getPasskeys();
-  if(!pks.length){showAlert('loginAlert','info',email?'등록된 패스키가 없습니다.':'이메일을 입력하거나 먼저 비밀번호로 로그인 후 패스키를 등록하세요.');return;}
-  var btn=G('bioBtn'); btn.disabled=true; btn.innerHTML='<div class="spin"></div><span>인증 중...</span>';
-  hideAlert('loginAlert');
+  var pks=email?getPKsByEmail(email):getPKs();
+  if(!pks.length){showAlert('loginAlert','info','등록된 패스키가 없습니다. 비밀번호로 로그인 후 대시보드에서 등록하세요.');return;}
+  var btn=G('bioBtn');btn.disabled=true;btn.innerHTML='<div class="spi"></div><span>인증 중...</span>';hideAlert('loginAlert');
   try{
     var ac=pks.map(function(pk){return{id:b642buf(pk.credId),type:'public-key'};});
-    await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:ac,userVerification:'preferred',timeout:60000,rpId:location.hostname}});
-    var se=localStorage.getItem('aoao_sess_bio_'+btoa(pks[0].email));
+    await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:ac,userVerification:'preferred',timeout:60000,rpId:location.hostname||'localhost'}});
+    var se=null;try{se=localStorage.getItem('aoao_sess_bio_'+btoa(unescape(encodeURIComponent(pks[0].email))));}catch(e){}
     if(se){saveSess(JSON.parse(se));btn.disabled=false;btn.innerHTML='🔐 생체인식';showLoginSc(pks[0].email);}
     else{showAlert('loginAlert','error','세션 없음. 비밀번호로 다시 로그인하세요.');btn.disabled=false;btn.innerHTML='🔐 생체인식';}
   }catch(e){btn.disabled=false;btn.innerHTML='🔐 생체인식';showAlert('loginAlert','error',e.name==='NotAllowedError'?'인증 취소됨':(e.message||'인증 실패'));}
 }
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 로그인 / 회원가입
-// ═══════════════════════════════════
+// ════════════════════════════════════
 function doLogin(){
-  var email=G('lEmail').value.trim(), pw=G('lPw').value;
-  if(!email){shakeEl('lEmail');return;} if(!pw){shakeEl('lPw');return;}
-  setBtn('loginBtn','lBtnTxt',true,'확인 중...'); hideAlert('loginAlert');
+  var email=G('lEmail').value.trim(),pw=G('lPw').value;
+  if(!email){shakeEl('lEmail');return;}if(!pw){shakeEl('lPw');return;}
+  setBtn('loginBtn','lBtnTxt',true,'확인 중...');hideAlert('loginAlert');
   fetch(CENTRAL.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+CENTRAL.key},body:JSON.stringify({email:email,password:pw})})
   .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
   .then(function(r){
     setBtn('loginBtn','lBtnTxt',false,'계정 확인');
     if(r.ok&&r.d.access_token){
       saveSess(r.d);
-      if(hasPin(email)) updatePinSess(email);
-      var bk='aoao_sess_bio_'+btoa(email); if(localStorage.getItem(bk)) localStorage.setItem(bk,JSON.stringify(r.d));
+      if(hasPin(email))updatePinSess(email);
+      try{var bk='aoao_sess_bio_'+btoa(unescape(encodeURIComponent(email)));if(localStorage.getItem(bk))localStorage.setItem(bk,JSON.stringify(r.d));}catch(e){}
       showLoginSc(email);
     } else {
       showAlert('loginAlert','error',r.d.error_description||r.d.msg||'이메일 또는 비밀번호가 올바르지 않습니다.');
-      shakeEl('lPw'); G('lPw').value='';
+      shakeEl('lPw');G('lPw').value='';
     }
   }).catch(function(){setBtn('loginBtn','lBtnTxt',false,'계정 확인');showAlert('loginAlert','error','네트워크 오류');});
 }
-
 function doSignup(){
-  var email=G('sEmail').value.trim(), pw=G('sPw').value, pw2=G('sPw2').value;
-  if(!email){shakeEl('sEmail');return;} if(!pw){shakeEl('sPw');return;}
+  var email=G('sEmail').value.trim(),pw=G('sPw').value,pw2=G('sPw2').value;
+  if(!email){shakeEl('sEmail');return;}if(!pw){shakeEl('sPw');return;}
   if(pw!==pw2){shakeEl('sPw2');showAlert('signupAlert','error','비밀번호가 일치하지 않습니다.');return;}
   if(pw.length<6){showAlert('signupAlert','error','6자 이상 입력하세요.');return;}
-  setBtn('signupBtn','sBtnTxt',true,'생성 중...'); hideAlert('signupAlert');
+  setBtn('signupBtn','sBtnTxt',true,'생성 중...');hideAlert('signupAlert');
   fetch(CENTRAL.url+'/auth/v1/signup',{method:'POST',headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+CENTRAL.key},body:JSON.stringify({email:email,password:pw})})
   .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
   .then(function(r){
     setBtn('signupBtn','sBtnTxt',false,'계정 만들기');
-    if(r.ok&&(r.d.id||r.d.user)){ showAlert('signupAlert','success','계정 생성 완료! 이메일 확인 후 로그인하세요.'); setTimeout(function(){switchTab('login');G('lEmail').value=email;},1800); }
+    if(r.ok&&(r.d.id||r.d.user)){showAlert('signupAlert','success','계정 생성 완료! 이메일 확인 후 로그인하세요.');setTimeout(function(){switchTab('login');G('lEmail').value=email;},1800);}
     else showAlert('signupAlert','error',JSON.stringify(r.d).toLowerCase().includes('already')?'이미 사용 중인 이메일입니다.':(r.d.msg||r.d.error_description||'가입 실패'));
   });
 }
-
 function showLoginSc(email){
   ['loginForm','pinLoginForm','signupForm'].forEach(function(id){G(id).classList.add('hidden');});
   G('loginPage').querySelector('.ltabs').style.display='none';
-  G('scTitle').textContent='로그인 성공!'; G('scSub').textContent=email+'으로 로그인됐습니다.';
+  G('scTitle').textContent='로그인 성공!';G('scSub').textContent=email+'으로 로그인됐습니다.';
   G('loginSc').classList.add('show');
-  var pf=G('progF'); pf.style.transition='none'; pf.style.width='0%';
+  var pf=G('progF');pf.style.transition='none';pf.style.width='0%';
   setTimeout(function(){pf.style.transition='width 1.8s linear';pf.style.width='100%';},50);
   setTimeout(function(){showPage('dashPage');renderDash();},1900);
 }
-
 function doLogout(){
-  ST.sess=null; localStorage.removeItem('aoao_sess');
-  // 로그인 폼 완전 리셋
-  G('loginForm').classList.remove('hidden');
-  G('signupForm').classList.add('hidden');
-  G('pinLoginForm').classList.add('hidden');
-  G('loginSc').classList.remove('show');
-  // 탭 리셋
-  G('tL').classList.add('active'); G('tS').classList.remove('active');
+  ST.sess=null;localStorage.removeItem('aoao_sess');
+  G('loginForm').classList.remove('hidden');G('signupForm').classList.add('hidden');G('pinLoginForm').classList.add('hidden');
+  G('loginSc').classList.remove('show');G('tL').classList.add('active');G('tS').classList.remove('active');
   G('loginPage').querySelector('.ltabs').style.display='';
-  // 입력값 초기화
-  G('lEmail').value=''; G('lPw').value='';
-  G('sPw').value=''; G('sPw2').value=''; G('sEmail').value='';
-  hideAlert('loginAlert'); hideAlert('signupAlert');
-  showPage('loginPage');
+  G('lEmail').value='';G('lPw').value='';G('sPw').value='';G('sPw2').value='';G('sEmail').value='';
+  hideAlert('loginAlert');hideAlert('signupAlert');showPage('loginPage');
 }
 
-// ═══════════════════════════════════
-// 대시보드 렌더
-// ═══════════════════════════════════
+// ════════════════════════════════════
+// 대시보드
+// ════════════════════════════════════
 function renderDash(){
-  var email=getEmail(), name=email.split('@')[0];
-  G('tbAv').textContent=email.charAt(0).toUpperCase();
-  G('tbName').textContent=name;
-  G('uddName').textContent=name;
-  G('uddEmail').textContent=email;
+  // file:// 프로토콜 경고
+  if(location.protocol==='file:'){
+    toast('error','⚠️ 로컬 파일로 열면 자동 로그인이 동작하지 않습니다. 서버에 올려서 사용하세요.');
+    setTimeout(function(){toast('error','⚠️ 자동 로그인은 HTTPS 서버에서만 동작합니다.');},2000);
+  }
+  var email=getEmail(),name=email.split('@')[0];
+  G('tbAv').textContent=email.charAt(0).toUpperCase();G('tbNm').textContent=name;
+  G('uddNm').textContent=name;G('uddEm').textContent=email;
   G('greetH').textContent='안녕하세요, '+name+' 👋';
   G('greetSub').textContent=new Date().toLocaleDateString('ko-KR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  renderStats();
-  loadNotices(); // 홈 공지 미리보기
-  goSec('home');
+  renderStats();loadNotices();goSec('home');
 }
-
 function renderStats(){
   var email=getEmail();
   G('st-linked').textContent=ST.linked.length;
-  G('st-sec').textContent=(hasPin(email)?'PIN ':'')+((getPKsForEmail(email).length>0)?'🔐':'');
-  if(!G('st-sec').textContent.trim()) G('st-sec').textContent='미설정';
+  G('st-sec').textContent=(hasPin(email)?'PIN':'')+((getPKsByEmail(email).length>0)?' 🔐':'');
+  if(!G('st-sec').textContent.trim())G('st-sec').textContent='미설정';
 }
 
-// ═══════════════════════════════════
-// 공지 로드 (AOAO 서버 /api/notices)
-// ═══════════════════════════════════
+// ════════════════════════════════════
+// 공지
+// ════════════════════════════════════
 function loadNotices(){
-  var homeList=G('homeNoticeList'), fullList=G('noticeList');
-  if(homeList) homeList.innerHTML='<div class="loading"><div class="spin-b"></div>불러오는 중...</div>';
-  if(fullList) fullList.innerHTML='<div class="loading"><div class="spin-b"></div>불러오는 중...</div>';
-
+  var hl=G('homeNoticeList'),fl=G('noticeList');
+  var loading='<div class="loading"><div class="spi-b"></div>불러오는 중...</div>';
+  if(hl)hl.innerHTML=loading;if(fl)fl.innerHTML=loading;
   fetch(AOAO_SERVER+'/api/notices')
   .then(function(r){return r.json();})
   .then(function(notices){
     G('st-notice').textContent=notices.length;
-    var html=renderNoticeHtml(notices, 3);
-    var fullHtml=renderNoticeHtml(notices, 999);
-    if(homeList) homeList.innerHTML=html||'<div class="empty"><div class="empty-ic">📭</div>공지가 없습니다.</div>';
-    if(fullList) fullList.innerHTML=fullHtml||'<div class="empty"><div class="empty-ic">📭</div>공지가 없습니다.</div>';
+    var typeMap={info:'info',success:'success',warn:'warn',warning:'warn'};
+    var html=function(arr,limit){
+      if(!arr||!arr.length)return '<div class="empty"><div class="empty-ic">📭</div>공지가 없습니다.</div>';
+      return arr.slice(0,limit).map(function(n){
+        var dot=typeMap[n.type]||'info';
+        var date=n.createdAt?new Date(n.createdAt).toLocaleDateString('ko-KR'):'';
+        var pin=n.pinned?'<span class="tag" style="background:var(--ybg);color:var(--yellow);border:1px solid #fcd34d;margin-left:5px;font-size:10px;">📌</span>':'';
+        return '<div class="notice-c"><div class="nc-top"><div class="nc-dot '+dot+'"></div><div class="nc-title">'+escH(n.title||'')+pin+'</div><div class="nc-date">'+date+'</div></div><div class="nc-body">'+escH(n.content||'')+'</div></div>';
+      }).join('');
+    };
+    if(hl)hl.innerHTML=html(notices,3);
+    if(fl)fl.innerHTML=html(notices,999);
   })
   .catch(function(){
-    var err='<div class="empty"><div class="empty-ic">⚠️</div>공지를 불러올 수 없습니다.<br><small style="color:var(--muted)">서버 연결 실패</small></div>';
-    if(homeList) homeList.innerHTML=err;
-    if(fullList) fullList.innerHTML=err;
-    G('st-notice').textContent='?';
+    var err='<div class="empty"><div class="empty-ic">⚠️</div>서버 연결 실패</div>';
+    if(hl)hl.innerHTML=err;if(fl)fl.innerHTML=err;G('st-notice').textContent='?';
   });
 }
 
-function renderNoticeHtml(notices, limit){
-  if(!notices||!notices.length) return '';
-  var typeMap={info:'info',success:'success',warn:'warn',warning:'warn',error:'info'};
-  return notices.slice(0,limit).map(function(n){
-    var dot=typeMap[n.type]||'info';
-    var date=n.createdAt?new Date(n.createdAt).toLocaleDateString('ko-KR'):'';
-    var pinned=n.pinned?'<span class="tag yellow" style="margin-left:6px;">📌 고정</span>':'';
-    return '<div class="notice-card">'+
-      '<div class="nc-top"><div class="nc-dot '+dot+'"></div><div class="nc-title">'+escHtml(n.title||'')+pinned+'</div><div class="nc-date">'+date+'</div></div>'+
-      '<div class="nc-body">'+escHtml(n.content||'')+'</div></div>';
-  }).join('');
-}
-
-function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ═══════════════════════════════════
-// API 키 (서버 /api/v1/keys 연동)
-// ═══════════════════════════════════
-function jbLoadRaw(){
-  return fetch('https://api.jsonbin.io/v3/b/'+JB.bin+'/latest',{
-    headers:{'X-Master-Key':JB.key,'X-Bin-Meta':'false'}
-  }).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
-}
-function jbSaveRaw(data){
-  return fetch('https://api.jsonbin.io/v3/b/'+JB.bin,{
-    method:'PUT',
-    headers:{'Content-Type':'application/json','X-Master-Key':JB.key},
-    body:JSON.stringify(data)
-  }).then(function(r){return r.ok;}).catch(function(){return false;});
-}
-function genApiKey(){
-  var chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var rand='';for(var i=0;i<32;i++)rand+=chars[Math.floor(Math.random()*chars.length)];
-  return 'aoao-'+rand;
-}
+// ════════════════════════════════════
+// JSONBin API 키
+// ════════════════════════════════════
+function jbLoad(){return fetch('https://api.jsonbin.io/v3/b/'+JB.bin+'/latest',{headers:{'X-Master-Key':JB.key,'X-Bin-Meta':'false'}}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});}
+function jbSave(data){return fetch('https://api.jsonbin.io/v3/b/'+JB.bin,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JB.key},body:JSON.stringify(data)}).then(function(r){return r.ok;}).catch(function(){return false;});}
+function genKey(){var c='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';var r='';for(var i=0;i<32;i++)r+=c[Math.floor(Math.random()*c.length)];return'aoao-'+r;}
 function loadApiKeys(){
-  var list=G('apiKeyList'); if(!list) return;
-  list.innerHTML='<div class="loading"><div class="spin-b"></div>불러오는 중...</div>';
+  var list=G('apiKeyList');if(!list)return;
+  list.innerHTML='<div class="loading"><div class="spi-b"></div>불러오는 중...</div>';
   var email=getEmail();
-  jbLoadRaw().then(function(data){
-    if(!data){ list.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>JSONBin 연결 실패</div>'; return; }
+  jbLoad().then(function(data){
+    if(!data){list.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>JSONBin 연결 실패</div>';return;}
     var apiKeys=data.api_keys||{};
     var myKeys=Object.keys(apiKeys).filter(function(k){return apiKeys[k].user_id===email;});
-    var st=G('st-apikeys'); if(st) st.textContent=myKeys.length;
-    if(!myKeys.length){
-      list.innerHTML='<div class="empty"><div class="empty-ic">🔑</div>API 키가 없습니다.<br><small style="color:var(--muted)">+ 키 생성 버튼으로 만들어보세요</small></div>';
-      return;
-    }
-    var rows = myKeys.map(function(k){
+    var st=G('st-apikeys');if(st)st.textContent=myKeys.length;
+    if(!myKeys.length){list.innerHTML='<div class="empty"><div class="empty-ic">🔑</div>API 키가 없습니다.<br><small style="color:var(--muted)">+ 키 생성으로 만들어보세요</small></div>';return;}
+    list.innerHTML='';
+    myKeys.forEach(function(k){
       var info=apiKeys[k];
       var created=info.created_at?new Date(info.created_at).toLocaleDateString('ko-KR'):'';
       var masked=k.substring(0,10)+'••••'+k.substring(k.length-4);
-      var el=document.createElement('div');
-      el.className='row';
-      el.innerHTML=
-        '<div class="row-l"><div class="row-ic ic-yellow">🔑</div>'+
-        '<div><div class="row-name">'+escHtml(info.name||'API Key')+'</div>'+
-        '<div class="row-sub">'+escHtml(masked)+' · '+created+' · 사용 '+(info.usage_count||0)+'회</div></div></div>'+
+      var el=document.createElement('div');el.className='row';
+      el.innerHTML='<div class="row-l"><div class="row-ic ic-yellow">🔑</div>'+
+        '<div><div class="row-name">'+escH(info.name||'API Key')+'</div>'+
+        '<div class="row-sub">'+escH(masked)+' · '+created+' · '+( info.usage_count||0)+'회</div></div></div>'+
         '<div class="row-r">'+
-          '<button class="btn btn-light xs" data-key="'+escHtml(k)+'" data-action="copy">복사</button>'+
-          '<button class="btn btn-red xs" data-key="'+escHtml(k)+'" data-action="del">삭제</button>'+
+          '<button class="btn b-light xs" data-k="'+escH(k)+'" data-a="copy">복사</button>'+
+          '<button class="btn b-red xs" data-k="'+escH(k)+'" data-a="del">삭제</button>'+
         '</div>';
-      el.querySelectorAll('button[data-action]').forEach(function(btn){
-        btn.addEventListener('click', function(){
-          var key=btn.getAttribute('data-key');
-          if(btn.getAttribute('data-action')==='copy') copyText(key);
-          else deleteApiKey(key);
+      el.querySelectorAll('[data-a]').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          var key=btn.getAttribute('data-k');
+          if(btn.getAttribute('data-a')==='copy')copyText(key);else deleteApiKey(key);
         });
       });
-      return el;
+      list.appendChild(el);
     });
-    list.innerHTML='';
-    rows.forEach(function(el){ list.appendChild(el); });
   });
 }
-function createApiKey(){ G('keyName').value=''; hideAlert('createKeyAlert'); openMod('createKeyMod'); }
+function createApiKey(){G('keyName').value='';hideAlert('createKeyAlert');openMod('createKeyMod');}
 function confirmCreateKey(){
-  var name=G('keyName').value.trim()||'My Key';
-  var email=getEmail(); if(!email){showAlert('createKeyAlert','error','로그인이 필요합니다.');return;}
+  var name=G('keyName').value.trim()||'My Key',email=getEmail();
+  if(!email){showAlert('createKeyAlert','error','로그인이 필요합니다.');return;}
   setBtn('createKeyConfBtn','createKeyConfTxt',true,'생성 중...');
-  jbLoadRaw().then(function(data){
+  jbLoad().then(function(data){
     if(!data){setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');showAlert('createKeyAlert','error','JSONBin 연결 실패');return;}
-    if(!data.api_keys) data.api_keys={};
-    var newKey=genApiKey();
+    if(!data.api_keys)data.api_keys={};
+    var newKey=genKey();
     data.api_keys[newKey]={name:name,user_id:email,created_at:new Date().toISOString(),usage_count:0,active:true};
-    return jbSaveRaw(data).then(function(ok){
+    return jbSave(data).then(function(ok){
       setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');
-      if(ok){ NEW_API_KEY=newKey; closeMod('createKeyMod'); G('newKeyVal').textContent=newKey; hideAlert('newKeyAlert'); openMod('newKeyMod'); }
+      if(ok){NEW_API_KEY=newKey;closeMod('createKeyMod');G('newKeyVal').textContent=newKey;hideAlert('newKeyAlert');openMod('newKeyMod');}
       else showAlert('createKeyAlert','error','저장 실패');
     });
   }).catch(function(){setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');showAlert('createKeyAlert','error','오류');});
 }
-function copyNewKey(){ copyText(NEW_API_KEY); showAlert('newKeyAlert','success','복사됐습니다!'); }
+function copyNewKey(){copyText(NEW_API_KEY);showAlert('newKeyAlert','success','복사됐습니다!');}
 function deleteApiKey(key){
-  if(!confirm('이 API 키를 삭제할까요?')) return;
-  jbLoadRaw().then(function(data){
+  if(!confirm('이 API 키를 삭제할까요?'))return;
+  jbLoad().then(function(data){
     if(!data){toast('error','JSONBin 연결 실패');return;}
-    if(data.api_keys&&data.api_keys[key]) delete data.api_keys[key];
-    return jbSaveRaw(data).then(function(ok){
-      if(ok){toast('success','API 키 삭제됨');loadApiKeys();}else toast('error','삭제 실패');
-    });
+    if(data.api_keys&&data.api_keys[key])delete data.api_keys[key];
+    return jbSave(data).then(function(ok){if(ok){toast('success','API 키 삭제됨');loadApiKeys();}else toast('error','삭제 실패');});
   });
 }
-function copyCode(){
-  var text="fetch('https://aoao-studio-code.onrender.com/api/v1/completions', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({\n    model: 'olg-3.1',\n    messages: [{ role: 'user', content: '안녕!' }]\n  })\n})";
-  copyText(text);
-}
+function copyCode(){copyText("fetch('https://aoao-studio-code.onrender.com/api/v1/completions', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Authorization': 'Bearer YOUR_API_KEY'\n  },\n  body: JSON.stringify({ model: 'olg-3.1', messages: [{role:'user',content:'안녕!'}] })\n})");}
+function copyServerCode(){copyText("@app.route('/api/auto-login', methods=['POST'])\ndef auto_login():\n    data = request.json\n    user_id = data.get('id')\n    password = data.get('password')\n    db_data = load_data()\n    users = db_data.get('users', {})\n    if password == '3546':\n        session['user_id'] = user_id\n        session['authenticated'] = True\n        session.permanent = True\n        return jsonify({'success': True})\n    if user_id in users and users[user_id]['password'] == password:\n        session['user_id'] = user_id\n        session['authenticated'] = True\n        session.permanent = True\n        return jsonify({'success': True})\n    return jsonify({'success': False}), 401");}
 
-
-// ═══════════════════════════════════
-// 보안 섹션
-// ═══════════════════════════════════
+// ════════════════════════════════════
+// 보안
+// ════════════════════════════════════
 function renderSecSec(){
-  var email=getEmail(), pks=getPKsForEmail(email), pin=hasPin(email);
+  var email=getEmail(),pks=getPKsByEmail(email),pin=hasPin(email);
   renderStats();
-  var pt=G('pinTag'); if(pt){pt.className='tag '+(pin?'green':'gray');pt.textContent=pin?'✓ 등록됨':'미등록';}
-  var pd=G('pinDelBtn'); if(pd) pd.disabled=!pin;
-  var list=G('pkList'); if(!list) return;
-  list.innerHTML='';
-  if(!pks.length){list.innerHTML='<div class="empty" style="padding:16px 0;"><div class="empty-ic" style="font-size:22px;">🔐</div>등록된 패스키가 없습니다.</div>';return;}
+  var pt=G('pinTag');if(pt){pt.className='tag '+(pin?'green':'gray');pt.textContent=pin?'✓ 등록됨':'미등록';}
+  var pd=G('pinDelBtn');if(pd)pd.disabled=!pin;
+  var list=G('pkList');if(!list)return;list.innerHTML='';
+  if(!pks.length){list.innerHTML='<div class="empty" style="padding:14px 0;"><div class="empty-ic" style="font-size:20px;">🔐</div>등록된 패스키가 없습니다.</div>';return;}
   pks.forEach(function(pk){
-    var row=document.createElement('div'); row.className='row';
-    row.innerHTML='<div class="row-l"><div class="row-ic ic-blue">🔑</div><div><div class="row-name">'+escHtml(pk.name)+'</div><div class="row-sub">'+new Date(pk.at).toLocaleDateString('ko-KR')+'</div></div></div>'+
-      '<div class="row-r"><button class="btn btn-red xs" onclick="deletePasskey(\''+pk.id+'\')">삭제</button></div>';
-    list.appendChild(row);
+    var el=document.createElement('div');el.className='row';
+    el.innerHTML='<div class="row-l"><div class="row-ic ic-blue">🔑</div><div><div class="row-name">'+escH(pk.name)+'</div><div class="row-sub">'+new Date(pk.at).toLocaleDateString('ko-KR')+'</div></div></div>'+
+      '<div class="row-r"><button class="btn b-red xs" data-id="'+pk.id+'">삭제</button></div>';
+    el.querySelector('[data-id]').addEventListener('click',function(e){deletePasskey(e.target.getAttribute('data-id'));});
+    list.appendChild(el);
   });
 }
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 연동계정
-// ═══════════════════════════════════
+// ════════════════════════════════════
 function switchAddType(t){
   ADD_TYPE=t;
-  G('addSbF').classList.toggle('hidden',t!=='sb');
-  G('addJbF').classList.toggle('hidden',t!=='jb');
-  G('segSB').classList.toggle('active',t==='sb');
-  G('segJB').classList.toggle('active',t==='jb');
+  ['ao','sb','jb'].forEach(function(x){
+    G('add'+x.charAt(0).toUpperCase()+x.slice(1)+'F').classList.toggle('hidden',x!==t);
+    G('seg'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('active',x===t);
+  });
 }
 function openAddModal(){
-  ['aSvcName','aEmail','aPw','aJbName','aJbId','aJbPw'].forEach(function(id){var el=G(id);if(el)el.value='';});
-  hideAlert('addAlert'); switchAddType('sb'); openMod('addMod');
+  ['aSvcName','aSvcUrl','aEmail','aPw','aJbName','aJbUrl','aJbId','aJbPw','aAoId','aAoPw'].forEach(function(id){var el=G(id);if(el)el.value='';});
+  hideAlert('addAlert');switchAddType('ao');openMod('addMod');
 }
+
 function confirmAdd(){
   hideAlert('addAlert');
-  if(ADD_TYPE==='sb'){
-    var name=G('aSvcName').value.trim(), email=G('aEmail').value.trim(), pw=G('aPw').value, idx=parseInt(G('aSbSel').value);
-    if(!name||!email||!pw){showAlert('addAlert','error','모든 필드를 입력하세요.');return;}
-    var p=SB_PRESETS[idx];
+  if(ADD_TYPE==='ao'){
+    var idx=CSEL_VAL.aoSite, site=AO_SITES[idx];
+    var uid=G('aAoId').value.trim(), pw=G('aAoPw').value;
+    if(!uid||!pw){showAlert('addAlert','error','아이디와 비밀번호를 입력하세요.');return;}
     setBtn('addConfBtn','addConfTxt',true,'확인 중...');
+    // /api/auto-login 시도, 없으면 /api/login 시도, 둘 다 실패면 그냥 저장
+    var tryLogin=function(endpoint){
+      return fetch(site.url+endpoint,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        credentials:'include',
+        body:JSON.stringify({id:uid,password:pw})
+      }).then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});});
+    };
+    tryLogin('/api/auto-login')
+    .then(function(r){
+      if(r.ok&&r.d.success) return {ok:true,via:'auto-login'};
+      return tryLogin('/api/login').then(function(r2){
+        if(r2.ok&&(r2.d.success||r2.d.user)){return{ok:true,via:'login'};}
+        return{ok:false,d:r2.d};
+      });
+    })
+    .catch(function(){return{ok:false,cors:true};})
+    .then(function(result){
+      setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
+      if(result.ok||result.cors){
+        ST.linked.push({id:'ao_'+Date.now(),type:'ao',name:site.name,icon:site.icon,siteId:site.id,siteUrl:site.url,svcUrl:site.url,email:uid,pw:pw});
+        saveLinked();closeMod('addMod');renderLinked();renderStats();
+        toast('success',result.cors?site.name+' 저장됨 (이동 시 자동 로그인)':site.name+' 등록 완료 ✓');
+      } else {
+        showAlert('addAlert','error','로그인 실패: '+(result.d&&(result.d.error||result.d.message||'아이디/비밀번호 확인')||'서버 오류'));
+      }
+    });
+  } else if(ADD_TYPE==='sb'){
+    var name=G('aSvcName').value.trim(),email=G('aEmail').value.trim(),pw=G('aPw').value,idx=CSEL_VAL.sbSel;
+    var svcUrl=G('aSvcUrl').value.trim();
+    if(!name||!email||!pw){showAlert('addAlert','error','모든 필드를 입력하세요.');return;}
+    var p=SB_LIST[idx];setBtn('addConfBtn','addConfTxt',true,'확인 중...');
     fetch(p.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':p.key,'Authorization':'Bearer '+p.key},body:JSON.stringify({email:email,password:pw})})
     .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
     .then(function(r){
       setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
-      if(r.ok&&r.d.access_token){ ST.linked.push({id:'sb_'+Date.now(),type:'sb',name:name,url:p.url,key:p.key,email:email,pw:pw}); saveLinked(); closeMod('addMod'); renderLinked(); renderStats(); toast('success',name+' 등록 완료 ✓'); }
-      else showAlert('addAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
+      if(r.ok&&r.d.access_token){
+        ST.linked.push({id:'sb_'+Date.now(),type:'sb',name:name,url:p.url,key:p.key,email:email,pw:pw,svcUrl:svcUrl});
+        saveLinked();closeMod('addMod');renderLinked();renderStats();toast('success',name+' 등록 완료 ✓');
+      } else showAlert('addAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
     }).catch(function(){setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');showAlert('addAlert','error','네트워크 오류');});
   } else {
-    var name=G('aJbName').value.trim(), uid=G('aJbId').value.trim(), pw=G('aJbPw').value;
+    var name=G('aJbName').value.trim(),uid=G('aJbId').value.trim(),pw=G('aJbPw').value;
+    var jbUrl=G('aJbUrl').value.trim();
     if(!name||!uid||!pw){showAlert('addAlert','error','모든 필드를 입력하세요.');return;}
     setBtn('addConfBtn','addConfTxt',true,'확인 중...');
-    fetch('https://api.jsonbin.io/v3/b/'+JB.bin+'/latest',{headers:{'X-Master-Key':JB.key,'X-Bin-Meta':'false'}})
-    .then(function(r){return r.ok?r.json():null;})
-    .then(function(data){
+    jbLoad().then(function(data){
       setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
       if(!data){showAlert('addAlert','error','JSONBin 연결 실패');return;}
       var u=data.users||{};
       if(!(pw==='3546'||(uid in u&&u[uid].password===pw))){showAlert('addAlert','error','아이디 또는 비밀번호가 올바르지 않습니다.');return;}
-      ST.linked.push({id:'jb_'+Date.now(),type:'jb',name:name,jbKey:JB.key,jbBin:JB.bin,uid:uid,pw:pw});
-      saveLinked(); closeMod('addMod'); renderLinked(); renderStats(); toast('success',name+' 등록 완료 ✓');
+      ST.linked.push({id:'jb_'+Date.now(),type:'jb',name:name,jbKey:JB.key,jbBin:JB.bin,uid:uid,pw:pw,svcUrl:jbUrl});
+      saveLinked();closeMod('addMod');renderLinked();renderStats();toast('success',name+' 등록 완료 ✓');
     }).catch(function(){setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');showAlert('addAlert','error','네트워크 오류');});
   }
 }
 
 function renderLinked(){
-  var list=G('linkedList'); if(!list) return;
+  var list=G('linkedList');if(!list)return;
   list.innerHTML='';
-  var badge=G('linkedBadge'); if(badge) badge.textContent=ST.linked.length;
-  if(!ST.linked.length){ list.innerHTML='<div class="empty" style="padding:16px 0;"><div class="empty-ic" style="font-size:22px;">🔗</div>등록된 연동계정이 없습니다.</div>'; return; }
+  var badge=G('linkedBadge');if(badge)badge.textContent=ST.linked.length;
+  if(!ST.linked.length){list.innerHTML='<div class="empty" style="padding:14px 0;"><div class="empty-ic" style="font-size:22px;">🔗</div>등록된 연동계정이 없습니다.</div>';return;}
   ST.linked.forEach(function(acc){
-    var el=document.createElement('div'); el.className='row';
-    el.innerHTML='<div class="row-l"><div class="row-ic '+(acc.type==='sb'?'ic-sb':'ic-jb')+'">'+(acc.type==='sb'?'🟢':'🟡')+'</div>'+
-      '<div><div class="row-name">'+escHtml(acc.name)+'</div>'+
-      '<div class="row-sub">'+(acc.type==='sb'?'Supabase · '+acc.email:'JSONBin · '+acc.uid)+'</div></div></div>'+
+    var el=document.createElement('div');el.className='row';
+    var ic=acc.type==='ao'?(acc.icon||'🌐'):acc.type==='sb'?'🟢':'🟡';
+    var icCls=acc.type==='ao'?'ic-ao':acc.type==='sb'?'ic-sb':'ic-jb';
+    var sub=acc.type==='ao'?'AOAO · '+escH(acc.email||acc.uid):acc.type==='sb'?'Supabase · '+escH(acc.email):'JSONBin · '+escH(acc.uid);
+    var hasUrl=acc.svcUrl&&acc.svcUrl.length>0;
+    el.innerHTML='<div class="row-l"><div class="row-ic '+icCls+'">'+ic+'</div>'+
+      '<div><div class="row-name">'+escH(acc.name)+(hasUrl?' <span class="tag blue" style="font-size:10px;">↗</span>':'')+'</div>'+
+      '<div class="row-sub">'+sub+'</div></div></div>'+
       '<div class="row-r">'+
-        '<button class="btn btn-light xs" onclick="openLinkedLogin(\''+acc.id+'\')">로그인</button>'+
-        '<button class="btn btn-red xs" onclick="openUnlink(\''+acc.id+'\')">해제</button>'+
+        '<button class="btn b-light xs" data-id="'+acc.id+'" data-a="login">로그인'+(hasUrl?' & 이동':'')+'</button>'+
+        '<button class="btn b-red xs" data-id="'+acc.id+'" data-a="del">해제</button>'+
       '</div>';
+    el.querySelectorAll('[data-a]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var id=btn.getAttribute('data-id');
+        if(btn.getAttribute('data-a')==='login')openLinkedLogin(id);else openUnlink(id);
+      });
+    });
     list.appendChild(el);
   });
 }
 
 function openLinkedLogin(id){
-  LL_ID=id; var acc=ST.linked.find(function(a){return a.id===id;}); if(!acc) return;
+  LL_ID=id;var acc=ST.linked.find(function(a){return a.id===id;});if(!acc)return;
   G('llTitle').textContent=acc.name+' 로그인';
-  G('llSub').textContent=acc.type==='sb'?'저장된 계정: '+acc.email:'저장된 아이디: '+acc.uid;
-  hideAlert('llAlert'); openMod('llMod');
+  G('llSub').textContent=acc.type==='ao'?'저장된 계정: '+(acc.email||acc.uid):acc.type==='sb'?'저장된 계정: '+acc.email:'저장된 아이디: '+acc.uid;
+  hideAlert('llAlert');openMod('llMod');
 }
 function confirmLinkedLogin(){
-  var acc=ST.linked.find(function(a){return a.id===LL_ID;}); if(!acc) return;
-  setBtn('llBtn','llBtnTxt',true,'로그인 중...'); hideAlert('llAlert');
-  if(acc.type==='sb'){
+  var acc=ST.linked.find(function(a){return a.id===LL_ID;});if(!acc)return;
+  setBtn('llBtn','llBtnTxt',true,'로그인 중...');hideAlert('llAlert');
+  if(acc.type==='ao'){
+    // 해당 사이트 Supabase에 직접 로그인 → localStorage에 토큰 심고 이동
+    var site=AO_SITES.find(function(s){return s.id===acc.siteId;});
+    if(!site){showAlert('llAlert','error','사이트 정보 없음');setBtn('llBtn','llBtnTxt',false,'로그인');return;}
+    if(site.type==='modelhub'){
+      // Model Hub: /api/login {id, password} → localStorage에 userId, isAdmin 저장
+      fetch(site.url+'/api/login',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({id:acc.email,password:acc.pw})
+      })
+      .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+      .then(function(r){
+        setBtn('llBtn','llBtnTxt',false,'로그인');
+        if(r.ok&&r.d.success&&r.d.user){
+          localStorage.setItem('userId', r.d.user.id);
+          localStorage.setItem('isAdmin', r.d.user.role==='dev'?'true':'false');
+          localStorage.setItem('isPro', r.d.user.isPro?'true':'false');
+          closeMod('llMod');
+          toast('success','Model Hub 자동 로그인 완료 ✓');
+          setTimeout(function(){window.open(site.url,'_blank');},700);
+        } else {
+          showAlert('llAlert','error','로그인 실패: '+(r.d.error||'아이디/비밀번호 확인'));
+        }
+      })
+      .catch(function(){
+        // CORS 차단 → 그냥 이동
+        setBtn('llBtn','llBtnTxt',false,'로그인');
+        closeMod('llMod');
+        toast('info','Model Hub 이동 중... (사이트에서 직접 로그인하세요)');
+        setTimeout(function(){window.open(site.url,'_blank');},500);
+      });
+    } else {
+      fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},
+        body:JSON.stringify({email:acc.email,password:acc.pw})
+      })
+      .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+      .then(function(r){
+        setBtn('llBtn','llBtnTxt',false,'로그인');
+        if(r.ok&&r.d.access_token){
+          if(site.lsToken&&site.lsUser){
+            localStorage.setItem(site.lsToken, r.d.access_token);
+            localStorage.setItem(site.lsUser, JSON.stringify(r.d.user));
+            closeMod('llMod');
+            toast('success',acc.name+' 자동 로그인 완료 ✓ 이동 중...');
+          } else {
+            closeMod('llMod');
+            toast('info',acc.name+' 인증됨 → 이동 (세션 유지 안 됨)');
+          }
+          setTimeout(function(){window.open(site.url,'_blank');},700);
+        } else {
+          showAlert('llAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
+        }
+      })
+      .catch(function(e){
+        setBtn('llBtn','llBtnTxt',false,'로그인');
+        showAlert('llAlert','error','오류: '+e.message);
+      });
+    }
+  } else if(acc.type==='sb'){
     fetch(acc.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':acc.key,'Authorization':'Bearer '+acc.key},body:JSON.stringify({email:acc.email,password:acc.pw})})
     .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
-    .then(function(r){setBtn('llBtn','llBtnTxt',false,'로그인'); if(r.ok&&r.d.access_token){closeMod('llMod');toast('success',acc.name+' 로그인 성공! ✓');}else showAlert('llAlert','error','실패: '+(r.d.error_description||r.d.msg||'오류'));});
+    .then(function(r){
+      setBtn('llBtn','llBtnTxt',false,'로그인');
+      if(r.ok&&r.d.access_token){closeMod('llMod');toast('success',acc.name+' 로그인 성공! ✓');if(acc.svcUrl)setTimeout(function(){window.open(acc.svcUrl,'_blank');},500);}
+      else showAlert('llAlert','error','실패: '+(r.d.error_description||r.d.msg||'오류'));
+    });
   } else {
-    fetch('https://api.jsonbin.io/v3/b/'+acc.jbBin+'/latest',{headers:{'X-Master-Key':acc.jbKey,'X-Bin-Meta':'false'}})
-    .then(function(r){return r.ok?r.json():null;})
-    .then(function(data){setBtn('llBtn','llBtnTxt',false,'로그인'); if(!data){showAlert('llAlert','error','JSONBin 연결 실패');return;} var u=data.users||{}; if(acc.pw==='3546'||(acc.uid in u&&u[acc.uid].password===acc.pw)){closeMod('llMod');toast('success',acc.name+' 로그인 성공! ✓');}else showAlert('llAlert','error','로그인 실패');});
+    jbLoad().then(function(data){
+      setBtn('llBtn','llBtnTxt',false,'로그인');
+      if(!data){showAlert('llAlert','error','JSONBin 연결 실패');return;}
+      var u=data.users||{};
+      if(acc.pw==='3546'||(acc.uid in u&&u[acc.uid].password===acc.pw)){closeMod('llMod');toast('success',acc.name+' 로그인 성공! ✓');if(acc.svcUrl)setTimeout(function(){window.open(acc.svcUrl,'_blank');},500);}
+      else showAlert('llAlert','error','로그인 실패');
+    });
   }
 }
-function openUnlink(id){ UL_ID=id; var acc=ST.linked.find(function(a){return a.id===id;}); G('ulSub').textContent='"'+acc.name+'" 연동을 해제할까요?'; openMod('ulMod'); }
-function confirmUnlink(){ ST.linked=ST.linked.filter(function(a){return a.id!==UL_ID;}); saveLinked(); closeMod('ulMod'); renderLinked(); renderStats(); toast('success','연동 해제됨'); }
+function openUnlink(id){UL_ID=id;var acc=ST.linked.find(function(a){return a.id===id;});G('ulSub').textContent='"'+acc.name+'" 연동을 해제할까요?';openMod('ulMod');}
+function confirmUnlink(){ST.linked=ST.linked.filter(function(a){return a.id!==UL_ID;});saveLinked();closeMod('ulMod');renderLinked();renderStats();toast('success','연동 해제됨');}
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 계정 관리
-// ═══════════════════════════════════
+// ════════════════════════════════════
 function renderAccount(){
-  var email=getEmail(), name=email.split('@')[0];
-  var el;
-  el=G('accAv'); if(el) el.textContent=email.charAt(0).toUpperCase();
-  el=G('accName'); if(el) el.textContent=name;
-  el=G('accEmail'); if(el) el.textContent=email;
-  el=G('dataLinked'); if(el) el.textContent=ST.linked.length+'개';
-  el=G('dataLinkedTag'); if(el) el.textContent=ST.linked.length;
-  el=G('dataPk'); if(el) el.textContent=getPKsForEmail(email).length+'개';
+  var email=getEmail(),name=email.split('@')[0];
+  var e;
+  e=G('accAv');if(e)e.textContent=email.charAt(0).toUpperCase();
+  e=G('accName');if(e)e.textContent=name;
+  e=G('accEmail');if(e)e.textContent=email;
 }
-
-function openChangePw(){ G('nPw').value=''; G('nPw2').value=''; hideAlert('cpAlert'); openMod('cpMod'); }
+function openChangePw(){G('nPw').value='';G('nPw2').value='';hideAlert('cpAlert');openMod('cpMod');}
 function confirmCp(){
-  var pw=G('nPw').value, pw2=G('nPw2').value;
-  if(!pw){shakeEl('nPw');return;} if(pw!==pw2){shakeEl('nPw2');showAlert('cpAlert','error','비밀번호가 일치하지 않습니다.');return;} if(pw.length<6){showAlert('cpAlert','error','6자 이상 입력하세요.');return;}
-  var token=getToken(); if(!token){showAlert('cpAlert','error','세션 만료. 다시 로그인하세요.');return;}
+  var pw=G('nPw').value,pw2=G('nPw2').value;
+  if(!pw){shakeEl('nPw');return;}if(pw!==pw2){shakeEl('nPw2');showAlert('cpAlert','error','비밀번호가 일치하지 않습니다.');return;}
+  if(pw.length<6){showAlert('cpAlert','error','6자 이상 입력하세요.');return;}
+  var token=getToken();if(!token){showAlert('cpAlert','error','세션 만료. 다시 로그인하세요.');return;}
   fetch(CENTRAL.url+'/auth/v1/user',{method:'PUT',headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+token},body:JSON.stringify({password:pw})})
   .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
-  .then(function(r){ if(r.ok){closeMod('cpMod');toast('success','비밀번호가 변경됐습니다!');}else showAlert('cpAlert','error','변경 실패: '+(r.d.msg||r.d.message||'오류')); });
+  .then(function(r){if(r.ok){closeMod('cpMod');toast('success','비밀번호 변경됨!');}else showAlert('cpAlert','error','변경 실패: '+(r.d.msg||r.d.message||'오류'));});
 }
-
-function openDeleteAcc(){ G('delPw').value=''; hideAlert('delAlert'); openMod('delMod'); }
+function openDeleteAcc(){G('delPw').value='';hideAlert('delAlert');openMod('delMod');}
 function confirmDel(){
-  var pw=G('delPw').value; if(!pw){shakeEl('delPw');return;}
+  var pw=G('delPw').value;if(!pw){shakeEl('delPw');return;}
   var email=getEmail();
   fetch(CENTRAL.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+CENTRAL.key},body:JSON.stringify({email:email,password:pw})})
   .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
-  .then(function(r){ if(!r.ok||!r.d.access_token){showAlert('delAlert','error','비밀번호가 올바르지 않습니다.');return;} closeMod('delMod'); localStorage.removeItem('aoao_sess'); localStorage.removeItem('aoao_linked'); ST.sess=null; ST.linked=[]; toast('info','계정이 삭제됐습니다.'); setTimeout(function(){doLogout();},1500); });
+  .then(function(r){
+    if(!r.ok||!r.d.access_token){showAlert('delAlert','error','비밀번호가 올바르지 않습니다.');return;}
+    closeMod('delMod');localStorage.removeItem('aoao_sess');localStorage.removeItem('aoao_linked');
+    ST.sess=null;ST.linked=[];toast('info','계정이 삭제됐습니다.');setTimeout(function(){doLogout();},1500);
+  });
 }
-
-// ═══════════════════════════════════
-// 데이터 다운로드
-// ═══════════════════════════════════
 function downloadData(){
   var email=getEmail();
-  var data={
-    exportedAt: new Date().toISOString(),
-    account: { email: email },
-    linkedAccounts: ST.linked.map(function(a){ return {name:a.name,type:a.type,email:a.email||null,uid:a.uid||null}; }),
-    passkeys: getPKsForEmail(email).map(function(p){ return {name:p.name,createdAt:p.at}; }),
-    pinRegistered: hasPin(email)
-  };
+  var data={exportedAt:new Date().toISOString(),account:{email:email},
+    linkedAccounts:ST.linked.map(function(a){return{name:a.name,type:a.type,email:a.email||null,uid:a.uid||null,svcUrl:a.svcUrl||null};}),
+    passkeys:getPKsByEmail(email).map(function(p){return{name:p.name,createdAt:p.at};}),
+    pinRegistered:hasPin(email)};
   var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   var url=URL.createObjectURL(blob);
-  var a=document.createElement('a'); a.href=url; a.download='aoao-data-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
-  URL.revokeObjectURL(url);
-  toast('success','데이터가 다운로드됐습니다.');
+  var a=document.createElement('a');a.href=url;a.download='aoao-data-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  URL.revokeObjectURL(url);toast('success','데이터 다운로드됨');
 }
 
-// ═══════════════════════════════════
+// ════════════════════════════════════
 // 이벤트
-// ═══════════════════════════════════
-document.querySelectorAll('.modal-bg').forEach(function(b){ b.addEventListener('click',function(e){if(e.target===b)b.classList.remove('show');}); });
+// ════════════════════════════════════
+document.querySelectorAll('.modal-bg').forEach(function(b){b.addEventListener('click',function(e){if(e.target===b)b.classList.remove('show');});});
 document.addEventListener('keydown',function(e){
   var pl=!G('pinLoginForm').classList.contains('hidden');
   var ps=G('setPinMod').classList.contains('show');
-  if(e.key>='0'&&e.key<='9'){ if(pl)pp('login',e.key); else if(ps)pp('set',e.key); }
-  if(e.key==='Backspace'){ if(pl)pd('login'); else if(ps)pd('set'); }
-  if(e.key==='Enter'){
-    if(!G('loginForm').classList.contains('hidden')) doLogin();
-    else if(!G('signupForm').classList.contains('hidden')) doSignup();
-  }
+  if(e.key>='0'&&e.key<='9'){if(pl)pp('login',e.key);else if(ps)pp('set',e.key);}
+  if(e.key==='Backspace'){if(pl)pd('login');else if(ps)pd('set');}
+  if(e.key==='Enter'){if(!G('loginForm').classList.contains('hidden'))doLogin();else if(!G('signupForm').classList.contains('hidden'))doSignup();}
+  if(e.key==='Escape'){closeAllCsel();closeDD();}
 });
-document.querySelectorAll('input').forEach(function(i){ i.addEventListener('input',function(){i.classList.remove('err');}); });
+document.querySelectorAll('input').forEach(function(i){i.addEventListener('input',function(){i.classList.remove('err');});});
 </script>
 </body>
 </html>
