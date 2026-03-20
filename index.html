@@ -1209,7 +1209,7 @@ var AO_SITES=[
   {id:'zeta',name:'AI Girlfriend',icon:'💕',url:'https://aoao-studio-zeta.onrender.com',authUrl:'https://aoao-studio-zeta.onrender.com/auth.html',type:'supabase',sbUrl:'https://twjzcstibzdftsaruhnp.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk',lsToken:'z-token',lsUser:'z-user'},
   {id:'typo',name:'Type Studio',icon:'✍️',url:'https://aoao-studio-typo.onrender.com',authUrl:'https://aoao-studio-typo.onrender.com/auth.html',type:'supabase',sbUrl:'https://mthjjyosovblpsegguju.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I',lsToken:'sb_token',lsUser:'sb_user'},
   {id:'game',name:'Game Studio',icon:'🎮',url:'https://aoao-gmae-studio.onrender.com',authUrl:'https://aoao-gmae-studio.onrender.com/auth.html',type:'supabase_nosession',sbUrl:'https://alnazztrdhpkyclkaklv.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA',lsToken:null,lsUser:null},
-  {id:'modelhub',name:'Model Hub',icon:'🤖',url:'https://aoao-studio-code.onrender.com',authUrl:'https://aoao-studio-code.onrender.com/auth.html',type:'modelhub'}
+  {id:'modelhub',name:'Model Hub',icon:'🤖',url:'https://aoao-studio-code.onrender.com',authUrl:'https://aoao-studio-code.onrender.com/auth',type:'supabase',sbUrl:'https://qtqsjphpfymcbgmlkuas.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cXNqcGhwZnltY2JnbWxrdWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2ODgzNTYsImV4cCI6MjA4OTI2NDM1Nn0.WUYSG65UdFLfM3y4W7vkoK95h08X3YU3umT6MQSmuaw',lsToken:'mh-token',lsUser:'mh-user'}
 ];
 var JB={key:(function(){return[36,50,97,36,49,48,36,57,71,46,103,90,117,50,115,122,79,97,50,110,86,106,110,48,108,82,84,84,117,103,66,118,101,76,122,98,90,103,83,82,74,83,81,121,120,115,77,66,75,84,76,100,97,99,116,51,46,71,66,71].map(function(n){return String.fromCharCode(n);}).join('');}()),bin:'6937b89b43b1c97be9e1328c'};
 var AOAO_SERVER='https://aoao-studio-code.onrender.com';
@@ -1492,12 +1492,7 @@ function launchSite(id){
   var acc=ST.linked.find(function(a){return a.siteId===id;});
   addRecentVisit(id);
   if(acc){
-    if(site&&site.type==='modelhub'){
-      toast('info','Model Hub는 보안상 자동 로그인이 불가합니다. 사이트에서 직접 로그인해주세요.');
-      setTimeout(function(){window.open(site.url,'_blank');},600);
-    } else {
-      openLinkedLogin(acc.id);
-    }
+    openLinkedLogin(acc.id);
   } else {
     if(site)window.open(site.url,'_blank');
   }
@@ -2281,17 +2276,7 @@ function confirmAdd(){
     var idx=CSEL_VAL.aoSite,site=AO_SITES[idx];
     var email=G('aAoId').value.trim(),pw=G('aAoPw').value;
     if(!email||!pw){showAlert('addAlert','error','이메일과 비밀번호를 입력하세요.');return;}
-    if(site.type==='modelhub'){
-      setBtn('addConfBtn','addConfTxt',true,'확인 중...');
-      jbLoad().then(function(data){
-        setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
-        if(!data){showAlert('addAlert','error','JSONBin 연결 실패');return;}
-        var users=data.users||{};
-        if(!(pw===JB_ADMIN_PW||(email in users&&users[email].password===pw))){showAlert('addAlert','error','아이디 또는 비밀번호가 올바르지 않습니다.');return;}
-        ST.linked.push({id:'ao_'+Date.now(),type:'ao',siteId:site.id,name:site.name,icon:site.icon,siteUrl:site.url,authUrl:site.authUrl,email:email,pw:pw});
-        saveLinked();closeMod('addMod');renderLinked();renderLauncher();renderStats();toast('success',site.name+' 등록 완료 ✓');
-      });
-    } else {
+    if(site.type==='modelhub'||site.type==='supabase'||site.type==='supabase_nosession'){
       setBtn('addConfBtn','addConfTxt',true,'확인 중...');
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},body:JSON.stringify({email:email,password:pw})})
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
@@ -2351,24 +2336,10 @@ function renderLinked(){
 }
 function openLinkedLogin(id){
   LL_ID=id;var acc=ST.linked.find(function(a){return a.id===id;});if(!acc)return;
-  var site=acc.type==='ao'?AO_SITES.find(function(s){return s.id===acc.siteId;}):null;
-  var isModelhub=site&&site.type==='modelhub';
-  G('llTitle').textContent=acc.name+(isModelhub?' 이동':'로그인');
+  G('llTitle').textContent=acc.name+' 로그인';
   G('llSub').textContent=(acc.email||acc.uid||'저장된 계정');
-  // modelhub는 보안 안내 표시
-  if(isModelhub){
-    showAlert('llAlert','warn',
-      '⚠️ <b>보안 제한</b><br>'+
-      'Model Hub는 서버 세션 방식이라 자동 로그인이 불가능합니다.<br>'+
-      '사이트 이동 후 직접 로그인해주세요.<br>'+
-      '<small style="opacity:.8">저장된 아이디: '+escH(acc.email||acc.uid||'-')+'</small>'
-    );
-    // 버튼 텍스트 변경
-    var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">사이트로 이동</span>';
-  } else {
-    hideAlert('llAlert');
-    var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">로그인 & 이동</span>';
-  }
+  hideAlert('llAlert');
+  var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">로그인 & 이동</span>';
   openMod('llMod');
 }
 function confirmLinkedLogin(){
@@ -2377,13 +2348,7 @@ function confirmLinkedLogin(){
   if(acc.type==='ao'){
     var site=AO_SITES.find(function(s){return s.id===acc.siteId;});
     if(!site){showAlert('llAlert','error','사이트 정보 없음');setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');return;}
-    if(site.type==='modelhub'){
-      // 보안상 크로스 도메인 자동 로그인 불가 → 그냥 사이트로 이동
-      setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');
-      closeMod('llMod');
-      toast('info','Model Hub로 이동합니다. 사이트에서 직접 로그인해주세요.');
-      setTimeout(function(){window.open(site.url,'_blank');},400);
-    } else {
+    if(site.type==='modelhub'||site.type==='supabase'||site.type==='supabase_nosession'){
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},body:JSON.stringify({email:acc.email,password:acc.pw})})
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
       .then(function(r){
