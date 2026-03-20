@@ -1784,6 +1784,8 @@ function markNoticeRead(){}
 // ════════════════════════════════════
 // API 키 (JSONBin)
 // ════════════════════════════════════
+function jbLoad(){return fetch('https://api.jsonbin.io/v3/b/'+JB.bin+'/latest',{headers:{'X-Master-Key':JB.key,'X-Bin-Meta':'false'}}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});}
+function jbSave(data){return fetch('https://api.jsonbin.io/v3/b/'+JB.bin,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JB.key},body:JSON.stringify(data)}).then(function(r){return r.ok;}).catch(function(){return false;});}
 function genKey(){var c='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',r='';for(var i=0;i<32;i++)r+=c[Math.floor(Math.random()*c.length)];return'aoao-'+r;}
 
 function loadApiKeys(){
