@@ -60,7 +60,75 @@ body::before{
 #loginPage{display:none;align-items:center;justify-content:center;padding:24px;}
 #loginPage.show{display:flex;min-height:100vh;}
 
-.login-wrap{width:100%;max-width:400px;}
+/* 2컬럼 레이아웃 */
+.login-outer{
+  display:flex;align-items:center;gap:64px;
+  width:100%;max-width:860px;
+}
+
+/* 왼쪽 소개 영역 */
+.login-intro{
+  flex:1;min-width:0;
+  animation:up .6s ease both;
+}
+.intro-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.2);
+  border-radius:20px;padding:5px 12px;
+  font-size:11px;font-weight:700;color:var(--blue);
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.intro-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s ease infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.intro-title{
+  font-size:36px;font-weight:900;line-height:1.15;
+  color:var(--text);margin-bottom:14px;letter-spacing:-.03em;
+}
+.intro-title span{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.intro-desc{
+  font-size:15px;color:var(--mid);line-height:1.7;
+  margin-bottom:28px;max-width:340px;
+}
+.intro-features{display:flex;flex-direction:column;gap:10px;}
+.intro-feat{
+  display:flex;align-items:center;gap:11px;
+  font-size:13px;font-weight:500;color:var(--mid);
+}
+.feat-ic{
+  width:32px;height:32px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.feat-ic.blue{background:var(--blue-l);}
+.feat-ic.green{background:var(--green-bg);}
+.feat-ic.yellow{background:var(--yellow-bg);}
+.feat-ic.purple{background:rgba(139,92,246,.1);}
+.intro-services{
+  display:flex;gap:8px;margin-top:28px;flex-wrap:wrap;
+}
+.intro-svc{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.7);border:1px solid var(--border);
+  border-radius:20px;padding:5px 11px;
+  font-size:11px;font-weight:600;color:var(--mid);
+  backdrop-filter:blur(8px);
+}
+
+/* 오른쪽 카드 */
+.login-wrap{width:100%;max-width:380px;flex-shrink:0;}
+
+@media(max-width:720px){
+  .login-outer{flex-direction:column;gap:28px;max-width:400px;}
+  .login-intro{text-align:center;}
+  .intro-title{font-size:26px;}
+  .intro-desc{max-width:100%;}
+  .intro-features{display:none;}
+  .intro-services{justify-content:center;}
+  .login-wrap{max-width:100%;}
+}
 .login-brand{text-align:center;margin-bottom:24px;animation:up .5s ease both;}
 .login-brand-mark{
   display:inline-flex;align-items:center;justify-content:center;
@@ -423,11 +491,55 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
 
 <!-- ════════════ LOGIN PAGE ════════════ -->
 <div class="page" id="loginPage">
-  <div class="login-wrap">
-    <div class="login-brand">
-      <div class="login-brand-mark">A</div>
-      <div class="login-brand-name">AOAO Studio</div>
+  <div class="login-outer">
+
+    <!-- 왼쪽 소개 -->
+    <div class="login-intro">
+      <div class="intro-badge">
+        <span class="intro-badge-dot"></span>
+        AOAO Studio
+      </div>
+      <div class="intro-title">
+        모든 서비스,<br>
+        <span>하나의 계정으로</span>
+      </div>
+      <div class="intro-desc">
+        중앙계정 하나로 AI Girlfriend, Type Studio,
+        Game Studio, Model Hub에 원클릭 로그인하세요.
+        패스키와 PIN으로 더 빠르고 안전하게.
+      </div>
+      <div class="intro-features">
+        <div class="intro-feat">
+          <div class="feat-ic blue">🔐</div>
+          <div><b>패스키 & PIN</b> — 비밀번호 없이 생체인식으로 빠른 로그인</div>
+        </div>
+        <div class="intro-feat">
+          <div class="feat-ic green">🔗</div>
+          <div><b>원클릭 이동</b> — 연동 사이트에 자동 로그인 후 바로 이동</div>
+        </div>
+        <div class="intro-feat">
+          <div class="feat-ic yellow">🔑</div>
+          <div><b>API 키 관리</b> — AOAO AI 모델 API를 한 곳에서 관리</div>
+        </div>
+        <div class="intro-feat">
+          <div class="feat-ic purple">📋</div>
+          <div><b>활동 로그</b> — 모든 기기에서의 로그인 기록 확인</div>
+        </div>
+      </div>
+      <div class="intro-services">
+        <div class="intro-svc">💕 AI Girlfriend</div>
+        <div class="intro-svc">✍️ Type Studio</div>
+        <div class="intro-svc">🎮 Game Studio</div>
+        <div class="intro-svc">🤖 Model Hub</div>
+      </div>
     </div>
+
+    <!-- 오른쪽 로그인 카드 -->
+    <div class="login-wrap">
+      <div class="login-brand" style="display:none;">
+        <div class="login-brand-mark">A</div>
+        <div class="login-brand-name">AOAO Studio</div>
+      </div>
     <div class="login-card">
       <div class="ltabs">
         <button class="ltab active" id="tL" onclick="switchTab('login')">로그인</button>
@@ -449,7 +561,6 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
           <button class="btn btn-dark" id="bioBtn" onclick="doBioLogin()">🔐 생체인식</button>
           <button class="btn btn-light" onclick="goPinLogin()">🔢 PIN</button>
         </div>
-        <div style="text-align:center;margin-top:7px;font-size:11px;color:var(--muted);">Windows Hello · Touch ID · Face ID (HTTPS 필요)</div>
         <div class="alert" id="loginAlert"></div>
       </div>
 
@@ -494,8 +605,9 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
         <div style="font-size:11px;color:var(--muted)">대시보드로 이동 중...</div>
       </div>
     </div>
-  </div>
-</div>
+    </div><!-- /login-wrap -->
+  </div><!-- /login-outer -->
+</div><!-- /loginPage -->
 
 <!-- ════════════ DASHBOARD PAGE ════════════ -->
 <div class="page" id="dashPage">
@@ -631,7 +743,6 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
           <button class="btn btn-blue sm" id="createKeyBtn" onclick="createApiKey()">+ 생성</button>
         </div>
         <div class="panel-body">
-          <div class="alert info show" style="margin-bottom:12px;font-size:12px;">JSONBin에 저장됩니다 · <code style="font-family:JetBrains Mono,monospace;">Bearer YOUR_API_KEY</code> 형식으로 사용</div>
           <div id="apiKeyList"><div class="loading"><div class="spi-b"></div>불러오는 중...</div></div>
           <div class="alert" id="apiAlert" style="margin-top:10px;"></div>
         </div>
@@ -661,7 +772,6 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
           <button class="btn btn-blue sm" id="bioAddBtn" onclick="doRegisterPasskey()">+ 추가</button>
         </div>
         <div class="panel-body">
-          <div class="alert warn show" style="margin-bottom:12px;font-size:12px;">⚠️ HTTPS 환경에서만 등록·사용 가능합니다.</div>
           <div id="pkList"></div>
           <div class="alert" id="bioAlert" style="margin-top:10px;"></div>
         </div>
@@ -925,6 +1035,15 @@ document.addEventListener('DOMContentLoaded',function(){
   if(!window.PublicKeyCredential){var b=G('bioBtn');if(b){b.disabled=true;b.textContent='🚫 미지원';}}
   if(ST.sess&&ST.sess.access_token){showPage('dashPage');renderDash();}
   else showPage('loginPage');
+  // 5분마다 세션 만료 체크
+  setInterval(function(){
+    if(ST.sess){
+      var t=getToken();
+      if(!t&&document.getElementById('dashPage').classList.contains('show')){
+        toast('error','세션이 만료됐습니다.');setTimeout(doLogout,1500);
+      }
+    }
+  },300000);
 });
 
 // ════════════════════════════════════
@@ -1017,7 +1136,23 @@ async function dbLoadActivityLogs(){
 function saveLinked(){localStorage.setItem('aoao_linked',JSON.stringify(ST.linked));}
 function saveProfile(){localStorage.setItem('aoao_profile',JSON.stringify(ST.profile));}
 function getEmail(){return ST.sess&&ST.sess.user&&ST.sess.user.email||'';}
-function getToken(){return ST.sess&&ST.sess.access_token||'';}
+function getToken(){
+  if(!ST.sess||!ST.sess.access_token) return '';
+  // JWT exp 체크
+  try{
+    var payload=JSON.parse(atob(ST.sess.access_token.split('.')[1]));
+    if(payload.exp&&payload.exp*1000<Date.now()){
+      // 만료 → 세션 클리어
+      ST.sess=null;localStorage.removeItem('aoao_sess');
+      if(document.getElementById('dashPage')&&document.getElementById('dashPage').classList.contains('show')){
+        toast('error','세션이 만료됐습니다. 다시 로그인해주세요.');
+        setTimeout(doLogout,1500);
+      }
+      return '';
+    }
+  }catch(e){}
+  return ST.sess.access_token;
+}
 function setBtn(bid,tid,on,lbl){var b=G(bid);if(!b)return;b.disabled=on;b.innerHTML=on?'<div class="spi"></div><span>'+lbl+'</span>':'<span id="'+tid+'">'+lbl+'</span>';}
 function buf2b64(buf){return btoa(String.fromCharCode.apply(null,new Uint8Array(buf)));}
 function b642buf(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a.buffer;}
@@ -1247,9 +1382,36 @@ function goPwLogin(){G('loginForm').classList.remove('hidden');G('pinLoginForm')
 async function handlePinLogin(pin){
   hideAlert('pinLoginAlert');
   var email=G('lEmail').value.trim();
+  // 브루트포스 방지
+  var lockKey='aoao_pin_lock_'+btoa(email.slice(0,20));
+  var lockData=JSON.parse(localStorage.getItem(lockKey)||'{"count":0,"until":0}');
+  if(lockData.until>Date.now()){
+    var sec=Math.ceil((lockData.until-Date.now())/1000);
+    dotState('login','error');
+    showAlert('pinLoginAlert','error','⛔ 잠금 중 — '+sec+'초 후 다시 시도하세요.');
+    setTimeout(function(){dotState('login','');updDots('login');},500);
+    return;
+  }
   var ok=await verifyPin(pin,email);
-  if(ok){dotState('login','ok');setTimeout(function(){var s=getPinSess(email);if(s){saveSess(s);logActivity('pin_login');dbLogActivity('pin_login').catch(function(){});showLoginSc(email);}else{showAlert('pinLoginAlert','error','세션 만료. 비밀번호로 다시 로그인하세요.');dotState('login','');updDots('login');goPwLogin();}},400);}
-  else{dotState('login','error');setTimeout(function(){dotState('login','');updDots('login');showAlert('pinLoginAlert','error','PIN이 올바르지 않습니다.');},500);}
+  if(ok){
+    localStorage.removeItem(lockKey);
+    dotState('login','ok');
+    setTimeout(function(){
+      var s=getPinSess(email);
+      if(s){saveSess(s);logActivity('pin_login');dbLogActivity('pin_login').catch(function(){});showLoginSc(email);}
+      else{showAlert('pinLoginAlert','error','세션 만료. 비밀번호로 다시 로그인하세요.');dotState('login','');updDots('login');goPwLogin();}
+    },400);
+  } else {
+    lockData.count=(lockData.count||0)+1;
+    if(lockData.count>=5){lockData.until=Date.now()+30000;lockData.count=0;}
+    localStorage.setItem(lockKey,JSON.stringify(lockData));
+    var remaining=5-lockData.count;
+    dotState('login','error');
+    setTimeout(function(){
+      dotState('login','');updDots('login');
+      showAlert('pinLoginAlert','error',remaining>0?'PIN이 올바르지 않습니다. ('+remaining+'회 남음)':'PIN이 올바르지 않습니다.');
+    },500);
+  }
 }
 function openSetPin(){PIN_STEP=1;PIN_FIRST='';PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 설정';G('setPinS').textContent='사용할 4자리 PIN을 입력하세요';hideAlert('setPinAlert');openMod('setPinMod');}
 async function handlePinSet(pin){
@@ -1320,6 +1482,8 @@ async function doBioLogin(){
 function doLogin(){
   var email=G('lEmail').value.trim(),pw=G('lPw').value;
   if(!email){shakeEl('lEmail');return;}if(!pw){shakeEl('lPw');return;}
+  if(email.length>254||pw.length>128){showAlert('loginAlert','error','입력값이 너무 깁니다.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){shakeEl('lEmail');showAlert('loginAlert','error','올바른 이메일 형식을 입력하세요.');return;}
   setBtn('loginBtn','lBtnTxt',true,'확인 중...');hideAlert('loginAlert');
   fetch(CENTRAL.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+CENTRAL.key},body:JSON.stringify({email:email,password:pw})})
   .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
@@ -1409,7 +1573,14 @@ function loadNotices(){
 // ════════════════════════════════════
 function jbLoad(){return fetch('https://api.jsonbin.io/v3/b/'+JB.bin+'/latest',{headers:{'X-Master-Key':JB.key,'X-Bin-Meta':'false'}}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});}
 function jbSave(data){return fetch('https://api.jsonbin.io/v3/b/'+JB.bin,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JB.key},body:JSON.stringify(data)}).then(function(r){return r.ok;}).catch(function(){return false;});}
-function genKey(){var c='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',r='';for(var i=0;i<32;i++)r+=c[Math.floor(Math.random()*c.length)];return'aoao-'+r;}
+function genKey(){
+  // crypto.getRandomValues 기반 강한 키 생성
+  var arr=new Uint8Array(32);
+  crypto.getRandomValues(arr);
+  var hex=Array.from(arr).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+  var ts=Date.now().toString(36);
+  return'aoao-'+ts+'-'+hex;
+}
 
 function loadApiKeys(){
   var list=G('apiKeyList');if(!list)return;
