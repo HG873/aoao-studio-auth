@@ -1147,13 +1147,7 @@ function launchSite(id){
   var site=AO_SITES.find(function(s){return s.id===id;});
   var acc=ST.linked.find(function(a){return a.siteId===id;});
   if(acc){
-    if(site&&site.type==='modelhub'){
-      // 보안상 자동 로그인 불가 → 바로 이동
-      toast('info','Model Hub는 보안상 자동 로그인이 불가합니다. 사이트에서 직접 로그인해주세요.');
-      setTimeout(function(){window.open(site.url,'_blank');},600);
-    } else {
-      openLinkedLogin(acc.id);
-    }
+    openLinkedLogin(acc.id);
   } else {
     if(site)window.open(site.url,'_blank');
   }
@@ -1586,23 +1580,10 @@ function renderLinked(){
 function openLinkedLogin(id){
   LL_ID=id;var acc=ST.linked.find(function(a){return a.id===id;});if(!acc)return;
   var site=acc.type==='ao'?AO_SITES.find(function(s){return s.id===acc.siteId;}):null;
-  var isModelhub=site&&site.type==='modelhub';
-  G('llTitle').textContent=acc.name+(isModelhub?' 이동':'로그인');
+  G('llTitle').textContent=acc.name+' 로그인';
   G('llSub').textContent=(acc.email||acc.uid||'저장된 계정');
-  // modelhub는 보안 안내 표시
-  if(isModelhub){
-    showAlert('llAlert','warn',
-      '⚠️ <b>보안 제한</b><br>'+
-      'Model Hub는 서버 세션 방식이라 자동 로그인이 불가능합니다.<br>'+
-      '사이트 이동 후 직접 로그인해주세요.<br>'+
-      '<small style="opacity:.8">저장된 아이디: '+escH(acc.email||acc.uid||'-')+'</small>'
-    );
-    // 버튼 텍스트 변경
-    var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">사이트로 이동</span>';
-  } else {
-    hideAlert('llAlert');
-    var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">로그인 & 이동</span>';
-  }
+  hideAlert('llAlert');
+  var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">로그인 & 이동</span>';
   openMod('llMod');
 }
 function confirmLinkedLogin(){
@@ -1612,11 +1593,33 @@ function confirmLinkedLogin(){
     var site=AO_SITES.find(function(s){return s.id===acc.siteId;});
     if(!site){showAlert('llAlert','error','사이트 정보 없음');setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');return;}
     if(site.type==='modelhub'){
-      // 보안상 크로스 도메인 자동 로그인 불가 → 그냥 사이트로 이동
-      setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');
-      closeMod('llMod');
-      toast('info','Model Hub로 이동합니다. 사이트에서 직접 로그인해주세요.');
-      setTimeout(function(){window.open(site.url,'_blank');},400);
+      // /api/login 호출 → auth.html?type=modelhub&uid=...&redirect=/ 경유
+      fetch(site.url+'/api/login',{
+        method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',
+        body:JSON.stringify({id:acc.email,password:acc.pw})
+      })
+      .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+      .then(function(r){
+        setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');
+        if(r.ok&&r.d.success&&r.d.user){
+          var uid=r.d.user.id||r.d.user.userId||acc.email;
+          var adm=(r.d.user.role==='dev'||r.d.user.isAdmin)?'true':'false';
+          var pro=r.d.user.isPro?'true':'false';
+          closeMod('llMod');
+          toast('success','Model Hub 로그인 완료 ✓');
+          var dest=site.authUrl+'?type=modelhub&uid='+encodeURIComponent(uid)+'&adm='+adm+'&pro='+pro+'&redirect='+encodeURIComponent('/');
+          setTimeout(function(){window.open(dest,'_blank');},600);
+        } else {
+          showAlert('llAlert','error','실패: '+(r.d.error||r.d.message||'아이디/비밀번호 확인'));
+        }
+      })
+      .catch(function(){
+        // CORS 차단 시 그냥 이동
+        setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');
+        closeMod('llMod');
+        toast('info','Model Hub로 이동합니다. 사이트에서 직접 로그인해주세요.');
+        setTimeout(function(){window.open(site.url,'_blank');},400);
+      });
     } else {
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},body:JSON.stringify({email:acc.email,password:acc.pw})})
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
