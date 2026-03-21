@@ -24,24 +24,6 @@
   --shadow-lg:0 12px 40px rgba(0,0,0,.1),0 2px 8px rgba(0,0,0,.06);
   --r:18px;--r-sm:12px;
 }
-/* ── 다크모드 ── */
-[data-theme="dark"]{
-  --bg:#0d1117;--white:#161b22;--text:#e6edf3;--mid:#8b949e;--muted:#484f58;
-  --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.15);
-  --glass:rgba(22,27,34,.85);--glass-border:rgba(255,255,255,.1);
-  --shadow:0 2px 16px rgba(0,0,0,.3),0 1px 4px rgba(0,0,0,.2);
-  --shadow-lg:0 12px 40px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3);
-  --red-bg:rgba(239,68,68,.15);--green-bg:rgba(34,197,94,.12);--yellow-bg:rgba(245,158,11,.15);
-  --blue-l:rgba(37,99,235,.18);
-}
-[data-theme="dark"] body::before{
-  background:
-    radial-gradient(ellipse 80% 60% at 10% 0%,rgba(37,99,235,.08) 0%,transparent 55%),
-    radial-gradient(ellipse 60% 50% at 90% 100%,rgba(56,189,248,.05) 0%,transparent 55%);
-}
-[data-theme="dark"] .toast.success{background:rgba(22,101,52,.9);}
-[data-theme="dark"] .toast.error{background:rgba(127,29,29,.9);}
-[data-theme="dark"] .toast.info{background:rgba(30,58,138,.9);}
 *{scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.12) transparent;}
 *::-webkit-scrollbar{width:4px;}
 *::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);border-radius:2px;}
@@ -435,86 +417,6 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
   .dash-body{padding:20px 14px 60px;}
   .dash-topbar{padding:0 14px;}
 }
-
-/* ── 드래그 런처 ── */
-.launcher-item.dragging{opacity:.4;transform:scale(.95);}
-.launcher-item.drag-over{border:2px dashed var(--blue);background:var(--blue-l);}
-.drag-handle{position:absolute;top:6px;left:6px;font-size:10px;color:var(--muted);opacity:0;transition:opacity .15s;cursor:grab;}
-.launcher-item:hover .drag-handle{opacity:1;}
-
-/* ── 공지 배지 ── */
-.notice-badge{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:16px;height:16px;padding:0 4px;
-  background:var(--red);color:#fff;border-radius:8px;
-  font-size:10px;font-weight:800;margin-left:5px;
-  animation:pop .3s cubic-bezier(.16,1,.3,1);
-}
-
-/* ── 테마 스위처 ── */
-.theme-sw{display:flex;gap:4px;background:rgba(0,0,0,.05);border-radius:10px;padding:3px;}
-.theme-btn{padding:5px 10px;border:none;border-radius:7px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
-.theme-btn.active{background:var(--white);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1);}
-
-/* ── 기기 관리 카드 ── */
-.device-card{
-  display:flex;align-items:center;gap:12px;
-  padding:12px 14px;background:rgba(255,255,255,.5);
-  border:1px solid rgba(255,255,255,.8);border-radius:12px;
-  margin-bottom:8px;transition:all .15s;
-}
-.device-card:hover{background:rgba(255,255,255,.8);}
-.device-ic{width:36px;height:36px;border-radius:10px;background:var(--blue-l);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.device-info{flex:1;min-width:0;}
-.device-name{font-size:13px;font-weight:700;color:var(--text);}
-.device-meta{font-size:11px;color:var(--muted);}
-.device-this{display:inline-flex;align-items:center;padding:2px 7px;border-radius:10px;background:var(--green-bg);color:var(--green);font-size:10px;font-weight:700;margin-left:6px;border:1px solid var(--green-b);}
-
-/* ── QR 모달 ── */
-.qr-wrap{text-align:center;padding:10px 0;}
-.qr-canvas{border-radius:12px;margin:12px auto;display:block;}
-.qr-note{font-size:12px;color:var(--muted);margin-top:6px;}
-
-/* ── TOTP 스텝 ── */
-.totp-step{display:none;}
-.totp-step.show{display:block;}
-.totp-qr{text-align:center;padding:8px 0;}
-.totp-secret{font-family:'JetBrains Mono',monospace;font-size:12px;background:rgba(0,0,0,.05);padding:8px 12px;border-radius:8px;word-break:break-all;letter-spacing:.08em;color:var(--mid);margin:8px 0;}
-.totp-input{display:flex;gap:6px;justify-content:center;margin:12px 0;}
-.totp-digit{width:40px;height:48px;border:1.5px solid var(--border2);border-radius:10px;background:rgba(0,0,0,.04);font-size:22px;font-weight:800;text-align:center;color:var(--text);font-family:'JetBrains Mono',monospace;outline:none;transition:all .15s;}
-.totp-digit:focus{border-color:var(--blue);background:var(--white);box-shadow:0 0 0 3px rgba(37,99,235,.12);}
-
-/* ── 북마크 & 메모 ── */
-.bm-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.8);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:all .15s;}
-.bm-item:hover{background:rgba(255,255,255,.85);transform:translateX(2px);}
-.bm-favicon{width:20px;height:20px;border-radius:4px;object-fit:cover;flex-shrink:0;background:var(--blue-l);}
-.bm-name{font-size:13px;font-weight:600;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.bm-url{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.note-card{background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.8);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s;}
-.note-card:hover{background:rgba(255,255,255,.85);}
-.note-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
-.note-preview{font-size:12px;color:var(--muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
-.note-date{font-size:10px;color:var(--muted);margin-top:5px;font-family:'JetBrains Mono',monospace;}
-textarea.fi{height:auto;min-height:100px;padding:10px 13px;resize:vertical;line-height:1.6;}
-
-/* ── 언어 토글 ── */
-.lang-sel{display:flex;gap:4px;}
-.lang-btn{padding:6px 14px;border:1.5px solid var(--border2);border-radius:8px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
-.lang-btn.active{border-color:var(--blue);background:var(--blue-l);color:var(--blue);}
-
-/* ── API 사용량 바 ── */
-.usage-bar{height:6px;background:rgba(0,0,0,.07);border-radius:3px;overflow:hidden;margin-top:6px;}
-.usage-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:3px;transition:width .6s cubic-bezier(.16,1,.3,1);}
-
-/* ── 초대 코드 박스 ── */
-.invite-box{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.04);border:1.5px dashed var(--border2);border-radius:10px;padding:10px 14px;}
-.invite-code{flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--blue);letter-spacing:.1em;}
-
-/* ── 최근 서비스 섹션 ── */
-.recent-strip{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
-.recent-strip::-webkit-scrollbar{display:none;}
-.recent-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--glass);border:1px solid rgba(255,255,255,.8);border-radius:20px;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0;}
-.recent-chip:hover{background:var(--blue-l);color:var(--blue);border-color:rgba(37,99,235,.3);}
 </style>
 </head>
 <body>
@@ -628,7 +530,6 @@ textarea.fi{height:auto;min-height:100px;padding:10px 13px;resize:vertical;line-
       <button class="dash-tab"        id="tab-linked"   onclick="goTab('linked')">🔗 연동계정</button>
       <button class="dash-tab"        id="tab-apikeys"  onclick="goTab('apikeys')">🔑 API 키</button>
       <button class="dash-tab"        id="tab-security" onclick="goTab('security')">🛡 보안</button>
-      <button class="dash-tab"        id="tab-extras"   onclick="goTab('extras')">✨ 더보기</button>
       <button class="dash-tab"        id="tab-account"  onclick="goTab('account')">👤 계정</button>
     </div>
 
@@ -674,15 +575,7 @@ textarea.fi{height:auto;min-height:100px;padding:10px 13px;resize:vertical;line-
 
       <!-- 서비스 런처 -->
       <div class="launcher-section">
-        <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;">
-          <span>서비스</span>
-          <span style="font-size:11px;color:var(--muted);font-weight:500;">꾹 눌러서 순서 변경</span>
-        </div>
-        <!-- 최근 방문 -->
-        <div id="recentStrip" style="display:none;margin-bottom:10px;">
-          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">최근 방문</div>
-          <div class="recent-strip" id="recentList"></div>
-        </div>
+        <div class="section-title">서비스</div>
         <div class="launcher-grid" id="launcherGrid">
           <!-- JS로 렌더링 -->
         </div>
@@ -704,7 +597,7 @@ textarea.fi{height:auto;min-height:100px;padding:10px 13px;resize:vertical;line-
         <!-- 공지 -->
         <div class="panel">
           <div class="panel-head">
-            <div class="panel-title"><span class="pic">📢</span>공지사항<span class="notice-badge hidden" id="noticeBadge">0</span></div>
+            <div class="panel-title"><span class="pic">📢</span>공지사항</div>
             <button class="btn btn-light sm" onclick="loadNotices()">↻</button>
           </div>
           <div class="panel-body" id="noticePanel">
@@ -761,9 +654,7 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
 
     <!-- ── 보안 탭 ── -->
     <div class="sub-page hidden" id="sp-security">
-      <div class="sub-head"><h2>보안 🛡</h2><p>패스키, PIN, TOTP, 기기 관리로 계정을 보호하세요</p></div>
-
-      <!-- 패스키 -->
+      <div class="sub-head"><h2>보안 🛡</h2><p>패스키와 PIN으로 계정을 보호하세요</p></div>
       <div class="panel">
         <div class="panel-head">
           <div class="panel-title"><span class="pic">🔐</span>패스키 (생체인식)</div>
@@ -775,8 +666,6 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
           <div class="alert" id="bioAlert" style="margin-top:10px;"></div>
         </div>
       </div>
-
-      <!-- PIN -->
       <div class="panel" style="margin-top:14px;">
         <div class="panel-head">
           <div class="panel-title"><span class="pic">🔢</span>PIN 빠른 로그인</div>
@@ -788,134 +677,6 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
             <button class="btn btn-light sm" style="flex:1" onclick="openSetPin()">설정 / 변경</button>
             <button class="btn btn-red sm" style="flex:1" id="pinDelBtn" onclick="deletePin()">해제</button>
           </div>
-        </div>
-      </div>
-
-      <!-- 2단계 인증 TOTP -->
-      <div class="panel" style="margin-top:14px;">
-        <div class="panel-head">
-          <div class="panel-title"><span class="pic">🔑</span>2단계 인증 (TOTP)</div>
-          <span id="totpTagDash" class="tag gray">미설정</span>
-        </div>
-        <div class="panel-body">
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Google Authenticator 등과 연동 · 로그인 시 6자리 코드 추가 입력</p>
-          <div style="display:flex;gap:8px;">
-            <button class="btn btn-light sm" style="flex:1" onclick="openTotpSetup()">설정 / 변경</button>
-            <button class="btn btn-red sm" style="flex:1" id="totpDelBtn" onclick="deleteTotp()">해제</button>
-          </div>
-          <div class="alert" id="totpSecAlert" style="margin-top:10px;"></div>
-        </div>
-      </div>
-
-      <!-- 기기 관리 -->
-      <div class="panel" style="margin-top:14px;">
-        <div class="panel-head">
-          <div class="panel-title"><span class="pic">📱</span>신뢰할 수 있는 기기</div>
-          <button class="btn btn-red sm" onclick="logoutAllDevices()">전체 로그아웃</button>
-        </div>
-        <div class="panel-body">
-          <div id="deviceList"><div class="loading"><div class="spi-b"></div>불러오는 중...</div></div>
-        </div>
-      </div>
-
-      <!-- 로그인 알림 -->
-      <div class="panel" style="margin-top:14px;">
-        <div class="panel-head">
-          <div class="panel-title"><span class="pic">🔔</span>로그인 알림</div>
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <span style="font-size:12px;color:var(--muted);" id="loginAlertLabel">꺼짐</span>
-            <div id="loginAlertToggle" onclick="toggleLoginAlert()" style="width:36px;height:20px;border-radius:10px;background:rgba(0,0,0,.12);cursor:pointer;position:relative;transition:background .2s;">
-              <div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);" id="loginAlertKnob"></div>
-            </div>
-          </label>
-        </div>
-        <div class="panel-body">
-          <p style="font-size:12px;color:var(--muted);">새 기기에서 로그인 시 등록된 이메일로 알림이 발송됩니다.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── 더보기 탭 (북마크/메모/개인화/초대/QR) ── -->
-    <div class="sub-page hidden" id="sp-extras">
-      <div class="sub-head"><h2>더보기 ✨</h2><p>북마크, 메모, 개인화 설정</p></div>
-
-      <!-- 개인화 -->
-      <div class="panel">
-        <div class="panel-head"><div class="panel-title"><span class="pic">🎨</span>개인화</div></div>
-        <div class="panel-body">
-          <!-- 테마 -->
-          <div class="sec-row">
-            <div class="sec-row-l"><div class="sec-ic ic-blue">🌗</div><div><div class="sec-row-name">테마</div><div class="sec-row-sub">라이트 / 다크 / 시스템</div></div></div>
-            <div class="theme-sw">
-              <button class="theme-btn active" id="themeLight" onclick="setTheme('light')">☀️</button>
-              <button class="theme-btn" id="themeAuto" onclick="setTheme('auto')">💻</button>
-              <button class="theme-btn" id="themeDark" onclick="setTheme('dark')">🌙</button>
-            </div>
-          </div>
-          <!-- 언어 -->
-          <div class="sec-row">
-            <div class="sec-row-l"><div class="sec-ic ic-blue">🌏</div><div><div class="sec-row-name">언어</div><div class="sec-row-sub">표시 언어 설정</div></div></div>
-            <div class="lang-sel">
-              <button class="lang-btn active" id="langKo" onclick="setLang('ko')">한국어</button>
-              <button class="lang-btn" id="langEn" onclick="setLang('en')">English</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 클라우드 북마크 -->
-      <div class="panel" style="margin-top:14px;">
-        <div class="panel-head">
-          <div class="panel-title"><span class="pic">🔖</span>클라우드 북마크</div>
-          <button class="btn btn-blue sm" onclick="openAddBookmark()">+ 추가</button>
-        </div>
-        <div class="panel-body">
-          <div id="bookmarkList"><div class="empty"><div class="empty-ic">🔖</div>저장된 북마크가 없습니다</div></div>
-        </div>
-      </div>
-
-      <!-- 메모/노트 -->
-      <div class="panel" style="margin-top:14px;">
-        <div class="panel-head">
-          <div class="panel-title"><span class="pic">📝</span>메모</div>
-          <button class="btn btn-blue sm" onclick="openAddNote()">+ 새 메모</button>
-        </div>
-        <div class="panel-body">
-          <div id="noteList"><div class="empty"><div class="empty-ic">📝</div>메모가 없습니다</div></div>
-        </div>
-      </div>
-
-      <!-- API 사용량 -->
-      <div class="panel" style="margin-top:14px;">
-        <div class="panel-head"><div class="panel-title"><span class="pic">📊</span>API 사용량</div><button class="btn btn-light sm" onclick="loadUsage()">↻</button></div>
-        <div class="panel-body" id="usagePanel">
-          <div class="loading"><div class="spi-b"></div>불러오는 중...</div>
-        </div>
-      </div>
-
-      <!-- 초대 -->
-      <div class="panel" style="margin-top:14px;">
-        <div class="panel-head"><div class="panel-title"><span class="pic">👥</span>친구 초대</div></div>
-        <div class="panel-body">
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">친구를 초대하고 AOAO Studio를 함께 사용하세요.</p>
-          <div class="invite-box">
-            <span class="invite-code" id="inviteCode">-</span>
-            <button class="btn btn-light xs" onclick="copyInvite()">복사</button>
-          </div>
-          <div style="margin-top:8px;display:flex;gap:8px;">
-            <input class="fi" type="email" id="inviteEmail" placeholder="초대할 이메일" style="flex:1;">
-            <button class="btn btn-blue sm" onclick="sendInvite()">보내기</button>
-          </div>
-          <div class="alert" id="inviteAlert" style="margin-top:8px;"></div>
-        </div>
-      </div>
-
-      <!-- QR 코드 로그인 -->
-      <div class="panel" style="margin-top:14px;">
-        <div class="panel-head"><div class="panel-title"><span class="pic">📲</span>QR 코드 로그인</div></div>
-        <div class="panel-body">
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">모바일에서 QR을 스캔하면 이 계정으로 자동 연결됩니다.</p>
-          <button class="btn btn-light sm" onclick="openQrMod()">QR 코드 보기</button>
         </div>
       </div>
     </div>
@@ -947,81 +708,9 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
   </div><!-- /dash-body -->
 </div><!-- /dashPage -->
 
-<!-- ════ Modal: TOTP 설정 ════ -->
-<div class="modal-bg" id="totpMod">
-  <div class="modal">
-    <h3>2단계 인증 설정</h3>
-    <!-- step1: QR -->
-    <div class="totp-step show" id="totpStep1">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">앱에서 QR을 스캔하거나 코드를 직접 입력하세요</p>
-      <div class="totp-qr"><canvas id="totpQrCanvas" width="160" height="160" style="border-radius:12px;"></canvas></div>
-      <div style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:4px;">직접 입력 코드</div>
-      <div class="totp-secret" id="totpSecretDisp"></div>
-      <button class="btn btn-blue" style="margin-top:8px;" onclick="totpNextStep()">다음 →</button>
-    </div>
-    <!-- step2: 인증 -->
-    <div class="totp-step" id="totpStep2">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">앱에 표시된 6자리 코드를 입력하세요</p>
-      <div class="totp-input" id="totpDigitWrap">
-        <input class="totp-digit" maxlength="1" id="td0" oninput="totpDigitInput(0)">
-        <input class="totp-digit" maxlength="1" id="td1" oninput="totpDigitInput(1)">
-        <input class="totp-digit" maxlength="1" id="td2" oninput="totpDigitInput(2)">
-        <input class="totp-digit" maxlength="1" id="td3" oninput="totpDigitInput(3)">
-        <input class="totp-digit" maxlength="1" id="td4" oninput="totpDigitInput(4)">
-        <input class="totp-digit" maxlength="1" id="td5" oninput="totpDigitInput(5)">
-      </div>
-      <div class="alert" id="totpVerifyAlert"></div>
-      <div class="modal-acts" style="margin-top:12px;">
-        <button class="btn btn-ghost" onclick="totpMod('back')">← 뒤로</button>
-        <button class="btn btn-blue" id="totpVerifyBtn" onclick="verifyTotpSetup()"><span id="totpVerifyTxt">인증 완료</span></button>
-      </div>
-    </div>
-    <div style="margin-top:10px;text-align:right;"><button class="btn btn-ghost sm" onclick="closeMod('totpMod')">닫기</button></div>
-  </div>
-</div>
-
-<!-- ════ Modal: QR 로그인 ════ -->
-<div class="modal-bg" id="qrMod">
-  <div class="modal" style="text-align:center;">
-    <h3>📲 QR 코드 로그인</h3>
-    <p>모바일에서 스캔하면 자동 로그인됩니다<br><small style="color:var(--muted)">유효시간: 3분</small></p>
-    <div class="qr-wrap">
-      <canvas id="qrCanvas" width="180" height="180" class="qr-canvas"></canvas>
-      <div class="qr-note" id="qrCountdown">⏱ 남은 시간: 3:00</div>
-    </div>
-    <button class="btn btn-ghost" onclick="closeMod('qrMod');clearQrTimer()">닫기</button>
-  </div>
-</div>
-
-<!-- ════ Modal: 북마크 추가 ════ -->
-<div class="modal-bg" id="bmMod">
-  <div class="modal">
-    <h3 id="bmModTitle">북마크 추가</h3><p>즐겨찾는 URL을 저장하세요</p>
-    <div class="field"><label>이름</label><input class="fi" type="text" id="bmName" placeholder="예) AOAO 홈"></div>
-    <div class="field"><label>URL</label><input class="fi" type="url" id="bmUrl" placeholder="https://..."></div>
-    <div class="alert" id="bmAlert"></div>
-    <div class="modal-acts">
-      <button class="btn btn-ghost" onclick="closeMod('bmMod')">취소</button>
-      <button class="btn btn-blue" onclick="saveBookmark()">저장</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════ Modal: 메모 편집 ════ -->
-<div class="modal-bg" id="noteMod">
-  <div class="modal" style="max-width:480px;">
-    <h3 id="noteModTitle">새 메모</h3>
-    <div class="field"><label>제목</label><input class="fi" type="text" id="noteTitle" placeholder="메모 제목"></div>
-    <div class="field"><label>내용</label><textarea class="fi" id="noteContent" placeholder="내용을 입력하세요..." style="height:120px;resize:vertical;"></textarea></div>
-    <div class="modal-acts">
-      <button class="btn btn-ghost" onclick="closeMod('noteMod')">취소</button>
-      <button class="btn btn-blue" onclick="saveNote()">저장</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════ 기존 모달들 ════ -->
 <div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ════ Modal: 프로필 편집 ════ -->
 <div class="modal-bg" id="editProfileMod">
   <div class="modal">
     <h3>프로필 편집</h3><p>닉네임을 설정하세요</p>
@@ -1071,7 +760,7 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
             <div class="csel-option selected" data-val="0" onclick="selectCsel('aoSite',0,'💕 AI Girlfriend',this)"><span class="opt-ic">💕</span><div><div>AI Girlfriend</div><div class="opt-sub">aoao-studio-zeta.onrender.com</div></div></div>
             <div class="csel-option" data-val="1" onclick="selectCsel('aoSite',1,'✍️ Type Studio',this)"><span class="opt-ic">✍️</span><div><div>Type Studio</div><div class="opt-sub">aoao-studio-typo.onrender.com</div></div></div>
             <div class="csel-option" data-val="2" onclick="selectCsel('aoSite',2,'🎮 Game Studio',this)"><span class="opt-ic">🎮</span><div><div>Game Studio</div><div class="opt-sub">aoao-gmae-studio.onrender.com</div></div></div>
-            <div class="csel-option" data-val="3" onclick="selectCsel('aoSite',3,'🤖 Model Hub',this)"><span class="opt-ic">🤖</span><div><div>Model Hub</div><div class="opt-sub">aoao-studio-code.onrender.com</div></div></div>
+            <div class="csel-option" data-val="3" onclick="selectCsel('aoSite',3,'🤖 Model Hub',this)"><span class="opt-ic">🤖</span><div><div>Model Hub</div><div class="opt-sub">aoao-studio-data.onrender.com</div></div></div>
           </div>
         </div>
       </div>
@@ -1209,7 +898,7 @@ var AO_SITES=[
   {id:'zeta',name:'AI Girlfriend',icon:'💕',url:'https://aoao-studio-zeta.onrender.com',authUrl:'https://aoao-studio-zeta.onrender.com/auth.html',type:'supabase',sbUrl:'https://twjzcstibzdftsaruhnp.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk',lsToken:'z-token',lsUser:'z-user'},
   {id:'typo',name:'Type Studio',icon:'✍️',url:'https://aoao-studio-typo.onrender.com',authUrl:'https://aoao-studio-typo.onrender.com/auth.html',type:'supabase',sbUrl:'https://mthjjyosovblpsegguju.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I',lsToken:'sb_token',lsUser:'sb_user'},
   {id:'game',name:'Game Studio',icon:'🎮',url:'https://aoao-gmae-studio.onrender.com',authUrl:'https://aoao-gmae-studio.onrender.com/auth.html',type:'supabase_nosession',sbUrl:'https://alnazztrdhpkyclkaklv.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA',lsToken:null,lsUser:null},
-  {id:'modelhub',name:'Model Hub',icon:'🤖',url:'https://aoao-studio-code.onrender.com',authUrl:'https://aoao-studio-code.onrender.com/auth',type:'supabase',sbUrl:'https://qtqsjphpfymcbgmlkuas.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cXNqcGhwZnltY2JnbWxrdWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2ODgzNTYsImV4cCI6MjA4OTI2NDM1Nn0.WUYSG65UdFLfM3y4W7vkoK95h08X3YU3umT6MQSmuaw',lsToken:'mh-token',lsUser:'mh-user'}
+  {id:'modelhub',name:'Model Hub',icon:'🤖',url:'https://aoao-studio-code.onrender.com',authUrl:'https://aoao-studio-code.onrender.com/auth',type:'modelhub'}
 ];
 var JB={key:(function(){return[36,50,97,36,49,48,36,57,71,46,103,90,117,50,115,122,79,97,50,110,86,106,110,48,108,82,84,84,117,103,66,118,101,76,122,98,90,103,83,82,74,83,81,121,120,115,77,66,75,84,76,100,97,99,116,51,46,71,66,71].map(function(n){return String.fromCharCode(n);}).join('');}()),bin:'6937b89b43b1c97be9e1328c'};
 var AOAO_SERVER='https://aoao-studio-code.onrender.com';
@@ -1224,9 +913,6 @@ var PIN_BUF={login:'',set:''},PIN_STEP=1,PIN_FIRST='';
 var NEW_API_KEY='';
 var CSEL_VAL={aoSite:0,sbSel:0};
 var ACTIVITY_LOG=[];
-var BOOKMARKS=[],NOTES=[],TOTP_SECRET='',QR_TIMER=null;
-var RECENT_VISITS=[],UNREAD_NOTICES=0;
-var SETTINGS={theme:'light',lang:'ko',loginAlert:false};
 
 // ════════════════════════════════════
 // 초기화
@@ -1236,32 +922,8 @@ document.addEventListener('DOMContentLoaded',function(){
   try{var l=localStorage.getItem('aoao_linked');if(l)ST.linked=JSON.parse(l);}catch(e){}
   try{var p=localStorage.getItem('aoao_profile');if(p)ST.profile=JSON.parse(p);}catch(e){}
   try{var a=localStorage.getItem('aoao_activity');if(a)ACTIVITY_LOG=JSON.parse(a);}catch(e){}
-  try{var bm=localStorage.getItem('aoao_bookmarks');if(bm)BOOKMARKS=JSON.parse(bm);}catch(e){}
-  try{var nt=localStorage.getItem('aoao_notes');if(nt)NOTES=JSON.parse(nt);}catch(e){}
-  try{var rv=localStorage.getItem('aoao_recent');if(rv)RECENT_VISITS=JSON.parse(rv);}catch(e){}
-  try{var st=localStorage.getItem('aoao_settings');if(st)SETTINGS=Object.assign(SETTINGS,JSON.parse(st));}catch(e){}
-  applyTheme(SETTINGS.theme);
-  applyLang(SETTINGS.lang);
   if(!window.PublicKeyCredential){var b=G('bioBtn');if(b){b.disabled=true;b.textContent='🚫 미지원';}}
-  if(ST.sess&&ST.sess.access_token){
-    var token=ST.sess.access_token;
-    Promise.all([
-      fetch(CENTRAL.url+'/rest/v1/profiles?select=nickname,avatar_url&limit=1',{headers:{'apikey':CENTRAL.key,'Authorization':'Bearer '+token}}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}),
-      fetch(CENTRAL.url+'/rest/v1/activity_logs?select=action,device,created_at&order=created_at.desc&limit=20',{headers:{'apikey':CENTRAL.key,'Authorization':'Bearer '+token}}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})
-    ]).then(function(results){
-      var prof=results[0],logs=results[1];
-      if(prof&&prof.length){
-        if(prof[0].nickname)ST.profile.nickname=prof[0].nickname;
-        if(prof[0].avatar_url)ST.profile.avatar=prof[0].avatar_url;
-        saveProfileLocal();
-      }
-      if(logs&&logs.length){
-        ACTIVITY_LOG=logs.map(function(l){return{action:l.action,device:l.device,time:l.created_at};});
-        localStorage.setItem('aoao_activity',JSON.stringify(ACTIVITY_LOG));
-      }
-      showPage('dashPage');renderDash();
-    }).catch(function(){showPage('dashPage');renderDash();});
-  }
+  if(ST.sess&&ST.sess.access_token){showPage('dashPage');renderDash();}
   else showPage('loginPage');
 });
 
@@ -1277,8 +939,83 @@ function openMod(id){G(id).classList.add('show');}
 function closeMod(id){G(id).classList.remove('show');}
 function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('show');});var el=G(id);if(el)el.classList.add('show');}
 function saveSess(s){ST.sess=s;localStorage.setItem('aoao_sess',JSON.stringify(s));}
+
+// ════════════════════════════════════
+// Supabase REST 헬퍼
+// ════════════════════════════════════
+function sbRest(path,opts){
+  var token=getToken();
+  var headers=Object.assign({'apikey':CENTRAL.key,'Content-Type':'application/json'},
+    token?{'Authorization':'Bearer '+token}:{},
+    opts&&opts.headers||{});
+  return fetch(CENTRAL.url+'/rest/v1'+path,Object.assign({},opts,{headers:headers}))
+    .then(function(r){return r.text().then(function(t){try{return{ok:r.ok,status:r.status,data:JSON.parse(t)};}catch(e){return{ok:r.ok,status:r.status,data:t};}});})
+    .catch(function(){return{ok:false,status:0,data:null};});
+}
+
+// ── 프로필 DB ──
+async function dbLoadProfile(){
+  var r=await sbRest('/profiles?select=*&limit=1',{headers:{'Prefer':'return=representation'}});
+  if(r.ok&&r.data&&r.data[0]){
+    var p=r.data[0];
+    if(p.nickname)ST.profile.nickname=p.nickname;
+    if(p.avatar_url)ST.profile.avatar=p.avatar_url;
+    localStorage.setItem('aoao_profile',JSON.stringify(ST.profile));
+  }
+}
+async function dbSaveProfile(){
+  var email=getEmail();
+  var body=JSON.stringify({nickname:ST.profile.nickname||null,avatar_url:ST.profile.avatar||null,email:email,updated_at:new Date().toISOString()});
+  // upsert
+  await sbRest('/profiles?on_conflict=id',{method:'POST',body:body,headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+}
+
+// ── PIN DB ──
+async function dbSavePin(hash){
+  await sbRest('/profiles?on_conflict=id',{method:'POST',body:JSON.stringify({pin_hash:hash,pin_updated_at:new Date().toISOString()}),headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+}
+async function dbLoadPin(){
+  var r=await sbRest('/profiles?select=pin_hash&limit=1');
+  if(r.ok&&r.data&&r.data[0]&&r.data[0].pin_hash) return r.data[0].pin_hash;
+  return null;
+}
+async function dbDeletePin(){
+  await sbRest('/profiles?on_conflict=id',{method:'POST',body:JSON.stringify({pin_hash:null,pin_updated_at:null}),headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+}
+
+// ── 패스키 DB ──
+async function dbLoadPasskeys(){
+  var r=await sbRest('/passkeys?select=*&order=created_at.desc');
+  if(r.ok&&r.data&&Array.isArray(r.data)){
+    var email=getEmail();
+    var pks=r.data.map(function(p){return{id:p.id,credId:p.cred_id,email:email,name:p.name,at:p.created_at};});
+    localStorage.setItem('aoao_passkeys',JSON.stringify(pks));
+    return pks;
+  }
+  return getPKs();
+}
+async function dbSavePasskey(pk){
+  var r=await sbRest('/passkeys',{method:'POST',body:JSON.stringify({cred_id:pk.credId,name:pk.name}),headers:{'Prefer':'return=representation'}});
+  if(r.ok&&r.data&&r.data[0]) pk.id=r.data[0].id;
+  return r.ok;
+}
+async function dbDeletePasskey(credId){
+  await sbRest('/passkeys?cred_id=eq.'+encodeURIComponent(credId),{method:'DELETE'});
+}
+
+// ── 활동 로그 DB ──
+async function dbLogActivity(action,device){
+  await sbRest('/activity_logs',{method:'POST',body:JSON.stringify({action:action,device:device||getDeviceName()}),headers:{'Prefer':'return=minimal'}});
+}
+async function dbLoadActivityLogs(){
+  var r=await sbRest('/activity_logs?select=*&order=created_at.desc&limit=20');
+  if(r.ok&&r.data&&Array.isArray(r.data)){
+    ACTIVITY_LOG=r.data.map(function(a){return{action:a.action,device:a.device||'-',time:a.created_at};});
+    localStorage.setItem('aoao_activity',JSON.stringify(ACTIVITY_LOG));
+  }
+}
 function saveLinked(){localStorage.setItem('aoao_linked',JSON.stringify(ST.linked));}
-function saveProfileLocal(){localStorage.setItem('aoao_profile',JSON.stringify(ST.profile));}
+function saveProfile(){localStorage.setItem('aoao_profile',JSON.stringify(ST.profile));}
 function getEmail(){return ST.sess&&ST.sess.user&&ST.sess.user.email||'';}
 function getToken(){return ST.sess&&ST.sess.access_token||'';}
 function setBtn(bid,tid,on,lbl){var b=G(bid);if(!b)return;b.disabled=on;b.innerHTML=on?'<div class="spi"></div><span>'+lbl+'</span>':'<span id="'+tid+'">'+lbl+'</span>';}
@@ -1289,22 +1026,13 @@ function copyText(txt){navigator.clipboard.writeText(txt).then(function(){toast(
 function toast(type,msg){var w=G('toastWrap');var el=document.createElement('div');el.className='toast '+type;el.textContent=msg;w.appendChild(el);setTimeout(function(){el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(function(){el.remove();},300);},3000);}
 
 // ════════════════════════════════════
-// 활동 로그 (Supabase)
+// 활동 로그
 // ════════════════════════════════════
 function logActivity(action,device){
   var entry={action:action,device:device||getDeviceName(),time:new Date().toISOString()};
   ACTIVITY_LOG.unshift(entry);
   if(ACTIVITY_LOG.length>20)ACTIVITY_LOG=ACTIVITY_LOG.slice(0,20);
   localStorage.setItem('aoao_activity',JSON.stringify(ACTIVITY_LOG));
-  // Supabase에도 저장 (비동기, 실패해도 무시)
-  var token=getToken();
-  if(token){
-    fetch(CENTRAL.url+'/rest/v1/activity_logs',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+token,'Prefer':'return=minimal'},
-      body:JSON.stringify({action:action,device:entry.device,created_at:entry.time})
-    }).catch(function(){});
-  }
 }
 function getDeviceName(){
   var ua=navigator.userAgent;
@@ -1332,39 +1060,22 @@ function renderActivityLog(){
       '<div class="ac-time">'+timeStr+'</div></div>';
   }).join('');
 }
-function clearActivityLog(){
-  ACTIVITY_LOG=[];localStorage.removeItem('aoao_activity');renderActivityLog();
-  var token=getToken();
-  if(token){
-    fetch(CENTRAL.url+'/rest/v1/activity_logs?select=id',{
-      method:'DELETE',
-      headers:{'apikey':CENTRAL.key,'Authorization':'Bearer '+token}
-    }).catch(function(){});
-  }
-}
+function clearActivityLog(){ACTIVITY_LOG=[];localStorage.removeItem('aoao_activity');renderActivityLog();}
 
 // ════════════════════════════════════
-// 프로필 (Supabase)
+// 프로필
 // ════════════════════════════════════
 function openEditProfile(){
   G('nicknameInput').value=ST.profile.nickname||'';
   hideAlert('profileAlert');
   openMod('editProfileMod');
 }
-function saveProfile(){
+function saveProfile2(){
   var nick=G('nicknameInput').value.trim();
   if(nick.length>20){showAlert('profileAlert','error','20자 이하로 입력하세요.');return;}
   ST.profile.nickname=nick;
-  saveProfileLocal();
-  // Supabase upsert
-  var token=getToken();
-  if(token){
-    fetch(CENTRAL.url+'/rest/v1/profiles',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+token,'Prefer':'resolution=merge-duplicates,return=minimal'},
-      body:JSON.stringify({nickname:nick,avatar_url:ST.profile.avatar||null})
-    }).catch(function(){});
-  }
+  saveProfile();
+  dbSaveProfile().catch(function(){});
   closeMod('editProfileMod');
   renderProfileCard();
   toast('success','프로필이 저장됐습니다!');
@@ -1375,16 +1086,8 @@ function handleAvatarChange(input){
   var reader=new FileReader();
   reader.onload=function(e){
     ST.profile.avatar=e.target.result;
-    saveProfileLocal();
-    // Supabase upsert
-    var token=getToken();
-    if(token){
-      fetch(CENTRAL.url+'/rest/v1/profiles',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+token,'Prefer':'resolution=merge-duplicates,return=minimal'},
-        body:JSON.stringify({nickname:ST.profile.nickname||null,avatar_url:e.target.result})
-      }).catch(function(){});
-    }
+    saveProfile();
+    dbSaveProfile().catch(function(){});
     renderProfileCard();
     renderTopbar();
     toast('success','아바타가 변경됐습니다!');
@@ -1404,7 +1107,7 @@ function renderProfileCard(){
 // ════════════════════════════════════
 // 탭 네비게이션
 // ════════════════════════════════════
-var TABS=['home','linked','apikeys','security','extras','account'];
+var TABS=['home','linked','apikeys','security','account'];
 function goTab(name){
   TABS.forEach(function(t){
     var sp=G('sp-'+t);if(sp){sp.classList.toggle('show',t===name);sp.classList.toggle('hidden',t!==name);}
@@ -1413,9 +1116,8 @@ function goTab(name){
   closeUserDD();
   if(name==='linked')renderLinked();
   if(name==='apikeys')loadApiKeys();
-  if(name==='security'){renderSecSec();renderDevices();}
+  if(name==='security')renderSecSec();
   if(name==='account')renderAccount();
-  if(name==='extras'){renderBookmarks();renderNotes();loadUsage();renderInviteCode();renderExtraSettings();}
 }
 
 // ════════════════════════════════════
@@ -1426,73 +1128,32 @@ function closeUserDD(){var el=G('userDD');if(el)el.classList.remove('show');}
 document.addEventListener('click',function(e){if(!e.target.closest('.tb-user-btn')&&!e.target.closest('.user-dd'))closeUserDD();});
 
 // ════════════════════════════════════
-// 서비스 런처 (드래그 + 최근방문)
+// 서비스 런처
 // ════════════════════════════════════
-var LAUNCHER_ORDER=null;
-function getLauncherOrder(){
-  try{var o=localStorage.getItem('aoao_launcher_order');if(o)return JSON.parse(o);}catch(e){}
-  return AO_SITES.map(function(s){return s.id;});
-}
-function saveLauncherOrder(order){localStorage.setItem('aoao_launcher_order',JSON.stringify(order));}
-function addRecentVisit(siteId){
-  RECENT_VISITS=RECENT_VISITS.filter(function(id){return id!==siteId;});
-  RECENT_VISITS.unshift(siteId);
-  if(RECENT_VISITS.length>5)RECENT_VISITS=RECENT_VISITS.slice(0,5);
-  localStorage.setItem('aoao_recent',JSON.stringify(RECENT_VISITS));
-}
-function renderRecentStrip(){
-  var strip=G('recentStrip'),list=G('recentList');if(!strip||!list)return;
-  if(!RECENT_VISITS.length){strip.style.display='none';return;}
-  strip.style.display='block';
-  list.innerHTML=RECENT_VISITS.map(function(id){
-    var s=AO_SITES.find(function(x){return x.id===id;});if(!s)return'';
-    return '<div class="recent-chip" onclick="launchSite(\''+s.id+'\')">'+s.icon+' '+s.name+'</div>';
-  }).join('');
-}
 function renderLauncher(){
   var el=G('launcherGrid');if(!el)return;
-  var order=getLauncherOrder();
-  var sorted=order.map(function(id){return AO_SITES.find(function(s){return s.id===id;});}).filter(Boolean);
-  AO_SITES.forEach(function(s){if(!sorted.find(function(x){return x.id===s.id;}))sorted.push(s);});
   var linkedIds=ST.linked.map(function(a){return a.siteId;});
-  el.innerHTML=sorted.map(function(s){
+  el.innerHTML=AO_SITES.map(function(s){
     var isLinked=linkedIds.indexOf(s.id)!==-1;
-    return '<div class="launcher-item" draggable="true" data-id="'+s.id+'" onclick="launchSite(\''+s.id+'\')" title="'+s.name+'">'+
-      '<div class="drag-handle">⣿</div>'+
+    return '<div class="launcher-item" onclick="launchSite(\''+s.id+'\')" title="'+s.name+'">'+
       '<div class="li-dot '+(isLinked?'linked':'unlinked')+'"></div>'+
       '<div class="li-icon">'+s.icon+'</div>'+
       '<div class="li-name">'+s.name+'</div>'+
       '<div class="li-desc">'+(isLinked?'연동됨':'클릭하여 이동')+'</div>'+
     '</div>';
   }).join('');
-  // 드래그 이벤트 바인딩
-  var items=el.querySelectorAll('.launcher-item');
-  var dragSrc=null;
-  items.forEach(function(item){
-    item.addEventListener('dragstart',function(e){dragSrc=item;item.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
-    item.addEventListener('dragend',function(){item.classList.remove('dragging');el.querySelectorAll('.launcher-item').forEach(function(i){i.classList.remove('drag-over');});});
-    item.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';if(item!==dragSrc){item.classList.add('drag-over');}});
-    item.addEventListener('dragleave',function(){item.classList.remove('drag-over');});
-    item.addEventListener('drop',function(e){
-      e.preventDefault();item.classList.remove('drag-over');
-      if(dragSrc&&dragSrc!==item){
-        var allItems=Array.from(el.querySelectorAll('.launcher-item'));
-        var fromIdx=allItems.indexOf(dragSrc),toIdx=allItems.indexOf(item);
-        if(fromIdx>toIdx)el.insertBefore(dragSrc,item);else el.insertBefore(dragSrc,item.nextSibling);
-        var newOrder=Array.from(el.querySelectorAll('.launcher-item')).map(function(i){return i.dataset.id;});
-        saveLauncherOrder(newOrder);
-        toast('success','순서가 저장됐습니다 ✓');
-      }
-    });
-  });
-  renderRecentStrip();
 }
 function launchSite(id){
   var site=AO_SITES.find(function(s){return s.id===id;});
   var acc=ST.linked.find(function(a){return a.siteId===id;});
-  addRecentVisit(id);
   if(acc){
-    openLinkedLogin(acc.id);
+    if(site&&site.type==='modelhub'){
+      // 보안상 자동 로그인 불가 → 바로 이동
+      toast('info','Model Hub는 보안상 자동 로그인이 불가합니다. 사이트에서 직접 로그인해주세요.');
+      setTimeout(function(){window.open(site.url,'_blank');},600);
+    } else {
+      openLinkedLogin(acc.id);
+    }
   } else {
     if(site)window.open(site.url,'_blank');
   }
@@ -1509,6 +1170,11 @@ function renderDash(){
   renderActivityLog();
   renderStats();
   loadNotices();
+  // DB에서 최신 데이터 로드 (비동기)
+  dbLoadProfile().then(function(){renderProfileCard();renderTopbar();renderStats();}).catch(function(){});
+  dbLoadActivityLogs().then(function(){renderActivityLog();}).catch(function(){});
+  dbLoadPasskeys().then(function(){}).catch(function(){});
+  dbLoadPin().then(function(hash){if(hash){var e=getEmail();var r=localStorage.getItem(pinKey(e));if(!r){localStorage.setItem(pinKey(e),JSON.stringify({hash:hash,sess:ST.sess?JSON.stringify(ST.sess):null,at:new Date().toISOString()}));renderSecSec();}}}).catch(function(){});
   goTab('home');
   // file:// 경고
   if(location.protocol==='file:'){
@@ -1566,7 +1232,7 @@ async function verifyPin(pin,email){var r=localStorage.getItem(pinKey(email));if
 function hasPin(email){return!!localStorage.getItem(pinKey(email));}
 function getPinSess(email){var r=localStorage.getItem(pinKey(email));if(!r)return null;try{var o=JSON.parse(r);return o.sess?JSON.parse(o.sess):null;}catch(e){return null;}}
 function updatePinSess(email){var r=localStorage.getItem(pinKey(email));if(!r||!ST.sess)return;try{var o=JSON.parse(r);o.sess=JSON.stringify(ST.sess);localStorage.setItem(pinKey(email),JSON.stringify(o));}catch(e){}}
-function deletePin(){var e=getEmail();localStorage.removeItem(pinKey(e));renderSecSec();toast('success','PIN이 해제됐습니다.');}
+function deletePin(){var e=getEmail();localStorage.removeItem(pinKey(e));dbDeletePin().catch(function(){});renderSecSec();toast('success','PIN이 해제됐습니다.');}
 
 // PIN 패드
 function pfx(m){return m==='login'?'l':'s';}
@@ -1588,13 +1254,13 @@ async function handlePinLogin(pin){
   hideAlert('pinLoginAlert');
   var email=G('lEmail').value.trim();
   var ok=await verifyPin(pin,email);
-  if(ok){dotState('login','ok');setTimeout(function(){var s=getPinSess(email);if(s){saveSess(s);logActivity('pin_login');showLoginSc(email);}else{showAlert('pinLoginAlert','error','세션 만료. 비밀번호로 다시 로그인하세요.');dotState('login','');updDots('login');goPwLogin();}},400);}
+  if(ok){dotState('login','ok');setTimeout(function(){var s=getPinSess(email);if(s){saveSess(s);logActivity('pin_login');dbLogActivity('pin_login').catch(function(){});showLoginSc(email);}else{showAlert('pinLoginAlert','error','세션 만료. 비밀번호로 다시 로그인하세요.');dotState('login','');updDots('login');goPwLogin();}},400);}
   else{dotState('login','error');setTimeout(function(){dotState('login','');updDots('login');showAlert('pinLoginAlert','error','PIN이 올바르지 않습니다.');},500);}
 }
 function openSetPin(){PIN_STEP=1;PIN_FIRST='';PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 설정';G('setPinS').textContent='사용할 4자리 PIN을 입력하세요';hideAlert('setPinAlert');openMod('setPinMod');}
 async function handlePinSet(pin){
   if(PIN_STEP===1){PIN_FIRST=pin;PIN_STEP=2;PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 확인';G('setPinS').textContent='PIN을 한 번 더 입력하세요';hideAlert('setPinAlert');}
-  else{if(pin===PIN_FIRST){dotState('set','ok');await savePin(pin,getEmail());setTimeout(function(){closeMod('setPinMod');renderSecSec();toast('success','PIN이 등록됐습니다! 🎉');},450);}
+  else{if(pin===PIN_FIRST){dotState('set','ok');var ph=await hashPin(pin,getEmail());await savePin(pin,getEmail());dbSavePin(ph).catch(function(){});setTimeout(function(){closeMod('setPinMod');renderSecSec();toast('success','PIN이 등록됐습니다! 🎉');},450);}
   else{dotState('set','error');setTimeout(function(){PIN_STEP=1;PIN_FIRST='';PIN_BUF.set='';updDots('set');G('setPinT').textContent='PIN 설정';G('setPinS').textContent='일치하지 않습니다. 다시 입력하세요';showAlert('setPinAlert','error','PIN이 일치하지 않았습니다.');},500);}}
 }
 
@@ -1623,11 +1289,20 @@ async function doRegisterPasskey(){
     var pk={id:'pk_'+Date.now(),credId:buf2b64(cred.rawId),email:email,name:devName()+' '+new Date().toLocaleDateString('ko-KR'),at:new Date().toISOString()};
     var all=getPKs();all.push(pk);savePKs(all);
     try{localStorage.setItem('aoao_sess_bio_'+btoa(unescape(encodeURIComponent(email))),JSON.stringify(ST.sess));}catch(e){}
+    // DB에도 저장
+    dbSavePasskey(pk).catch(function(){});
     btn.disabled=false;btn.textContent='+ 추가';renderSecSec();
     showAlert('bioAlert','success','패스키가 등록됐습니다! 🎉');
   }catch(e){btn.disabled=false;btn.textContent='+ 추가';showAlert('bioAlert','error',e.name==='NotAllowedError'?'등록 취소됨':e.name==='InvalidStateError'?'이미 등록됨':(e.message||'등록 실패'));}
 }
-function deletePasskey(id){var all=getPKs().filter(function(p){return p.id!==id;});savePKs(all);renderSecSec();toast('success','패스키 삭제됨');}
+function deletePasskey(id){
+  var all=getPKs();
+  var target=all.find(function(p){return p.id===id;});
+  var remaining=all.filter(function(p){return p.id!==id;});
+  savePKs(remaining);
+  if(target)dbDeletePasskey(target.credId).catch(function(){});
+  renderSecSec();toast('success','패스키 삭제됨');
+}
 
 async function doBioLogin(){
   if(!window.PublicKeyCredential){showAlert('loginAlert','error','WebAuthn 미지원');return;}
@@ -1640,7 +1315,7 @@ async function doBioLogin(){
     var ac=pks.map(function(pk){return{id:b642buf(pk.credId),type:'public-key'};});
     await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:ac,userVerification:'preferred',timeout:60000,rpId:location.hostname||'localhost'}});
     var se=null;try{se=localStorage.getItem('aoao_sess_bio_'+btoa(unescape(encodeURIComponent(pks[0].email))));}catch(e){}
-    if(se){saveSess(JSON.parse(se));btn.disabled=false;btn.innerHTML='🔐 생체인식';logActivity('passkey_login');showLoginSc(pks[0].email);}
+    if(se){saveSess(JSON.parse(se));btn.disabled=false;btn.innerHTML='🔐 생체인식';logActivity('passkey_login');dbLogActivity('passkey_login').catch(function(){});showLoginSc(pks[0].email);}
     else{showAlert('loginAlert','error','세션 없음. 비밀번호로 다시 로그인하세요.');btn.disabled=false;btn.innerHTML='🔐 생체인식';}
   }catch(e){btn.disabled=false;btn.innerHTML='🔐 생체인식';showAlert('loginAlert','error',e.name==='NotAllowedError'?'인증 취소됨':(e.message||'인증 실패'));}
 }
@@ -1661,10 +1336,9 @@ function doLogin(){
       if(hasPin(email))updatePinSess(email);
       try{var bk='aoao_sess_bio_'+btoa(unescape(encodeURIComponent(email)));if(localStorage.getItem(bk))localStorage.setItem(bk,JSON.stringify(r.d));}catch(e){}
       logActivity('login');
-      registerCurrentDevice(email);
-      if(SETTINGS.loginAlert){
-        fetch(AOAO_SERVER+'/api/login-alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,device:getDeviceName(),time:new Date().toISOString()})}).catch(function(){});
-      }
+      dbLogActivity('login').catch(function(){});
+      dbLoadProfile().catch(function(){});
+      dbLoadActivityLogs().catch(function(){});
       showLoginSc(email);
     } else {
       showAlert('loginAlert','error',r.d.error_description||r.d.msg||'이메일 또는 비밀번호가 올바르지 않습니다.');
@@ -1695,35 +1369,12 @@ function showLoginSc(email){
   G('loginSc').classList.add('show');
   var pf=G('progF');pf.style.transition='none';pf.style.width='0%';
   setTimeout(function(){pf.style.transition='width 1.8s linear';pf.style.width='100%';},50);
-  // Supabase에서 프로필 로드
-  var token=getToken();
-  if(token){
-    fetch(CENTRAL.url+'/rest/v1/profiles?select=nickname,avatar_url&limit=1',{
-      headers:{'apikey':CENTRAL.key,'Authorization':'Bearer '+token}
-    }).then(function(r){return r.ok?r.json():null;})
-    .then(function(data){
-      if(data&&data.length){
-        if(data[0].nickname)ST.profile.nickname=data[0].nickname;
-        if(data[0].avatar_url)ST.profile.avatar=data[0].avatar_url;
-        saveProfileLocal();
-      }
-      // Supabase에서 활동 로그 로드
-      return fetch(CENTRAL.url+'/rest/v1/activity_logs?select=action,device,created_at&order=created_at.desc&limit=20',{
-        headers:{'apikey':CENTRAL.key,'Authorization':'Bearer '+token}
-      });
-    }).then(function(r){return r&&r.ok?r.json():null;})
-    .then(function(logs){
-      if(logs&&logs.length){
-        ACTIVITY_LOG=logs.map(function(l){return{action:l.action,device:l.device,time:l.created_at};});
-        localStorage.setItem('aoao_activity',JSON.stringify(ACTIVITY_LOG));
-      }
-    }).catch(function(){});
-  }
   setTimeout(function(){showPage('dashPage');renderDash();},1900);
 }
 
 function doLogout(){
   logActivity('logout');
+  dbLogActivity('logout').catch(function(){});
   ST.sess=null;localStorage.removeItem('aoao_sess');
   G('loginForm').classList.remove('hidden');
   G('signupForm').classList.add('hidden');
@@ -1738,43 +1389,26 @@ function doLogout(){
 }
 
 // ════════════════════════════════════
-// 공지 (배지 포함)
+// 공지
 // ════════════════════════════════════
-var LAST_NOTICE_SEEN=0;
 function loadNotices(){
   var el=G('noticePanel');if(!el)return;
   if(location.protocol==='file:'){el.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>서버에서만 로드 가능</div>';return;}
   el.innerHTML='<div class="loading"><div class="spi-b"></div>불러오는 중...</div>';
-  try{LAST_NOTICE_SEEN=parseInt(localStorage.getItem('aoao_notice_seen')||'0');}catch(e){}
   fetch(AOAO_SERVER+'/api/notices',{cache:'no-store'})
   .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
   .then(function(raw){
     var notices=Array.isArray(raw)?raw:(raw.notices||raw.data||[]);
     if(!notices.length){el.innerHTML='<div class="empty"><div class="empty-ic">📭</div>공지가 없습니다</div>';return;}
-    // 배지
-    var newest=notices[0]&&notices[0].createdAt?new Date(notices[0].createdAt).getTime():0;
-    UNREAD_NOTICES=notices.filter(function(n){return n.createdAt&&new Date(n.createdAt).getTime()>LAST_NOTICE_SEEN;}).length;
-    var badge=G('noticeBadge');
-    if(badge){if(UNREAD_NOTICES>0){badge.textContent=UNREAD_NOTICES;badge.classList.remove('hidden');}else badge.classList.add('hidden');}
     var typeMap={info:'info',success:'success',warn:'warn',warning:'warn'};
     el.innerHTML=notices.slice(0,5).map(function(n){
       var dot=typeMap[n.type]||'info';
       var date=n.createdAt?new Date(n.createdAt).toLocaleDateString('ko-KR'):'';
-      var isNew=n.createdAt&&new Date(n.createdAt).getTime()>LAST_NOTICE_SEEN;
-      return '<div class="notice-item" onclick="markNoticeRead()" style="cursor:default;">'+
-        '<div class="ni-top">'+
-        '<div class="ni-dot '+dot+'"></div>'+
-        '<div class="ni-title">'+escH(n.title||'')+(isNew?'<span style="margin-left:5px;font-size:10px;background:var(--red);color:#fff;padding:1px 5px;border-radius:6px;">NEW</span>':'')+'</div>'+
-        '<div class="ni-date">'+date+'</div></div>'+
-        '<div class="ni-body">'+escH(n.content||n.body||'')+'</div></div>';
+      return '<div class="notice-item"><div class="ni-top"><div class="ni-dot '+dot+'"></div><div class="ni-title">'+escH(n.title||'')+'</div><div class="ni-date">'+date+'</div></div><div class="ni-body">'+escH(n.content||n.body||'')+'</div></div>';
     }).join('');
-    // 읽음 처리
-    if(newest)localStorage.setItem('aoao_notice_seen',String(newest));
-    UNREAD_NOTICES=0;if(badge)badge.classList.add('hidden');
   })
   .catch(function(e){el.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>로드 실패: '+e.message+'</div>';});
 }
-function markNoticeRead(){}
 
 // ════════════════════════════════════
 // API 키 (JSONBin)
@@ -1823,7 +1457,7 @@ function confirmCreateKey(){
     data.api_keys[newKey]={name:name,user_id:email,created_at:new Date().toISOString(),usage_count:0,active:true};
     return jbSave(data).then(function(ok){
       setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');
-      if(ok){NEW_API_KEY=newKey;closeMod('createKeyMod');G('newKeyVal').textContent=newKey;hideAlert('newKeyAlert');openMod('newKeyMod');loadApiKeys();}
+      if(ok){NEW_API_KEY=newKey;closeMod('createKeyMod');G('newKeyVal').textContent=newKey;hideAlert('newKeyAlert');openMod('newKeyMod');}
       else showAlert('createKeyAlert','error','저장 실패');
     });
   }).catch(function(){setBtn('createKeyConfBtn','createKeyConfTxt',false,'생성');showAlert('createKeyAlert','error','오류');});
@@ -1846,19 +1480,7 @@ function renderSecSec(){
   var email=getEmail(),pks=getPKsByEmail(email),pin=hasPin(email);
   renderStats();
   var pt=G('pinTagDash');if(pt){pt.className='tag '+(pin?'green':'gray');pt.textContent=pin?'✓ 등록됨':'미등록';}
-  var pd_btn=G('pinDelBtn');if(pd_btn)pd_btn.disabled=!pin;
-  // TOTP 태그
-  var totpTag=G('totpTagDash');var hasTotp=!!localStorage.getItem('aoao_totp_'+btoa(email));
-  if(totpTag){totpTag.className='tag '+(hasTotp?'green':'gray');totpTag.textContent=hasTotp?'✓ 등록됨':'미설정';}
-  var totpDel=G('totpDelBtn');if(totpDel)totpDel.disabled=!hasTotp;
-  // 로그인 알림 토글
-  var lbl=G('loginAlertLabel'),knob=G('loginAlertKnob'),toggle=G('loginAlertToggle');
-  if(toggle){
-    var on=SETTINGS.loginAlert;
-    toggle.style.background=on?'var(--blue)':'rgba(0,0,0,.12)';
-    if(knob)knob.style.transform=on?'translateX(16px)':'translateX(0)';
-    if(lbl)lbl.textContent=on?'켜짐':'꺼짐';
-  }
+  var pd=G('pinDelBtn');if(pd)pd.disabled=!pin;
   var list=G('pkList');if(!list)return;
   list.innerHTML='';
   if(!pks.length){list.innerHTML='<div class="empty" style="padding:12px 0;"><div class="empty-ic" style="font-size:22px;">🔐</div>등록된 패스키가 없습니다</div>';return;}
@@ -1872,391 +1494,8 @@ function renderSecSec(){
 }
 
 // ════════════════════════════════════
-// 기기 관리
+// 연동계정
 // ════════════════════════════════════
-function renderDevices(){
-  var list=G('deviceList');if(!list)return;
-  var email=getEmail();
-  // localStorage에 기기 세션 저장 (로그인 시 자동 등록)
-  var key='aoao_devices_'+btoa(email);
-  var devices=[];
-  try{devices=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
-  // 현재 기기 세션 ID
-  var curId=sessionStorage.getItem('aoao_cur_device');
-  if(!curId){
-    curId='dev_'+Date.now();sessionStorage.setItem('aoao_cur_device',curId);
-    var curDev={id:curId,name:getDeviceName(),ua:navigator.userAgent.substring(0,60),loginAt:new Date().toISOString()};
-    devices=devices.filter(function(d){return d.id!==curId;});
-    devices.unshift(curDev);
-    if(devices.length>5)devices=devices.slice(0,5);
-    localStorage.setItem(key,JSON.stringify(devices));
-  }
-  if(!devices.length){list.innerHTML='<div class="empty" style="padding:12px 0;">기기 정보가 없습니다</div>';return;}
-  list.innerHTML='';
-  devices.forEach(function(dev){
-    var isCur=dev.id===curId;
-    var ic=dev.name.includes('iPhone')||dev.name.includes('Android')?'📱':dev.name.includes('iPad')?'🖥':'💻';
-    var loginAt=dev.loginAt?new Date(dev.loginAt).toLocaleString('ko-KR'):'알 수 없음';
-    var el=document.createElement('div');el.className='device-card';
-    el.innerHTML='<div class="device-ic">'+ic+'</div>'+
-      '<div class="device-info">'+
-        '<div class="device-name">'+escH(dev.name)+(isCur?'<span class="device-this">현재 기기</span>':'')+'</div>'+
-        '<div class="device-meta">마지막 로그인: '+loginAt+'</div>'+
-      '</div>'+
-      (isCur?'':'<button class="btn btn-red xs" data-devid="'+dev.id+'">로그아웃</button>');
-    if(!isCur){
-      el.querySelector('button').addEventListener('click',function(){
-        devices=devices.filter(function(d){return d.id!==dev.id;});
-        localStorage.setItem(key,JSON.stringify(devices));
-        toast('success','해당 기기 세션이 해제됐습니다.');
-        renderDevices();
-      });
-    }
-    list.appendChild(el);
-  });
-}
-function logoutAllDevices(){
-  if(!confirm('모든 기기에서 로그아웃할까요?'))return;
-  var email=getEmail();
-  localStorage.removeItem('aoao_devices_'+btoa(email));
-  sessionStorage.removeItem('aoao_cur_device');
-  doLogout();toast('success','모든 기기 로그아웃 완료');
-}
-
-// ════════════════════════════════════
-// 로그인 알림 토글
-// ════════════════════════════════════
-function toggleLoginAlert(){
-  SETTINGS.loginAlert=!SETTINGS.loginAlert;
-  saveSettings();
-  var on=SETTINGS.loginAlert;
-  var toggle=G('loginAlertToggle'),knob=G('loginAlertKnob'),lbl=G('loginAlertLabel');
-  if(toggle)toggle.style.background=on?'var(--blue)':'rgba(0,0,0,.12)';
-  if(knob)knob.style.transform=on?'translateX(16px)':'translateX(0)';
-  if(lbl)lbl.textContent=on?'켜짐':'꺼짐';
-  toast(on?'success':'info',on?'로그인 알림이 켜졌습니다 🔔':'로그인 알림이 꺼졌습니다');
-}
-
-// ════════════════════════════════════
-// TOTP (Google Authenticator 호환)
-// ════════════════════════════════════
-function base32Encode(buf){
-  var alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',bits=0,val=0,out='';
-  for(var i=0;i<buf.length;i++){val=(val<<8)|buf[i];bits+=8;while(bits>=5){out+=alpha[(val>>>(bits-5))&31];bits-=5;}}
-  if(bits>0)out+=alpha[(val<<(5-bits))&31];
-  return out;
-}
-function base32Decode(s){
-  var alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';s=s.toUpperCase().replace(/=+$/,'');
-  var bits=0,val=0,out=[];
-  for(var i=0;i<s.length;i++){var c=alpha.indexOf(s[i]);if(c<0)continue;val=(val<<5)|c;bits+=5;if(bits>=8){out.push((val>>>(bits-8))&255);bits-=8;}}
-  return new Uint8Array(out);
-}
-async function hotp(secret,counter){
-  var key=base32Decode(secret);
-  var msg=new Uint8Array(8);for(var i=7;i>=0;i--){msg[i]=counter&0xff;counter=Math.floor(counter/256);}
-  var k=await crypto.subtle.importKey('raw',key,{name:'HMAC',hash:'SHA-1'},false,['sign']);
-  var sig=new Uint8Array(await crypto.subtle.sign('HMAC',k,msg));
-  var off=sig[19]&0xf;
-  var code=((sig[off]&0x7f)<<24|(sig[off+1]&0xff)<<16|(sig[off+2]&0xff)<<8|(sig[off+3]&0xff))%1000000;
-  return String(code).padStart(6,'0');
-}
-async function getTotpCode(secret){
-  var counter=Math.floor(Date.now()/1000/30);
-  return hotp(secret,counter);
-}
-function genTotpSecret(){var arr=new Uint8Array(20);crypto.getRandomValues(arr);return base32Encode(arr);}
-function drawQrToCanvas(canvasId,text){
-  // 내장 QR — URL 기반 이미지 API 사용
-  var c=G(canvasId);if(!c)return;
-  var ctx=c.getContext('2d');
-  var img=new Image();
-  img.crossOrigin='anonymous';
-  img.onload=function(){ctx.clearRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);};
-  img.src='https://api.qrserver.com/v1/create-qr-code/?size='+c.width+'x'+c.height+'&data='+encodeURIComponent(text)+'&bgcolor=ffffff&color=0f172a&qzone=1';
-}
-function openTotpSetup(){
-  TOTP_SECRET=genTotpSecret();
-  var email=getEmail();
-  var uri='otpauth://totp/AOAO%20Studio:'+encodeURIComponent(email)+'?secret='+TOTP_SECRET+'&issuer=AOAO%20Studio';
-  G('totpSecretDisp').textContent=TOTP_SECRET;
-  hideAlert('totpVerifyAlert');
-  [0,1,2,3,4,5].forEach(function(i){var d=G('td'+i);if(d)d.value='';});
-  G('totpStep1').classList.add('show');G('totpStep1').style.display='block';
-  G('totpStep2').classList.remove('show');G('totpStep2').style.display='none';
-  openMod('totpMod');
-  setTimeout(function(){drawQrToCanvas('totpQrCanvas',uri);},100);
-}
-function totpNextStep(){
-  G('totpStep1').style.display='none';
-  G('totpStep2').style.display='block';
-  setTimeout(function(){var d=G('td0');if(d)d.focus();},100);
-}
-function totpMod(action){
-  if(action==='back'){G('totpStep2').style.display='none';G('totpStep1').style.display='block';}
-}
-function totpDigitInput(idx){
-  var d=G('td'+idx);if(!d)return;
-  d.value=d.value.replace(/\D/g,'').slice(-1);
-  if(d.value&&idx<5){var next=G('td'+(idx+1));if(next)next.focus();}
-  if(idx===5){
-    var code=[0,1,2,3,4,5].map(function(i){return(G('td'+i)||{value:''}).value;}).join('');
-    if(code.length===6)verifyTotpSetup();
-  }
-}
-async function verifyTotpSetup(){
-  var entered=[0,1,2,3,4,5].map(function(i){return(G('td'+i)||{value:''}).value;}).join('');
-  if(entered.length<6){showAlert('totpVerifyAlert','error','6자리를 모두 입력하세요.');return;}
-  setBtn('totpVerifyBtn','totpVerifyTxt',true,'확인 중...');
-  try{
-    var expected=await getTotpCode(TOTP_SECRET);
-    // 전후 1 window 허용
-    var c=Math.floor(Date.now()/1000/30);
-    var valid=false;
-    for(var d=-1;d<=1;d++){var code=await hotp(TOTP_SECRET,c+d);if(code===entered){valid=true;break;}}
-    setBtn('totpVerifyBtn','totpVerifyTxt',false,'인증 완료');
-    if(valid){
-      localStorage.setItem('aoao_totp_'+btoa(getEmail()),TOTP_SECRET);
-      closeMod('totpMod');renderSecSec();
-      toast('success','2단계 인증이 등록됐습니다! 🎉');
-    } else showAlert('totpVerifyAlert','error','코드가 올바르지 않습니다. 앱 시간을 확인하세요.');
-  }catch(e){setBtn('totpVerifyBtn','totpVerifyTxt',false,'인증 완료');showAlert('totpVerifyAlert','error','오류: '+e.message);}
-}
-function deleteTotp(){
-  if(!confirm('2단계 인증을 해제할까요?'))return;
-  localStorage.removeItem('aoao_totp_'+btoa(getEmail()));
-  renderSecSec();toast('success','2단계 인증이 해제됐습니다.');
-}
-
-// ════════════════════════════════════
-// QR 코드 로그인
-// ════════════════════════════════════
-function openQrMod(){
-  var token=getToken(),email=getEmail();
-  if(!token){toast('error','로그인 필요');return;}
-  var payload=JSON.stringify({email:email,token:token.substring(0,20),ts:Date.now()});
-  var url='https://aoao-studio-code.onrender.com/qr-login?data='+encodeURIComponent(btoa(payload));
-  openMod('qrMod');
-  setTimeout(function(){drawQrToCanvas('qrCanvas',url);},100);
-  var secs=180;
-  function tick(){
-    var m=Math.floor(secs/60),s=secs%60;
-    var cd=G('qrCountdown');if(cd)cd.textContent='⏱ 남은 시간: '+m+':'+(s<10?'0':'')+s;
-    if(secs<=0){clearQrTimer();var cd2=G('qrCountdown');if(cd2)cd2.textContent='⌛ 만료됨 — 다시 열어주세요';}
-    secs--;
-  }
-  tick();QR_TIMER=setInterval(tick,1000);
-}
-function clearQrTimer(){if(QR_TIMER){clearInterval(QR_TIMER);QR_TIMER=null;}}
-
-// ════════════════════════════════════
-// 테마 / 언어
-// ════════════════════════════════════
-function saveSettings(){localStorage.setItem('aoao_settings',JSON.stringify(SETTINGS));}
-function applyTheme(theme){
-  var root=document.documentElement;
-  if(theme==='dark'){root.setAttribute('data-theme','dark');}
-  else if(theme==='light'){root.removeAttribute('data-theme');}
-  else{// auto
-    var dark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(dark)root.setAttribute('data-theme','dark');else root.removeAttribute('data-theme');
-  }
-}
-function setTheme(t){
-  SETTINGS.theme=t;saveSettings();applyTheme(t);
-  ['light','auto','dark'].forEach(function(x){
-    var b=G('theme'+x.charAt(0).toUpperCase()+x.slice(1));if(b)b.classList.toggle('active',x===t);
-  });
-  toast('success',{light:'☀️ 라이트 모드',auto:'💻 시스템 테마',dark:'🌙 다크 모드'}[t]);
-}
-var I18N={
-  ko:{home:'🏠 홈',linked:'🔗 연동계정',apikeys:'🔑 API 키',security:'🛡 보안',extras:'✨ 더보기',account:'👤 계정',logout:'🚪 로그아웃'},
-  en:{home:'🏠 Home',linked:'🔗 Linked',apikeys:'🔑 API Keys',security:'🛡 Security',extras:'✨ More',account:'👤 Account',logout:'🚪 Logout'}
-};
-function applyLang(lang){
-  var t=I18N[lang]||I18N.ko;
-  var map={home:'tab-home',linked:'tab-linked',apikeys:'tab-apikeys',security:'tab-security',extras:'tab-extras',account:'tab-account'};
-  Object.keys(map).forEach(function(k){var el=G(map[k]);if(el)el.textContent=t[k];});
-}
-function setLang(lang){
-  SETTINGS.lang=lang;saveSettings();applyLang(lang);
-  ['ko','en'].forEach(function(l){var b=G('lang'+l.charAt(0).toUpperCase()+l.slice(1));if(b)b.classList.toggle('active',l===lang);});
-  toast('success',lang==='ko'?'한국어로 변경됐습니다':'Changed to English');
-}
-function renderExtraSettings(){
-  // 테마 버튼 상태
-  ['light','auto','dark'].forEach(function(x){
-    var b=G('theme'+x.charAt(0).toUpperCase()+x.slice(1));
-    if(b)b.classList.toggle('active',SETTINGS.theme===x);
-  });
-  // 언어 버튼 상태
-  ['ko','en'].forEach(function(l){
-    var b=G('lang'+l.charAt(0).toUpperCase()+l.slice(1));
-    if(b)b.classList.toggle('active',SETTINGS.lang===l);
-  });
-}
-
-// ════════════════════════════════════
-// 클라우드 북마크
-// ════════════════════════════════════
-var BM_EDIT_ID=null;
-function saveBookmarks(){localStorage.setItem('aoao_bookmarks',JSON.stringify(BOOKMARKS));}
-function renderBookmarks(){
-  var list=G('bookmarkList');if(!list)return;
-  if(!BOOKMARKS.length){list.innerHTML='<div class="empty"><div class="empty-ic">🔖</div>저장된 북마크가 없습니다</div>';return;}
-  list.innerHTML='';
-  BOOKMARKS.forEach(function(bm){
-    var el=document.createElement('div');el.className='bm-item';
-    var domain='';try{domain=new URL(bm.url).hostname;}catch(e){}
-    var favSrc=domain?'https://www.google.com/s2/favicons?domain='+domain+'&sz=32':'';
-    el.innerHTML='<img class="bm-favicon" src="'+favSrc+'" onerror="this.style.display=\'none\'" alt="">'+
-      '<div style="flex:1;min-width:0;"><div class="bm-name">'+escH(bm.name)+'</div><div class="bm-url">'+escH(bm.url)+'</div></div>'+
-      '<div style="display:flex;gap:4px;flex-shrink:0;">'+
-        '<button class="btn btn-light xs" data-bm="'+bm.id+'" data-act="open">열기</button>'+
-        '<button class="btn btn-light xs" data-bm="'+bm.id+'" data-act="edit">편집</button>'+
-        '<button class="btn btn-red xs" data-bm="'+bm.id+'" data-act="del">삭제</button>'+
-      '</div>';
-    el.querySelectorAll('button[data-act]').forEach(function(btn){
-      btn.addEventListener('click',function(e){
-        e.stopPropagation();
-        var id=btn.getAttribute('data-bm'),act=btn.getAttribute('data-act');
-        var bk=BOOKMARKS.find(function(b){return b.id===id;});
-        if(act==='open'&&bk)window.open(bk.url,'_blank');
-        else if(act==='edit'&&bk){BM_EDIT_ID=id;G('bmModTitle').textContent='북마크 편집';G('bmName').value=bk.name;G('bmUrl').value=bk.url;hideAlert('bmAlert');openMod('bmMod');}
-        else if(act==='del'){BOOKMARKS=BOOKMARKS.filter(function(b){return b.id!==id;});saveBookmarks();renderBookmarks();toast('success','북마크 삭제됨');}
-      });
-    });
-    el.addEventListener('click',function(){if(bm.url)window.open(bm.url,'_blank');});
-    list.appendChild(el);
-  });
-}
-function openAddBookmark(){BM_EDIT_ID=null;G('bmModTitle').textContent='북마크 추가';G('bmName').value='';G('bmUrl').value='';hideAlert('bmAlert');openMod('bmMod');}
-function saveBookmark(){
-  var name=G('bmName').value.trim(),url=G('bmUrl').value.trim();
-  if(!name){shakeEl('bmName');return;}
-  if(!url||!url.startsWith('http')){shakeEl('bmUrl');showAlert('bmAlert','error','올바른 URL을 입력하세요 (http/https)');return;}
-  if(BM_EDIT_ID){
-    var bm=BOOKMARKS.find(function(b){return b.id===BM_EDIT_ID;});
-    if(bm){bm.name=name;bm.url=url;}
-  } else {
-    BOOKMARKS.push({id:'bm_'+Date.now(),name:name,url:url,createdAt:new Date().toISOString()});
-  }
-  saveBookmarks();closeMod('bmMod');renderBookmarks();toast('success','북마크가 저장됐습니다 🔖');
-}
-
-// ════════════════════════════════════
-// 메모
-// ════════════════════════════════════
-var NOTE_EDIT_ID=null;
-function saveNotes(){localStorage.setItem('aoao_notes',JSON.stringify(NOTES));}
-function renderNotes(){
-  var list=G('noteList');if(!list)return;
-  if(!NOTES.length){list.innerHTML='<div class="empty"><div class="empty-ic">📝</div>메모가 없습니다</div>';return;}
-  list.innerHTML='';
-  NOTES.slice().sort(function(a,b){return new Date(b.updatedAt)-new Date(a.updatedAt);}).forEach(function(note){
-    var el=document.createElement('div');el.className='note-card';
-    var date=new Date(note.updatedAt).toLocaleDateString('ko-KR');
-    el.innerHTML='<div class="note-title">'+escH(note.title||'제목 없음')+'</div>'+
-      '<div class="note-preview">'+escH(note.content||'')+'</div>'+
-      '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">'+
-        '<div class="note-date">'+date+'</div>'+
-        '<div style="display:flex;gap:4px;">'+
-          '<button class="btn btn-light xs" data-nid="'+note.id+'" data-act="edit">편집</button>'+
-          '<button class="btn btn-red xs" data-nid="'+note.id+'" data-act="del">삭제</button>'+
-        '</div>'+
-      '</div>';
-    el.querySelectorAll('button[data-act]').forEach(function(btn){
-      btn.addEventListener('click',function(e){
-        e.stopPropagation();
-        var id=btn.getAttribute('data-nid'),act=btn.getAttribute('data-act');
-        var n=NOTES.find(function(x){return x.id===id;});
-        if(act==='edit'&&n){NOTE_EDIT_ID=id;G('noteModTitle').textContent='메모 편집';G('noteTitle').value=n.title||'';G('noteContent').value=n.content||'';openMod('noteMod');}
-        else if(act==='del'){if(!confirm('이 메모를 삭제할까요?'))return;NOTES=NOTES.filter(function(x){return x.id!==id;});saveNotes();renderNotes();toast('success','메모 삭제됨');}
-      });
-    });
-    list.appendChild(el);
-  });
-}
-function openAddNote(){NOTE_EDIT_ID=null;G('noteModTitle').textContent='새 메모';G('noteTitle').value='';G('noteContent').value='';openMod('noteMod');}
-function saveNote(){
-  var title=G('noteTitle').value.trim(),content=G('noteContent').value.trim();
-  if(!title&&!content){shakeEl('noteTitle');return;}
-  var now=new Date().toISOString();
-  if(NOTE_EDIT_ID){
-    var n=NOTES.find(function(x){return x.id===NOTE_EDIT_ID;});
-    if(n){n.title=title;n.content=content;n.updatedAt=now;}
-  } else {
-    NOTES.push({id:'note_'+Date.now(),title:title,content:content,createdAt:now,updatedAt:now});
-  }
-  saveNotes();closeMod('noteMod');renderNotes();toast('success','메모가 저장됐습니다 📝');
-}
-
-// ════════════════════════════════════
-// API 사용량
-// ════════════════════════════════════
-function loadUsage(){
-  var el=G('usagePanel');if(!el)return;
-  var email=getEmail();
-  jbLoad().then(function(data){
-    if(!data){el.innerHTML='<div class="empty">JSONBin 연결 실패</div>';return;}
-    var keys=data.api_keys||{};
-    var myKeys=Object.values(keys).filter(function(k){return k.user_id===email;});
-    var total=myKeys.reduce(function(sum,k){return sum+(k.usage_count||0);},0);
-    var limit=1000;var pct=Math.min(100,Math.round(total/limit*100));
-    el.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:6px;">'+
-      '<span style="font-size:13px;font-weight:600;color:var(--text);">이번 달 호출 수</span>'+
-      '<span style="font-size:13px;font-weight:700;color:var(--blue);">'+total.toLocaleString()+' / '+limit.toLocaleString()+'</span>'+
-      '</div>'+
-      '<div class="usage-bar"><div class="usage-fill" style="width:'+pct+'%"></div></div>'+
-      '<div style="font-size:11px;color:var(--muted);margin-top:5px;">'+pct+'% 사용됨 · API 키 '+myKeys.length+'개</div>';
-  }).catch(function(){el.innerHTML='<div class="empty">로드 실패</div>';});
-}
-
-// ════════════════════════════════════
-// 초대
-// ════════════════════════════════════
-function renderInviteCode(){
-  var el=G('inviteCode');if(!el)return;
-  var email=getEmail();
-  var code='AOAO-'+btoa(email).replace(/=/g,'').substring(0,8).toUpperCase();
-  el.textContent=code;
-}
-function copyInvite(){
-  var code=G('inviteCode');if(!code)return;
-  copyText('AOAO Studio 초대 코드: '+code.textContent+'\nhttps://aoao-studio-code.onrender.com');
-}
-function sendInvite(){
-  var email=G('inviteEmail').value.trim();
-  if(!email||!email.includes('@')){shakeEl('inviteEmail');showAlert('inviteAlert','error','올바른 이메일을 입력하세요.');return;}
-  // 서버 이메일 발송 (AOAO_SERVER 엔드포인트)
-  showAlert('inviteAlert','info','발송 중...');
-  fetch(AOAO_SERVER+'/api/invite',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+getToken()},
-    body:JSON.stringify({to:email,from:getEmail(),code:G('inviteCode').textContent})
-  }).then(function(r){
-    if(r.ok){G('inviteEmail').value='';showAlert('inviteAlert','success','초대 이메일이 발송됐습니다! ✉️');}
-    else showAlert('inviteAlert','warn','서버 미지원 — 코드를 직접 공유해주세요.');
-  }).catch(function(){showAlert('inviteAlert','warn','오프라인 — 코드를 직접 공유해주세요.');});
-}
-
-// ════════════════════════════════════
-// 기기 등록 (로그인 시 자동)
-// ════════════════════════════════════
-function registerCurrentDevice(email){
-  var key='aoao_devices_'+btoa(email);
-  var devices=[];try{devices=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
-  var curId='dev_'+Date.now();
-  sessionStorage.setItem('aoao_cur_device',curId);
-  var dev={id:curId,name:getDeviceName(),loginAt:new Date().toISOString()};
-  devices=devices.filter(function(d){
-    // 3개월 지난 기기 자동 제거
-    return d.loginAt&&(Date.now()-new Date(d.loginAt).getTime())<90*24*3600*1000;
-  });
-  devices.unshift(dev);
-  if(devices.length>10)devices=devices.slice(0,10);
-  localStorage.setItem(key,JSON.stringify(devices));
-}
 function switchAddType(t){
   ADD_TYPE=t;
   var fMap={ao:'addAoF',sb:'addSbF',jb:'addJbF'};
@@ -2276,7 +1515,17 @@ function confirmAdd(){
     var idx=CSEL_VAL.aoSite,site=AO_SITES[idx];
     var email=G('aAoId').value.trim(),pw=G('aAoPw').value;
     if(!email||!pw){showAlert('addAlert','error','이메일과 비밀번호를 입력하세요.');return;}
-    if(site.type==='modelhub'||site.type==='supabase'||site.type==='supabase_nosession'){
+    if(site.type==='modelhub'){
+      setBtn('addConfBtn','addConfTxt',true,'확인 중...');
+      jbLoad().then(function(data){
+        setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
+        if(!data){showAlert('addAlert','error','JSONBin 연결 실패');return;}
+        var users=data.users||{};
+        if(!(pw===JB_ADMIN_PW||(email in users&&users[email].password===pw))){showAlert('addAlert','error','아이디 또는 비밀번호가 올바르지 않습니다.');return;}
+        ST.linked.push({id:'ao_'+Date.now(),type:'ao',siteId:site.id,name:site.name,icon:site.icon,siteUrl:site.url,authUrl:site.authUrl,email:email,pw:pw});
+        saveLinked();closeMod('addMod');renderLinked();renderLauncher();renderStats();toast('success',site.name+' 등록 완료 ✓');
+      });
+    } else {
       setBtn('addConfBtn','addConfTxt',true,'확인 중...');
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},body:JSON.stringify({email:email,password:pw})})
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
@@ -2336,10 +1585,24 @@ function renderLinked(){
 }
 function openLinkedLogin(id){
   LL_ID=id;var acc=ST.linked.find(function(a){return a.id===id;});if(!acc)return;
-  G('llTitle').textContent=acc.name+' 로그인';
+  var site=acc.type==='ao'?AO_SITES.find(function(s){return s.id===acc.siteId;}):null;
+  var isModelhub=site&&site.type==='modelhub';
+  G('llTitle').textContent=acc.name+(isModelhub?' 이동':'로그인');
   G('llSub').textContent=(acc.email||acc.uid||'저장된 계정');
-  hideAlert('llAlert');
-  var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">로그인 & 이동</span>';
+  // modelhub는 보안 안내 표시
+  if(isModelhub){
+    showAlert('llAlert','warn',
+      '⚠️ <b>보안 제한</b><br>'+
+      'Model Hub는 서버 세션 방식이라 자동 로그인이 불가능합니다.<br>'+
+      '사이트 이동 후 직접 로그인해주세요.<br>'+
+      '<small style="opacity:.8">저장된 아이디: '+escH(acc.email||acc.uid||'-')+'</small>'
+    );
+    // 버튼 텍스트 변경
+    var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">사이트로 이동</span>';
+  } else {
+    hideAlert('llAlert');
+    var btn=G('llBtn');if(btn)btn.innerHTML='<span id="llBtnTxt">로그인 & 이동</span>';
+  }
   openMod('llMod');
 }
 function confirmLinkedLogin(){
@@ -2348,7 +1611,13 @@ function confirmLinkedLogin(){
   if(acc.type==='ao'){
     var site=AO_SITES.find(function(s){return s.id===acc.siteId;});
     if(!site){showAlert('llAlert','error','사이트 정보 없음');setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');return;}
-    if(site.type==='modelhub'||site.type==='supabase'||site.type==='supabase_nosession'){
+    if(site.type==='modelhub'){
+      // 보안상 크로스 도메인 자동 로그인 불가 → 그냥 사이트로 이동
+      setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');
+      closeMod('llMod');
+      toast('info','Model Hub로 이동합니다. 사이트에서 직접 로그인해주세요.');
+      setTimeout(function(){window.open(site.url,'_blank');},400);
+    } else {
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},body:JSON.stringify({email:acc.email,password:acc.pw})})
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
       .then(function(r){
