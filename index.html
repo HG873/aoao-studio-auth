@@ -1017,7 +1017,7 @@ var JB_ADMIN_PW='3546';
 // ════════════════════════════════════
 // 상태
 // ════════════════════════════════════
-var ST={sess:null,linked:[],profile:{nickname:'',avatar:''}};
+var ST={sess:null,linked:[],profile:{nickname:'',avatar:''},passkeys:[],pinHash:null,bioSess:null};
 var ADD_TYPE='ao',LL_ID=null,UL_ID=null;
 var PIN_BUF={login:'',set:''},PIN_STEP=1,PIN_FIRST='';
 var NEW_API_KEY='';
@@ -1029,9 +1029,8 @@ var ACTIVITY_LOG=[];
 // ════════════════════════════════════
 document.addEventListener('DOMContentLoaded',function(){
   try{var s=localStorage.getItem('aoao_sess');if(s)ST.sess=JSON.parse(s);}catch(e){}
-  try{var l=localStorage.getItem('aoao_linked');if(l)ST.linked=JSON.parse(l);}catch(e){}
+  // profile은 로컬 캐시로만 (DB에서 덮어씀)
   try{var p=localStorage.getItem('aoao_profile');if(p)ST.profile=JSON.parse(p);}catch(e){}
-  try{var a=localStorage.getItem('aoao_activity');if(a)ACTIVITY_LOG=JSON.parse(a);}catch(e){}
   if(!window.PublicKeyCredential){var b=G('bioBtn');if(b){b.disabled=true;b.textContent='🚫 미지원';}}
   if(ST.sess&&ST.sess.access_token){showPage('dashPage');renderDash();}
   else showPage('loginPage');
@@ -1064,76 +1063,154 @@ function saveSess(s){ST.sess=s;localStorage.setItem('aoao_sess',JSON.stringify(s
 // ════════════════════════════════════
 function sbRest(path,opts){
   var token=getToken();
-  var headers=Object.assign({'apikey':CENTRAL.key,'Content-Type':'application/json'},
+  var headers=Object.assign(
+    {'apikey':CENTRAL.key,'Content-Type':'application/json'},
     token?{'Authorization':'Bearer '+token}:{},
-    opts&&opts.headers||{});
+    (opts&&opts.headers)||{}
+  );
   return fetch(CENTRAL.url+'/rest/v1'+path,Object.assign({},opts,{headers:headers}))
-    .then(function(r){return r.text().then(function(t){try{return{ok:r.ok,status:r.status,data:JSON.parse(t)};}catch(e){return{ok:r.ok,status:r.status,data:t};}});})
-    .catch(function(){return{ok:false,status:0,data:null};});
+    .then(function(r){return r.text().then(function(t){
+      try{return{ok:r.ok,status:r.status,d:JSON.parse(t)};}
+      catch(e){return{ok:r.ok,status:r.status,d:t};}
+    });})
+    .catch(function(){return{ok:false,status:0,d:null};});
 }
 
-// ── 프로필 DB ──
+// ── 프로필 ──
 async function dbLoadProfile(){
-  var r=await sbRest('/profiles?select=*&limit=1',{headers:{'Prefer':'return=representation'}});
-  if(r.ok&&r.data&&r.data[0]){
-    var p=r.data[0];
+  var r=await sbRest('/profiles?select=*&limit=1');
+  if(r.ok&&r.d&&r.d[0]){
+    var p=r.d[0];
     if(p.nickname)ST.profile.nickname=p.nickname;
     if(p.avatar_url)ST.profile.avatar=p.avatar_url;
+    // bio 세션도 복원
+    if(p.bio_sess){try{ST.bioSess=JSON.parse(p.bio_sess);}catch(e){}}
     localStorage.setItem('aoao_profile',JSON.stringify(ST.profile));
   }
 }
 async function dbSaveProfile(){
-  var email=getEmail();
-  var body=JSON.stringify({nickname:ST.profile.nickname||null,avatar_url:ST.profile.avatar||null,email:email,updated_at:new Date().toISOString()});
-  // upsert
-  await sbRest('/profiles?on_conflict=id',{method:'POST',body:body,headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+  var body=JSON.stringify({
+    nickname:ST.profile.nickname||null,
+    avatar_url:ST.profile.avatar||null,
+    email:getEmail(),
+    updated_at:new Date().toISOString()
+  });
+  await sbRest('/profiles?on_conflict=id',{method:'POST',body:body,
+    headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
 }
 
-// ── PIN DB ──
+// ── PIN (DB 전용) ──
 async function dbSavePin(hash){
-  await sbRest('/profiles?on_conflict=id',{method:'POST',body:JSON.stringify({pin_hash:hash,pin_updated_at:new Date().toISOString()}),headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+  await sbRest('/profiles?on_conflict=id',{method:'POST',
+    body:JSON.stringify({pin_hash:hash,pin_updated_at:new Date().toISOString()}),
+    headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+  ST.pinHash=hash; // 메모리 캐시
 }
 async function dbLoadPin(){
+  if(ST.pinHash)return ST.pinHash;
   var r=await sbRest('/profiles?select=pin_hash&limit=1');
-  if(r.ok&&r.data&&r.data[0]&&r.data[0].pin_hash) return r.data[0].pin_hash;
+  if(r.ok&&r.d&&r.d[0]&&r.d[0].pin_hash){ST.pinHash=r.d[0].pin_hash;return r.d[0].pin_hash;}
   return null;
 }
 async function dbDeletePin(){
-  await sbRest('/profiles?on_conflict=id',{method:'POST',body:JSON.stringify({pin_hash:null,pin_updated_at:null}),headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+  await sbRest('/profiles?on_conflict=id',{method:'POST',
+    body:JSON.stringify({pin_hash:null,pin_updated_at:null}),
+    headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+  ST.pinHash=null;
+}
+async function dbVerifyPin(pin){
+  var hash=await dbLoadPin();
+  if(!hash)return false;
+  return hash===(await hashPin(pin,getEmail()));
+}
+async function dbHasPin(){
+  var h=await dbLoadPin();
+  return!!h;
 }
 
-// ── 패스키 DB ──
+// ── 패스키 ──
 async function dbLoadPasskeys(){
   var r=await sbRest('/passkeys?select=*&order=created_at.desc');
-  if(r.ok&&r.data&&Array.isArray(r.data)){
+  if(r.ok&&r.d&&Array.isArray(r.d)){
     var email=getEmail();
-    var pks=r.data.map(function(p){return{id:p.id,credId:p.cred_id,email:email,name:p.name,at:p.created_at};});
-    localStorage.setItem('aoao_passkeys',JSON.stringify(pks));
-    return pks;
+    ST.passkeys=r.d.map(function(p){
+      return{id:p.id,credId:p.cred_id,email:email,name:p.name,at:p.created_at};
+    });
+    return ST.passkeys;
   }
-  return getPKs();
+  return ST.passkeys||[];
 }
 async function dbSavePasskey(pk){
-  var r=await sbRest('/passkeys',{method:'POST',body:JSON.stringify({cred_id:pk.credId,name:pk.name}),headers:{'Prefer':'return=representation'}});
-  if(r.ok&&r.data&&r.data[0]) pk.id=r.data[0].id;
+  var r=await sbRest('/passkeys',{method:'POST',
+    body:JSON.stringify({cred_id:pk.credId,name:pk.name}),
+    headers:{'Prefer':'return=representation'}});
+  if(r.ok&&r.d&&r.d[0]){pk.id=r.d[0].id;}
+  if(!ST.passkeys)ST.passkeys=[];
+  ST.passkeys.push(pk);
   return r.ok;
 }
 async function dbDeletePasskey(credId){
   await sbRest('/passkeys?cred_id=eq.'+encodeURIComponent(credId),{method:'DELETE'});
+  if(ST.passkeys)ST.passkeys=ST.passkeys.filter(function(p){return p.credId!==credId;});
 }
 
-// ── 활동 로그 DB ──
+// ── 패스키 세션 ──
+async function dbSaveBioSess(sess){
+  ST.bioSess=sess;
+  await sbRest('/profiles?on_conflict=id',{method:'POST',
+    body:JSON.stringify({bio_sess:JSON.stringify(sess)}),
+    headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
+}
+async function dbLoadBioSess(){
+  if(ST.bioSess)return ST.bioSess;
+  var r=await sbRest('/profiles?select=bio_sess&limit=1');
+  if(r.ok&&r.d&&r.d[0]&&r.d[0].bio_sess){
+    try{ST.bioSess=JSON.parse(r.d[0].bio_sess);return ST.bioSess;}catch(e){}
+  }
+  return null;
+}
+
+// ── 활동 로그 ──
 async function dbLogActivity(action,device){
-  await sbRest('/activity_logs',{method:'POST',body:JSON.stringify({action:action,device:device||getDeviceName()}),headers:{'Prefer':'return=minimal'}});
+  await sbRest('/activity_logs',{method:'POST',
+    body:JSON.stringify({action:action,device:device||getDeviceName()}),
+    headers:{'Prefer':'return=minimal'}});
 }
 async function dbLoadActivityLogs(){
   var r=await sbRest('/activity_logs?select=*&order=created_at.desc&limit=20');
-  if(r.ok&&r.data&&Array.isArray(r.data)){
-    ACTIVITY_LOG=r.data.map(function(a){return{action:a.action,device:a.device||'-',time:a.created_at};});
-    localStorage.setItem('aoao_activity',JSON.stringify(ACTIVITY_LOG));
+  if(r.ok&&r.d&&Array.isArray(r.d)){
+    ACTIVITY_LOG=r.d.map(function(a){
+      return{action:a.action,device:a.device||'-',time:a.created_at};
+    });
   }
 }
-function saveLinked(){localStorage.setItem('aoao_linked',JSON.stringify(ST.linked));}
+
+// ── 연동계정 DB ──
+async function dbLoadLinked(){
+  var r=await sbRest('/linked_accounts?select=*&order=created_at.asc');
+  if(r.ok&&r.d&&Array.isArray(r.d)){
+    ST.linked=r.d.map(function(a){
+      var data={};
+      try{data=JSON.parse(a.data||'{}');}catch(e){}
+      return Object.assign({id:a.id,type:a.site_type,name:a.name},data);
+    });
+  }
+}
+async function dbSaveLinked(acc){
+  // id, type, name 제외한 나머지를 data JSON에 저장
+  var data=Object.assign({},acc);
+  delete data.id;delete data.type;delete data.name;
+  var r=await sbRest('/linked_accounts',{method:'POST',
+    body:JSON.stringify({name:acc.name,site_type:acc.type,data:JSON.stringify(data)}),
+    headers:{'Prefer':'return=representation'}});
+  if(r.ok&&r.d&&r.d[0])acc.id=r.d[0].id;
+  return r.ok;
+}
+async function dbDeleteLinked(id){
+  await sbRest('/linked_accounts?id=eq.'+id,{method:'DELETE'});
+  ST.linked=ST.linked.filter(function(a){return a.id!==id;});
+}
+function saveLinked(){/* DB에서 관리 - dbSaveLinked/dbDeleteLinked 사용 */}
 function saveProfile(){localStorage.setItem('aoao_profile',JSON.stringify(ST.profile));}
 function getEmail(){return ST.sess&&ST.sess.user&&ST.sess.user.email||'';}
 function getToken(){
@@ -1143,7 +1220,7 @@ function getToken(){
     var payload=JSON.parse(atob(ST.sess.access_token.split('.')[1]));
     if(payload.exp&&payload.exp*1000<Date.now()){
       // 만료 → 세션 클리어
-      ST.sess=null;localStorage.removeItem('aoao_sess');
+      ST.sess=null;ST.linked=[];ST.passkeys=[];ST.pinHash=null;ST.bioSess=null;localStorage.removeItem('aoao_sess');localStorage.removeItem('aoao_profile');
       if(document.getElementById('dashPage')&&document.getElementById('dashPage').classList.contains('show')){
         toast('error','세션이 만료됐습니다. 다시 로그인해주세요.');
         setTimeout(doLogout,1500);
@@ -1167,7 +1244,7 @@ function logActivity(action,device){
   var entry={action:action,device:device||getDeviceName(),time:new Date().toISOString()};
   ACTIVITY_LOG.unshift(entry);
   if(ACTIVITY_LOG.length>20)ACTIVITY_LOG=ACTIVITY_LOG.slice(0,20);
-  localStorage.setItem('aoao_activity',JSON.stringify(ACTIVITY_LOG));
+  
 }
 function getDeviceName(){
   var ua=navigator.userAgent;
@@ -1195,7 +1272,7 @@ function renderActivityLog(){
       '<div class="ac-time">'+timeStr+'</div></div>';
   }).join('');
 }
-function clearActivityLog(){ACTIVITY_LOG=[];localStorage.removeItem('aoao_activity');renderActivityLog();}
+function clearActivityLog(){ACTIVITY_LOG=[];renderActivityLog();}
 
 // ════════════════════════════════════
 // 프로필
@@ -1249,7 +1326,7 @@ function goTab(name){
     var tb=G('tab-'+t);if(tb)tb.classList.toggle('active',t===name);
   });
   closeUserDD();
-  if(name==='linked')renderLinked();
+  if(name==='linked'){if(!ST.linked.length)dbLoadLinked().then(renderLinked).catch(function(){});else renderLinked();}
   if(name==='apikeys')loadApiKeys();
   if(name==='security')renderSecSec();
   if(name==='account')renderAccount();
@@ -1299,11 +1376,16 @@ function renderDash(){
   renderActivityLog();
   renderStats();
   loadNotices();
-  // DB에서 최신 데이터 로드 (비동기)
-  dbLoadProfile().then(function(){renderProfileCard();renderTopbar();renderStats();}).catch(function(){});
-  dbLoadActivityLogs().then(function(){renderActivityLog();}).catch(function(){});
-  dbLoadPasskeys().then(function(){}).catch(function(){});
-  dbLoadPin().then(function(hash){if(hash){var e=getEmail();var r=localStorage.getItem(pinKey(e));if(!r){localStorage.setItem(pinKey(e),JSON.stringify({hash:hash,sess:ST.sess?JSON.stringify(ST.sess):null,at:new Date().toISOString()}));renderSecSec();}}}).catch(function(){});
+  // DB에서 모든 데이터 로드
+  Promise.all([
+    dbLoadProfile().catch(function(){}),
+    dbLoadLinked().catch(function(){}),
+    dbLoadPasskeys().catch(function(){}),
+    dbLoadPin().catch(function(){}),
+    dbLoadActivityLogs().catch(function(){}),
+  ]).then(function(){
+    renderProfileCard();renderTopbar();renderLinked();renderLauncher();renderSecSec();renderActivityLog();renderStats();
+  });
   goTab('home');
   // file:// 경고
   if(location.protocol==='file:'){
@@ -1356,12 +1438,12 @@ function switchTab(t){
 // ════════════════════════════════════
 function pinKey(email){try{return'aoao_pin_'+btoa(unescape(encodeURIComponent(email)));}catch(e){return'aoao_pin_'+email.split('').map(function(c){return c.charCodeAt(0).toString(16);}).join('');}}
 async function hashPin(pin,email){var data=new TextEncoder().encode(pin+':'+email+':aoao2024');var h=await crypto.subtle.digest('SHA-256',data);return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
-async function savePin(pin,email){var hash=await hashPin(pin,email);var obj={hash:hash,sess:ST.sess?JSON.stringify(ST.sess):null,at:new Date().toISOString()};try{localStorage.setItem(pinKey(email),JSON.stringify(obj));}catch(e){}}
-async function verifyPin(pin,email){var r=localStorage.getItem(pinKey(email));if(!r)return false;try{return JSON.parse(r).hash===(await hashPin(pin,email));}catch(e){return false;}}
-function hasPin(email){return!!localStorage.getItem(pinKey(email));}
-function getPinSess(email){var r=localStorage.getItem(pinKey(email));if(!r)return null;try{var o=JSON.parse(r);return o.sess?JSON.parse(o.sess):null;}catch(e){return null;}}
-function updatePinSess(email){var r=localStorage.getItem(pinKey(email));if(!r||!ST.sess)return;try{var o=JSON.parse(r);o.sess=JSON.stringify(ST.sess);localStorage.setItem(pinKey(email),JSON.stringify(o));}catch(e){}}
-function deletePin(){var e=getEmail();localStorage.removeItem(pinKey(e));dbDeletePin().catch(function(){});renderSecSec();toast('success','PIN이 해제됐습니다.');}
+async function savePin(pin,email){var hash=await hashPin(pin,email);await dbSavePin(hash);}
+async function verifyPin(pin,email){return dbVerifyPin(pin);}
+function hasPin(email){return!!(ST.pinHash);} // 메모리 캐시
+function getPinSess(email){return ST.bioSess||ST.sess;} // bio 세션 or 현재 세션
+function updatePinSess(email){/* DB 세션은 로그인 시 자동 갱신됨 */}
+function deletePin(){dbDeletePin().then(function(){renderSecSec();toast('success','PIN이 해제됐습니다.');}).catch(function(){toast('error','PIN 삭제 실패');});}
 
 // PIN 패드
 function pfx(m){return m==='login'?'l':'s';}
@@ -1423,8 +1505,8 @@ async function handlePinSet(pin){
 // ════════════════════════════════════
 // 패스키 (WebAuthn)
 // ════════════════════════════════════
-function getPKs(){try{return JSON.parse(localStorage.getItem('aoao_passkeys')||'[]');}catch(e){return[];}}
-function savePKs(a){localStorage.setItem('aoao_passkeys',JSON.stringify(a));}
+function getPKs(){return ST.passkeys||[];}
+function savePKs(a){ST.passkeys=a;}
 function getPKsByEmail(e){return getPKs().filter(function(p){return p.email===e;});}
 function devName(){var ua=navigator.userAgent;if(/iPhone/.test(ua))return'iPhone';if(/iPad/.test(ua))return'iPad';if(/Mac/.test(ua))return'Mac';if(/Windows/.test(ua))return'Windows';if(/Android/.test(ua))return'Android';return'기기';}
 
@@ -1444,7 +1526,7 @@ async function doRegisterPasskey(){
     }});
     var pk={id:'pk_'+Date.now(),credId:buf2b64(cred.rawId),email:email,name:devName()+' '+new Date().toLocaleDateString('ko-KR'),at:new Date().toISOString()};
     var all=getPKs();all.push(pk);savePKs(all);
-    try{localStorage.setItem('aoao_sess_bio_'+btoa(unescape(encodeURIComponent(email))),JSON.stringify(ST.sess));}catch(e){}
+    dbSaveBioSess(ST.sess).catch(function(){});
     // DB에도 저장
     dbSavePasskey(pk).catch(function(){});
     btn.disabled=false;btn.textContent='+ 추가';renderSecSec();
@@ -1452,12 +1534,11 @@ async function doRegisterPasskey(){
   }catch(e){btn.disabled=false;btn.textContent='+ 추가';showAlert('bioAlert','error',e.name==='NotAllowedError'?'등록 취소됨':e.name==='InvalidStateError'?'이미 등록됨':(e.message||'등록 실패'));}
 }
 function deletePasskey(id){
-  var all=getPKs();
-  var target=all.find(function(p){return p.id===id;});
-  var remaining=all.filter(function(p){return p.id!==id;});
-  savePKs(remaining);
-  if(target)dbDeletePasskey(target.credId).catch(function(){});
-  renderSecSec();toast('success','패스키 삭제됨');
+  var target=getPKs().find(function(p){return p.id===id;});
+  if(!target){toast('error','패스키를 찾을 수 없습니다.');return;}
+  dbDeletePasskey(target.credId)
+    .then(function(){renderSecSec();toast('success','패스키 삭제됨');})
+    .catch(function(){toast('error','패스키 삭제 실패');});
 }
 
 async function doBioLogin(){
@@ -1470,8 +1551,8 @@ async function doBioLogin(){
   try{
     var ac=pks.map(function(pk){return{id:b642buf(pk.credId),type:'public-key'};});
     await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:ac,userVerification:'preferred',timeout:60000,rpId:location.hostname||'localhost'}});
-    var se=null;try{se=localStorage.getItem('aoao_sess_bio_'+btoa(unescape(encodeURIComponent(pks[0].email))));}catch(e){}
-    if(se){saveSess(JSON.parse(se));btn.disabled=false;btn.innerHTML='🔐 생체인식';logActivity('passkey_login');dbLogActivity('passkey_login').catch(function(){});showLoginSc(pks[0].email);}
+    var se=await dbLoadBioSess();
+    if(se){saveSess(se);btn.disabled=false;btn.innerHTML='🔐 생체인식';logActivity('passkey_login');dbLogActivity('passkey_login').catch(function(){});showLoginSc(pks[0].email);}
     else{showAlert('loginAlert','error','세션 없음. 비밀번호로 다시 로그인하세요.');btn.disabled=false;btn.innerHTML='🔐 생체인식';}
   }catch(e){btn.disabled=false;btn.innerHTML='🔐 생체인식';showAlert('loginAlert','error',e.name==='NotAllowedError'?'인증 취소됨':(e.message||'인증 실패'));}
 }
@@ -1492,7 +1573,7 @@ function doLogin(){
     if(r.ok&&r.d.access_token){
       saveSess(r.d);
       if(hasPin(email))updatePinSess(email);
-      try{var bk='aoao_sess_bio_'+btoa(unescape(encodeURIComponent(email)));if(localStorage.getItem(bk))localStorage.setItem(bk,JSON.stringify(r.d));}catch(e){}
+      if(ST.bioSess)dbSaveBioSess(r.d).catch(function(){});
       logActivity('login');
       dbLogActivity('login').catch(function(){});
       dbLoadProfile().catch(function(){});
@@ -1533,7 +1614,7 @@ function showLoginSc(email){
 function doLogout(){
   logActivity('logout');
   dbLogActivity('logout').catch(function(){});
-  ST.sess=null;localStorage.removeItem('aoao_sess');
+  ST.sess=null;ST.linked=[];ST.passkeys=[];ST.pinHash=null;ST.bioSess=null;localStorage.removeItem('aoao_sess');localStorage.removeItem('aoao_profile');
   G('loginForm').classList.remove('hidden');
   G('signupForm').classList.add('hidden');
   G('pinLoginForm').classList.add('hidden');
@@ -1687,8 +1768,11 @@ function confirmAdd(){
         if(!data){showAlert('addAlert','error','JSONBin 연결 실패');return;}
         var users=data.users||{};
         if(!(pw===JB_ADMIN_PW||(email in users&&users[email].password===pw))){showAlert('addAlert','error','아이디 또는 비밀번호가 올바르지 않습니다.');return;}
-        ST.linked.push({id:'ao_'+Date.now(),type:'ao',siteId:site.id,name:site.name,icon:site.icon,siteUrl:site.url,authUrl:site.authUrl,email:email,pw:pw});
-        saveLinked();closeMod('addMod');renderLinked();renderLauncher();renderStats();toast('success',site.name+' 등록 완료 ✓');
+        var newAcc={id:'ao_'+Date.now(),type:'ao',siteId:site.id,name:site.name,icon:site.icon,siteUrl:site.url,authUrl:site.authUrl,email:email,pw:pw};
+        dbSaveLinked(newAcc).then(function(ok){
+          if(ok){ST.linked.push(newAcc);closeMod('addMod');renderLinked();renderLauncher();renderStats();toast('success',site.name+' 등록 완료 ✓');}
+          else{showAlert('addAlert','error','DB 저장 실패');}
+        });
       });
     } else {
       setBtn('addConfBtn','addConfTxt',true,'확인 중...');
@@ -1696,7 +1780,10 @@ function confirmAdd(){
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
       .then(function(r){
         setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
-        if(r.ok&&r.d.access_token){ST.linked.push({id:'ao_'+Date.now(),type:'ao',siteId:site.id,name:site.name,icon:site.icon,siteUrl:site.url,authUrl:site.authUrl,email:email,pw:pw});saveLinked();closeMod('addMod');renderLinked();renderLauncher();renderStats();toast('success',site.name+' 등록 완료 ✓');}
+        if(r.ok&&r.d.access_token){
+          var nA={id:'ao_'+Date.now(),type:'ao',siteId:site.id,name:site.name,icon:site.icon,siteUrl:site.url,authUrl:site.authUrl,email:email,pw:pw};
+          dbSaveLinked(nA).then(function(ok){if(ok){ST.linked.push(nA);closeMod('addMod');renderLinked();renderLauncher();renderStats();toast('success',site.name+' 등록 완료 ✓');}else showAlert('addAlert','error','DB 저장 실패');});
+        }
         else showAlert('addAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
       }).catch(function(){setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');showAlert('addAlert','error','네트워크 오류');});
     }
@@ -1710,7 +1797,10 @@ function confirmAdd(){
     .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
     .then(function(r){
       setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');
-      if(r.ok&&r.d.access_token){ST.linked.push({id:'sb_'+Date.now(),type:'sb',name:name,url:p.url,key:p.key,email:email,pw:pw,svcUrl:svcUrl});saveLinked();closeMod('addMod');renderLinked();renderStats();toast('success',name+' 등록 완료 ✓');}
+      if(r.ok&&r.d.access_token){
+        var nS={id:'sb_'+Date.now(),type:'sb',name:name,url:p.url,key:p.key,email:email,pw:pw,svcUrl:svcUrl};
+        dbSaveLinked(nS).then(function(ok){if(ok){ST.linked.push(nS);closeMod('addMod');renderLinked();renderStats();toast('success',name+' 등록 완료 ✓');}else showAlert('addAlert','error','DB 저장 실패');});
+      }
       else showAlert('addAlert','error','로그인 실패: '+(r.d.error_description||r.d.msg||'이메일/비밀번호 확인'));
     }).catch(function(){setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');showAlert('addAlert','error','네트워크 오류');});
   } else {
@@ -1723,8 +1813,8 @@ function confirmAdd(){
       if(!data){showAlert('addAlert','error','JSONBin 연결 실패');return;}
       var u=data.users||{};
       if(!(pw===JB_ADMIN_PW||(uid in u&&u[uid].password===pw))){showAlert('addAlert','error','아이디 또는 비밀번호가 올바르지 않습니다.');return;}
-      ST.linked.push({id:'jb_'+Date.now(),type:'jb',name:name,jbKey:JB.key,jbBin:JB.bin,uid:uid,pw:pw,svcUrl:jbSvcUrl});
-      saveLinked();closeMod('addMod');renderLinked();renderStats();toast('success',name+' 등록 완료 ✓');
+      var newJb={id:'jb_'+Date.now(),type:'jb',name:name,jbKey:JB.key,jbBin:JB.bin,uid:uid,pw:pw,svcUrl:jbSvcUrl};
+      dbSaveLinked(newJb).then(function(ok){if(ok){ST.linked.push(newJb);closeMod('addMod');renderLinked();renderStats();toast('success',name+' 등록 완료 ✓');}else showAlert('addAlert','error','DB 저장 실패');});
     }).catch(function(){setBtn('addConfBtn','addConfTxt',false,'로그인 후 저장');showAlert('addAlert','error','네트워크 오류');});
   }
 }
@@ -1814,7 +1904,11 @@ function confirmLinkedLogin(){
   }
 }
 function openUnlink(id){UL_ID=id;var acc=ST.linked.find(function(a){return a.id===id;});G('ulSub').textContent='"'+acc.name+'" 연동을 해제할까요?';openMod('ulMod');}
-function confirmUnlink(){ST.linked=ST.linked.filter(function(a){return a.id!==UL_ID;});saveLinked();closeMod('ulMod');renderLinked();renderLauncher();renderStats();toast('success','연동 해제됨');}
+function confirmUnlink(){
+  dbDeleteLinked(UL_ID)
+    .then(function(){closeMod('ulMod');renderLinked();renderLauncher();renderStats();toast('success','연동 해제됨');})
+    .catch(function(){toast('error','해제 실패');});
+}
 
 // ════════════════════════════════════
 // 계정 관리
@@ -1841,7 +1935,7 @@ function confirmDel(){
   var email=getEmail();
   fetch(CENTRAL.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':CENTRAL.key,'Authorization':'Bearer '+CENTRAL.key},body:JSON.stringify({email:email,password:pw})})
   .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
-  .then(function(r){if(!r.ok||!r.d.access_token){showAlert('delAlert','error','비밀번호가 올바르지 않습니다.');return;}closeMod('delMod');localStorage.removeItem('aoao_sess');localStorage.removeItem('aoao_linked');ST.sess=null;ST.linked=[];toast('info','계정이 삭제됐습니다.');setTimeout(function(){doLogout();},1500);});
+  .then(function(r){if(!r.ok||!r.d.access_token){showAlert('delAlert','error','비밀번호가 올바르지 않습니다.');return;}closeMod('delMod');localStorage.removeItem('aoao_sess');localStorage.removeItem('aoao_profile');ST.sess=null;ST.linked=[];ST.passkeys=[];ST.pinHash=null;ST.bioSess=null;toast('info','계정이 삭제됐습니다.');setTimeout(function(){doLogout();},1500);});
 }
 function downloadData(){
   var email=getEmail();
