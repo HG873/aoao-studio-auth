@@ -1630,12 +1630,16 @@ function doLogout(){
 // ════════════════════════════════════
 // 공지
 // ════════════════════════════════════
-function loadNotices(){
+function loadNotices(retry){
   var el=G('noticePanel');if(!el)return;
   if(location.protocol==='file:'){el.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>서버에서만 로드 가능</div>';return;}
-  el.innerHTML='<div class="loading"><div class="spi-b"></div>불러오는 중...</div>';
-  fetch(AOAO_SERVER+'/api/notices',{cache:'no-store'})
-  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+  var attempt=retry||1;
+  el.innerHTML='<div class="loading"><div class="spi-b"></div>'+(attempt>1?'서버 깨우는 중... ('+attempt+'/3)':'불러오는 중...')+'</div>';
+  // 10초 타임아웃
+  var ctrl=new AbortController();
+  var tid=setTimeout(function(){ctrl.abort();},10000);
+  fetch(AOAO_SERVER+'/api/notices',{cache:'no-store',signal:ctrl.signal})
+  .then(function(r){clearTimeout(tid);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
   .then(function(raw){
     var notices=Array.isArray(raw)?raw:(raw.notices||raw.data||[]);
     if(!notices.length){el.innerHTML='<div class="empty"><div class="empty-ic">📭</div>공지가 없습니다</div>';return;}
@@ -1646,7 +1650,15 @@ function loadNotices(){
       return '<div class="notice-item"><div class="ni-top"><div class="ni-dot '+dot+'"></div><div class="ni-title">'+escH(n.title||'')+'</div><div class="ni-date">'+date+'</div></div><div class="ni-body">'+escH(n.content||n.body||'')+'</div></div>';
     }).join('');
   })
-  .catch(function(e){el.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>로드 실패: '+e.message+'</div>';});
+  .catch(function(e){
+    clearTimeout(tid);
+    // Render 슬립 → 재시도 (최대 3회)
+    if(attempt<3){
+      setTimeout(function(){loadNotices(attempt+1);},5000);
+    } else {
+      el.innerHTML='<div class="empty"><div class="empty-ic">😴</div>서버가 슬립 중입니다<br><small style="color:var(--muted)">잠시 후 <span style="cursor:pointer;color:var(--blue);" onclick="loadNotices()">다시 시도</span>하세요</small></div>';
+    }
+  });
 }
 
 // ════════════════════════════════════
