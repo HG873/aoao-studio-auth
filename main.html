@@ -326,7 +326,7 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
 /* ── 서비스 런처 ── */
 .launcher-section{margin-bottom:24px;animation:up .5s .1s ease both;}
 .section-title{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;padding-left:4px;}
-.launcher-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.launcher-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
 .launcher-item{
   background:var(--glass);border:1px solid rgba(255,255,255,.8);
   border-radius:20px;padding:20px 12px 16px;
@@ -479,11 +479,14 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
 .empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
 .empty-ic{font-size:28px;margin-bottom:8px;}
 
-@media(max-width:600px){
-  .launcher-grid{grid-template-columns:repeat(2,1fr);}
+@media(max-width:700px){
+  .launcher-grid{grid-template-columns:repeat(3,1fr);}
   .panels{grid-template-columns:1fr;}
   .dash-body{padding:20px 14px 60px;}
   .dash-topbar{padding:0 14px;}
+}
+@media(max-width:480px){
+  .launcher-grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
 </head>
@@ -505,7 +508,7 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
       </div>
       <div class="intro-desc">
         중앙계정 하나로 AI Girlfriend, Type Studio,
-        Game Studio, Model Hub에 원클릭 로그인하세요.
+        Game Studio, Model Hub, 클래스 월드에 원클릭 로그인하세요.
         패스키와 PIN으로 더 빠르고 안전하게.
       </div>
       <div class="intro-features">
@@ -531,6 +534,7 @@ select.fi{cursor:pointer;appearance:none;background-image:url("data:image/svg+xm
         <div class="intro-svc">✍️ Type Studio</div>
         <div class="intro-svc">🎮 Game Studio</div>
         <div class="intro-svc">🤖 Model Hub</div>
+        <div class="intro-svc">🏫 클래스 월드</div>
       </div>
     </div>
 
@@ -828,7 +832,7 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
     <div class="alert" id="profileAlert"></div>
     <div class="modal-acts">
       <button class="btn btn-ghost" onclick="closeMod('editProfileMod')">취소</button>
-      <button class="btn btn-blue" onclick="saveProfile()">저장</button>
+      <button class="btn btn-blue" onclick="saveProfile2()">저장</button>
     </div>
   </div>
 </div>
@@ -870,7 +874,8 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
             <div class="csel-option selected" data-val="0" onclick="selectCsel('aoSite',0,'💕 AI Girlfriend',this)"><span class="opt-ic">💕</span><div><div>AI Girlfriend</div><div class="opt-sub">aoao-studio-zeta.onrender.com</div></div></div>
             <div class="csel-option" data-val="1" onclick="selectCsel('aoSite',1,'✍️ Type Studio',this)"><span class="opt-ic">✍️</span><div><div>Type Studio</div><div class="opt-sub">aoao-studio-typo.onrender.com</div></div></div>
             <div class="csel-option" data-val="2" onclick="selectCsel('aoSite',2,'🎮 Game Studio',this)"><span class="opt-ic">🎮</span><div><div>Game Studio</div><div class="opt-sub">aoao-gmae-studio.onrender.com</div></div></div>
-            <div class="csel-option" data-val="3" onclick="selectCsel('aoSite',3,'🤖 Model Hub',this)"><span class="opt-ic">🤖</span><div><div>Model Hub</div><div class="opt-sub">aoao-studio-data.onrender.com</div></div></div>
+            <div class="csel-option" data-val="3" onclick="selectCsel('aoSite',3,'🤖 Model Hub',this)"><span class="opt-ic">🤖</span><div><div>Model Hub</div><div class="opt-sub">aoao-studio-code.onrender.com</div></div></div>
+            <div class="csel-option" data-val="4" onclick="selectCsel('aoSite',4,'🏫 클래스 월드',this)"><span class="opt-ic">🏫</span><div><div>클래스 월드</div><div class="opt-sub">aoao-copung-classworld.onrender.com</div></div></div>
           </div>
         </div>
       </div>
@@ -896,6 +901,7 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
             <div class="csel-option selected" data-val="0" onclick="selectCsel('sbSel',0,'🟢 OLG Studio (sb1)',this)"><span class="opt-ic">🟢</span><div>OLG Studio (sb1)</div></div>
             <div class="csel-option" data-val="1" onclick="selectCsel('sbSel',1,'🟢 AOAO Chat (sb2)',this)"><span class="opt-ic">🟢</span><div>AOAO Chat (sb2)</div></div>
             <div class="csel-option" data-val="2" onclick="selectCsel('sbSel',2,'🟢 AOAO Data (sb3)',this)"><span class="opt-ic">🟢</span><div>AOAO Data (sb3)</div></div>
+            <div class="csel-option" data-val="3" onclick="selectCsel('sbSel',3,'🏫 클래스 월드 (sb4)',this)"><span class="opt-ic">🏫</span><div>클래스 월드 (sb4)</div></div>
           </div>
         </div>
       </div>
@@ -999,17 +1005,25 @@ fetch(<span style="color:#86efac">'https://aoao-studio-code.onrender.com/api/v1/
 // 설정
 // ════════════════════════════════════
 var CENTRAL={url:'https://qtqsjphpfymcbgmlkuas.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cXNqcGhwZnltY2JnbWxrdWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2ODgzNTYsImV4cCI6MjA4OTI2NDM1Nn0.WUYSG65UdFLfM3y4W7vkoK95h08X3YU3umT6MQSmuaw'};
+
+// ★ SB_LIST에 클래스 월드 Supabase 추가
 var SB_LIST=[
   {name:'OLG Studio',url:'https://twjzcstibzdftsaruhnp.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk'},
   {name:'AOAO Chat',url:'https://mthjjyosovblpsegguju.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I'},
-  {name:'AOAO Data',url:'https://alnazztrdhpkyclkaklv.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA'}
+  {name:'AOAO Data',url:'https://alnazztrdhpkyclkaklv.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA'},
+  {name:'클래스 월드',url:'https://puauncwwtbnsieulvhca.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1YXVuY3d3dGJuc2lldWx2aGNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMDczMTMsImV4cCI6MjA4OTc4MzMxM30._3a4pg-ot9FxYHAywpq1Ic1eV1iLrPKGFymZJAPfE1A'}
 ];
+
+// ★ AO_SITES에 클래스 월드 추가
 var AO_SITES=[
   {id:'zeta',name:'AI Girlfriend',icon:'💕',url:'https://aoao-studio-zeta.onrender.com',authUrl:'https://aoao-studio-zeta.onrender.com/auth.html',type:'supabase',sbUrl:'https://twjzcstibzdftsaruhnp.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3anpjc3RpYnpkZnRzYXJ1aG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjAyNTAsImV4cCI6MjA4ODgzNjI1MH0.Rj1KjW7IxIpfU26BBQa873hzcARRtcpCFyif15rozIk',lsToken:'z-token',lsUser:'z-user'},
   {id:'typo',name:'Type Studio',icon:'✍️',url:'https://aoao-studio-typo.onrender.com',authUrl:'https://aoao-studio-typo.onrender.com/auth.html',type:'supabase',sbUrl:'https://mthjjyosovblpsegguju.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10aGpqeW9zb3ZibHBzZWdndWp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzE1MDQsImV4cCI6MjA4ODc0NzUwNH0.7qJaVSM9i6zTHV23u5kPiMQytW_XYDCIsUvIlswTg8I',lsToken:'sb_token',lsUser:'sb_user'},
   {id:'game',name:'Game Studio',icon:'🎮',url:'https://aoao-gmae-studio.onrender.com',authUrl:'https://aoao-gmae-studio.onrender.com/auth.html',type:'supabase_nosession',sbUrl:'https://alnazztrdhpkyclkaklv.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsbmF6enRyZGhwa3ljbGtha2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MzIwNDgsImV4cCI6MjA4NDMwODA0OH0.mUvc6zTV-xNhuBlC0iseVKX1WeNvkGgV_wO4Yl0dGxA',lsToken:null,lsUser:null},
-  {id:'modelhub',name:'Model Hub',icon:'🤖',url:'https://aoao-studio-code.onrender.com',authUrl:'https://aoao-studio-code.onrender.com/auth',type:'modelhub'}
+  {id:'modelhub',name:'Model Hub',icon:'🤖',url:'https://aoao-studio-code.onrender.com',authUrl:'https://aoao-studio-code.onrender.com/auth',type:'modelhub'},
+  // ★ 클래스 월드 — Supabase 이메일/비밀번호 방식 (supabase 타입)
+  {id:'classworld',name:'클래스 월드',icon:'🏫',url:'https://aoao-copung-classworld.onrender.com',authUrl:'https://aoao-copung-classworld.onrender.com/auth',type:'supabase',sbUrl:'https://puauncwwtbnsieulvhca.supabase.co',sbKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1YXVuY3d3dGJuc2lldWx2aGNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMDczMTMsImV4cCI6MjA4OTc4MzMxM30._3a4pg-ot9FxYHAywpq1Ic1eV1iLrPKGFymZJAPfE1A',lsToken:'cw-token',lsUser:'cw-user'}
 ];
+
 var JB={key:(function(){return[36,50,97,36,49,48,36,57,71,46,103,90,117,50,115,122,79,97,50,110,86,106,110,48,108,82,84,84,117,103,66,118,101,76,122,98,90,103,83,82,74,83,81,121,120,115,77,66,75,84,76,100,97,99,116,51,46,71,66,71].map(function(n){return String.fromCharCode(n);}).join('');}()),bin:'6937b89b43b1c97be9e1328c'};
 var AOAO_SERVER='https://aoao-studio-code.onrender.com';
 var JB_ADMIN_PW='3546';
@@ -1029,12 +1043,10 @@ var ACTIVITY_LOG=[];
 // ════════════════════════════════════
 document.addEventListener('DOMContentLoaded',function(){
   try{var s=localStorage.getItem('aoao_sess');if(s)ST.sess=JSON.parse(s);}catch(e){}
-  // profile은 로컬 캐시로만 (DB에서 덮어씀)
   try{var p=localStorage.getItem('aoao_profile');if(p)ST.profile=JSON.parse(p);}catch(e){}
   if(!window.PublicKeyCredential){var b=G('bioBtn');if(b){b.disabled=true;b.textContent='🚫 미지원';}}
   if(ST.sess&&ST.sess.access_token){showPage('dashPage');renderDash();}
   else showPage('loginPage');
-  // 5분마다 세션 만료 체크
   setInterval(function(){
     if(ST.sess){
       var t=getToken();
@@ -1083,7 +1095,6 @@ async function dbLoadProfile(){
     var p=r.d[0];
     if(p.nickname)ST.profile.nickname=p.nickname;
     if(p.avatar_url)ST.profile.avatar=p.avatar_url;
-    // bio 세션도 복원
     if(p.bio_sess){try{ST.bioSess=JSON.parse(p.bio_sess);}catch(e){}}
     localStorage.setItem('aoao_profile',JSON.stringify(ST.profile));
   }
@@ -1104,7 +1115,7 @@ async function dbSavePin(hash){
   await sbRest('/profiles?on_conflict=id',{method:'POST',
     body:JSON.stringify({pin_hash:hash,pin_updated_at:new Date().toISOString()}),
     headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}});
-  ST.pinHash=hash; // 메모리 캐시
+  ST.pinHash=hash;
 }
 async function dbLoadPin(){
   if(ST.pinHash)return ST.pinHash;
@@ -1197,7 +1208,6 @@ async function dbLoadLinked(){
   }
 }
 async function dbSaveLinked(acc){
-  // id, type, name 제외한 나머지를 data JSON에 저장
   var data=Object.assign({},acc);
   delete data.id;delete data.type;delete data.name;
   var r=await sbRest('/linked_accounts',{method:'POST',
@@ -1210,16 +1220,14 @@ async function dbDeleteLinked(id){
   await sbRest('/linked_accounts?id=eq.'+id,{method:'DELETE'});
   ST.linked=ST.linked.filter(function(a){return a.id!==id;});
 }
-function saveLinked(){/* DB에서 관리 - dbSaveLinked/dbDeleteLinked 사용 */}
+function saveLinked(){}
 function saveProfile(){localStorage.setItem('aoao_profile',JSON.stringify(ST.profile));}
 function getEmail(){return ST.sess&&ST.sess.user&&ST.sess.user.email||'';}
 function getToken(){
   if(!ST.sess||!ST.sess.access_token) return '';
-  // JWT exp 체크
   try{
     var payload=JSON.parse(atob(ST.sess.access_token.split('.')[1]));
     if(payload.exp&&payload.exp*1000<Date.now()){
-      // 만료 → 세션 클리어
       ST.sess=null;ST.linked=[];ST.passkeys=[];ST.pinHash=null;ST.bioSess=null;localStorage.removeItem('aoao_sess');localStorage.removeItem('aoao_profile');
       if(document.getElementById('dashPage')&&document.getElementById('dashPage').classList.contains('show')){
         toast('error','세션이 만료됐습니다. 다시 로그인해주세요.');
@@ -1244,7 +1252,6 @@ function logActivity(action,device){
   var entry={action:action,device:device||getDeviceName(),time:new Date().toISOString()};
   ACTIVITY_LOG.unshift(entry);
   if(ACTIVITY_LOG.length>20)ACTIVITY_LOG=ACTIVITY_LOG.slice(0,20);
-  
 }
 function getDeviceName(){
   var ua=navigator.userAgent;
@@ -1308,7 +1315,6 @@ function handleAvatarChange(input){
 }
 function renderProfileCard(){
   var email=getEmail(),name=ST.profile.nickname||email.split('@')[0];
-  // 아바타
   var avText=G('pcAvText'),avImg=G('pcAvImg');
   if(ST.profile.avatar){avImg.src=ST.profile.avatar;avImg.style.display='block';avText.style.display='none';}
   else{avImg.style.display='none';avText.style.display='block';avText.textContent=email.charAt(0).toUpperCase();}
@@ -1369,14 +1375,12 @@ function launchSite(id){
 // 대시보드 렌더
 // ════════════════════════════════════
 function renderDash(){
-  var email=getEmail(),name=ST.profile.nickname||email.split('@')[0];
   renderTopbar();
   renderProfileCard();
   renderLauncher();
   renderActivityLog();
   renderStats();
   loadNotices();
-  // DB에서 모든 데이터 로드
   Promise.all([
     dbLoadProfile().catch(function(){}),
     dbLoadLinked().catch(function(){}),
@@ -1387,7 +1391,6 @@ function renderDash(){
     renderProfileCard();renderTopbar();renderLinked();renderLauncher();renderSecSec();renderActivityLog();renderStats();
   });
   goTab('home');
-  // file:// 경고
   if(location.protocol==='file:'){
     setTimeout(function(){toast('error','⚠️ 로컬 파일 실행 — 자동 로그인·공지·API키 동작 안 함');},600);
   }
@@ -1440,9 +1443,9 @@ function pinKey(email){try{return'aoao_pin_'+btoa(unescape(encodeURIComponent(em
 async function hashPin(pin,email){var data=new TextEncoder().encode(pin+':'+email+':aoao2024');var h=await crypto.subtle.digest('SHA-256',data);return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
 async function savePin(pin,email){var hash=await hashPin(pin,email);await dbSavePin(hash);}
 async function verifyPin(pin,email){return dbVerifyPin(pin);}
-function hasPin(email){return!!(ST.pinHash);} // 메모리 캐시
-function getPinSess(email){return ST.bioSess||ST.sess;} // bio 세션 or 현재 세션
-function updatePinSess(email){/* DB 세션은 로그인 시 자동 갱신됨 */}
+function hasPin(email){return!!(ST.pinHash);}
+function getPinSess(email){return ST.bioSess||ST.sess;}
+function updatePinSess(email){}
 function deletePin(){dbDeletePin().then(function(){renderSecSec();toast('success','PIN이 해제됐습니다.');}).catch(function(){toast('error','PIN 삭제 실패');});}
 
 // PIN 패드
@@ -1464,7 +1467,6 @@ function goPwLogin(){G('loginForm').classList.remove('hidden');G('pinLoginForm')
 async function handlePinLogin(pin){
   hideAlert('pinLoginAlert');
   var email=G('lEmail').value.trim();
-  // 브루트포스 방지
   var lockKey='aoao_pin_lock_'+btoa(email.slice(0,20));
   var lockData=JSON.parse(localStorage.getItem(lockKey)||'{"count":0,"until":0}');
   if(lockData.until>Date.now()){
@@ -1527,7 +1529,6 @@ async function doRegisterPasskey(){
     var pk={id:'pk_'+Date.now(),credId:buf2b64(cred.rawId),email:email,name:devName()+' '+new Date().toLocaleDateString('ko-KR'),at:new Date().toISOString()};
     var all=getPKs();all.push(pk);savePKs(all);
     dbSaveBioSess(ST.sess).catch(function(){});
-    // DB에도 저장
     dbSavePasskey(pk).catch(function(){});
     btn.disabled=false;btn.textContent='+ 추가';renderSecSec();
     showAlert('bioAlert','success','패스키가 등록됐습니다! 🎉');
@@ -1635,7 +1636,6 @@ function loadNotices(retry){
   if(location.protocol==='file:'){el.innerHTML='<div class="empty"><div class="empty-ic">⚠️</div>서버에서만 로드 가능</div>';return;}
   var attempt=retry||1;
   el.innerHTML='<div class="loading"><div class="spi-b"></div>'+(attempt>1?'서버 깨우는 중... ('+attempt+'/3)':'불러오는 중...')+'</div>';
-  // 10초 타임아웃
   var ctrl=new AbortController();
   var tid=setTimeout(function(){ctrl.abort();},10000);
   fetch(AOAO_SERVER+'/api/notices',{cache:'no-store',signal:ctrl.signal})
@@ -1652,7 +1652,6 @@ function loadNotices(retry){
   })
   .catch(function(e){
     clearTimeout(tid);
-    // Render 슬립 → 재시도 (최대 3회)
     if(attempt<3){
       setTimeout(function(){loadNotices(attempt+1);},5000);
     } else {
@@ -1667,7 +1666,6 @@ function loadNotices(retry){
 function jbLoad(){return fetch('https://api.jsonbin.io/v3/b/'+JB.bin+'/latest',{headers:{'X-Master-Key':JB.key,'X-Bin-Meta':'false'}}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});}
 function jbSave(data){return fetch('https://api.jsonbin.io/v3/b/'+JB.bin,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JB.key},body:JSON.stringify(data)}).then(function(r){return r.ok;}).catch(function(){return false;});}
 function genKey(){
-  // crypto.getRandomValues 기반 강한 키 생성
   var arr=new Uint8Array(32);
   crypto.getRandomValues(arr);
   var hex=Array.from(arr).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
@@ -1787,6 +1785,7 @@ function confirmAdd(){
         });
       });
     } else {
+      // ★ supabase / supabase_nosession / 클래스 월드 모두 동일 로직
       setBtn('addConfBtn','addConfTxt',true,'확인 중...');
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},body:JSON.stringify({email:email,password:pw})})
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
@@ -1852,7 +1851,6 @@ function renderLinked(){
 }
 function openLinkedLogin(id){
   LL_ID=id;var acc=ST.linked.find(function(a){return a.id===id;});if(!acc)return;
-  var site=acc.type==='ao'?AO_SITES.find(function(s){return s.id===acc.siteId;}):null;
   G('llTitle').textContent=acc.name+' 로그인';
   G('llSub').textContent=(acc.email||acc.uid||'저장된 계정');
   hideAlert('llAlert');
@@ -1866,7 +1864,6 @@ function confirmLinkedLogin(){
     var site=AO_SITES.find(function(s){return s.id===acc.siteId;});
     if(!site){showAlert('llAlert','error','사이트 정보 없음');setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');return;}
     if(site.type==='modelhub'){
-      // /api/login 호출 → auth.html?type=modelhub&uid=...&redirect=/ 경유
       fetch(site.url+'/api/login',{
         method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',
         body:JSON.stringify({id:acc.email,password:acc.pw})
@@ -1887,19 +1884,20 @@ function confirmLinkedLogin(){
         }
       })
       .catch(function(){
-        // CORS 차단 시 그냥 이동
         setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');
         closeMod('llMod');
         toast('info','Model Hub로 이동합니다. 사이트에서 직접 로그인해주세요.');
         setTimeout(function(){window.open(site.url,'_blank');},400);
       });
     } else {
+      // ★ supabase / supabase_nosession / 클래스 월드 모두 동일 로직
       fetch(site.sbUrl+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':site.sbKey,'Authorization':'Bearer '+site.sbKey},body:JSON.stringify({email:acc.email,password:acc.pw})})
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
       .then(function(r){
         setBtn('llBtn','llBtnTxt',false,'로그인 & 이동');
         if(r.ok&&r.d.access_token){
           closeMod('llMod');toast('success',acc.name+' 로그인 ✓ 이동 중...');
+          // ★ 클래스 월드 / 기타 supabase 사이트 — authUrl에 토큰 전달
           var dest=site.type==='supabase_nosession'
             ?site.authUrl+'?type='+site.id+'&token='+encodeURIComponent(r.d.access_token)+'&refresh='+encodeURIComponent(r.d.refresh_token||'')+'&redirect='+encodeURIComponent('/?gat='+encodeURIComponent(r.d.access_token)+'&grt='+encodeURIComponent(r.d.refresh_token||''))
             :site.authUrl+'?type='+site.id+'&token='+encodeURIComponent(r.d.access_token)+'&refresh='+encodeURIComponent(r.d.refresh_token||'')+'&user='+encodeURIComponent(JSON.stringify(r.d.user||{}))+'&redirect='+encodeURIComponent('/');
